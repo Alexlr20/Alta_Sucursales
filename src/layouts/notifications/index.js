@@ -139,47 +139,50 @@ function Notifications() {
           }}
         />
       </MDBox>
-      <MDTypography color="icon">Tipos de Mandatos</MDTypography>
-      <MDBox mt={6}>
-        <VerticalBarChart
-          description=""
-          chart={{
-            labels: ["Sin Aprobar", "Aprobados", "Terminados"],
-            datasets: [
-              {
-                label: "Sales by age",
-                color: "info",
-                data: [5, 10, 1],
-              },
-            ],
-          }}
-        />
-      </MDBox>
-      <MDTypography color="icon">Tipos de Mandatos</MDTypography>
-      <MDBox mt={6}>
-        <VerticalBarChart
-          description=""
-          chart={{
-            labels: ["Sin Aprobar", "Aprobados", "Terminados"],
-            datasets: [
-              {
-                label: "a",
-                color: "info",
-                data: [4, 6, 0],
-              },
-              {
-                label: "b",
-                color: "info",
-                data: [1, 3, 0],
-              },
-              {
-                label: "c",
-                color: "info",
-                data: [0, 1, 0],
-              },
-            ],
-          }}
-        />
+
+      <MDBox mt={0} display="flex">
+        <MDBox width="50%">
+          <MDTypography color="icon">Tipos de Mandatos</MDTypography>
+          <VerticalBarChart
+            description=""
+            chart={{
+              labels: ["Sin Aprobar", "Aprobados", "Terminados"],
+              datasets: [
+                {
+                  label: "Sales by age",
+                  color: "info",
+                  data: [5, 10, 1],
+                },
+              ],
+            }}
+          />
+        </MDBox>
+        <MDBox width="50%">
+          <MDTypography color="icon">Tipos de mandatos por fecha</MDTypography>
+          <VerticalBarChart
+            description=""
+            chart={{
+              labels: ["Sin Aprobar", "Aprobados", "Terminados"],
+              datasets: [
+                {
+                  label: "a",
+                  color: "info",
+                  data: [4, 6, 0],
+                },
+                {
+                  label: "b",
+                  color: "info",
+                  data: [1, 3, 0],
+                },
+                {
+                  label: "c",
+                  color: "info",
+                  data: [0, 1, 0],
+                },
+              ],
+            }}
+          />
+        </MDBox>
       </MDBox>
       <Footer />
     </DashboardLayout>
