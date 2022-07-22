@@ -19,7 +19,7 @@ Coded by www.creative-tim.com
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
-import MDButton from "components/MDButton";
+import { Icon } from "@mui/material";
 // import MDBadge from "components/MDBadge";
 
 // Images
@@ -39,7 +39,7 @@ export default function data() {
   const TableFiller = ({ image, name, calle }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
       <MDAvatar src={image} name={name} size="sm" />
-      <MDBox ml={0} lineHeight={1}>
+      <MDBox ml={-1} lineHeight={1}>
         <MDTypography display="block" variant="caption" fontWeight="medium">
           {name}
         </MDTypography>
@@ -58,16 +58,39 @@ export default function data() {
     </MDBox>
   );
 
-  const StatusButton = ({ status }) => (
+  // eslint-disable-next-line no-empty-pattern
+  const StatusButton = ({}) => (
     <MDBox lineHeight={1} textAlign="left">
-      <MDButton variant="caption">{status}</MDButton>
-      <img src="/src/assets" alt="" />
+      <Icon fontSize="small" color="info">
+        lock
+      </Icon>
     </MDBox>
   );
 
-  const AttachedDocButton = ({ adjuntos }) => (
+  // eslint-disable-next-line no-empty-pattern
+  const AttachedDocButton = ({}) => (
     <MDBox lineHeight={1} textAlign="left">
-      <MDButton variant="caption">{adjuntos}</MDButton>
+      <Icon fontSize="small" color="info">
+        note_add
+      </Icon>
+    </MDBox>
+  );
+
+  // eslint-disable-next-line no-empty-pattern
+  const NotesButton = ({}) => (
+    <MDBox lineHeight={1} textAlign="left">
+      <Icon fontSize="small" color="info">
+        description
+      </Icon>
+    </MDBox>
+  );
+
+  // eslint-disable-next-line no-empty-pattern
+  const DetailsButton = ({}) => (
+    <MDBox lineHeight={1} textAlign="left">
+      <Icon fontSize="small" color="info">
+        add_circle{" "}
+      </Icon>
     </MDBox>
   );
 
@@ -101,6 +124,8 @@ export default function data() {
       { Header: "Visto", accessor: "Visto", align: "center" },
       { Header: "Status", accessor: "Status", align: "center" },
       { Header: "Adjuntos", accessor: "Adjuntos", align: "center" },
+      { Header: "Notas", accessor: "Notas", align: "center" },
+      { Header: "Aceptado", accessor: "Aceptado", align: "center" },
     ],
 
     rows: [
@@ -115,6 +140,8 @@ export default function data() {
         Visto: <TableFiller name="--" />,
         Status: <StatusButton status="candado" />,
         Adjuntos: <AttachedDocButton adjuntos="doc" />,
+        Notas: <NotesButton notas="notas" />,
+        Aceptado: <DetailsButton aceptado="aceptado" />,
       },
       {
         Tipo: <TableFiller name="Acciones Operativas" />,
@@ -127,6 +154,8 @@ export default function data() {
         Visto: <TableFiller name="--" />,
         Status: <StatusButton status="candado" />,
         Adjuntos: <AttachedDocButton adjuntos="doc" />,
+        Notas: <NotesButton notas="notas" />,
+        Aceptado: <DetailsButton aceptado="aceptado" />,
       },
       {
         Tipo: <TableFiller name="Acciones Operativas" />,
@@ -139,6 +168,8 @@ export default function data() {
         Visto: <TableFiller name="--" />,
         Status: <StatusButton status="candado" />,
         Adjuntos: <AttachedDocButton adjuntos="doc" />,
+        Notas: <NotesButton notas="notas" />,
+        Aceptado: <DetailsButton aceptado="aceptado" />,
       },
       {
         Tipo: <TableFiller name="Acciones Operativas" />,
@@ -151,6 +182,8 @@ export default function data() {
         Visto: <TableFiller name="--" />,
         Status: <StatusButton status="candado" />,
         Adjuntos: <AttachedDocButton adjuntos="doc" />,
+        Notas: <NotesButton notas="notas" />,
+        Aceptado: <DetailsButton aceptado="aceptado" />,
       },
       {
         Tipo: <TableFiller name="Acciones Operativas" />,
@@ -163,6 +196,8 @@ export default function data() {
         Visto: <TableFiller name="--" />,
         Status: <StatusButton status="candado" />,
         Adjuntos: <AttachedDocButton adjuntos="doc" />,
+        Notas: <NotesButton notas="notas" />,
+        Aceptado: <DetailsButton aceptado="aceptado" />,
       },
       {
         Tipo: <TableFiller name="Acciones Operativas" />,
@@ -175,6 +210,8 @@ export default function data() {
         Visto: <TableFiller name="--" />,
         Status: <StatusButton status="candado" />,
         Adjuntos: <AttachedDocButton adjuntos="doc" />,
+        Notas: <NotesButton notas="notas" />,
+        Aceptado: <DetailsButton aceptado="aceptado" />,
       },
       {
         Tipo: <TableFiller name="Acciones Operativas" />,
@@ -187,6 +224,8 @@ export default function data() {
         Visto: <TableFiller name="--" />,
         Status: <StatusButton status="candado" />,
         Adjuntos: <AttachedDocButton adjuntos="doc" />,
+        Notas: <NotesButton notas="notas" />,
+        Aceptado: <DetailsButton aceptado="aceptado" />,
       },
       {
         Tipo: <TableFiller name="Acciones Operativas" />,
@@ -199,6 +238,8 @@ export default function data() {
         Visto: <TableFiller name="--" />,
         Status: <StatusButton status="candado" />,
         Adjuntos: <AttachedDocButton adjuntos="doc" />,
+        Notas: <NotesButton notas="notas" />,
+        Aceptado: <DetailsButton aceptado="aceptado" />,
       },
       {
         Tipo: <TableFiller name="Acciones Operativas" />,
@@ -211,6 +252,8 @@ export default function data() {
         Visto: <TableFiller name="--" />,
         Status: <StatusButton status="candado" />,
         Adjuntos: <AttachedDocButton adjuntos="doc" />,
+        Notas: <NotesButton notas="notas" />,
+        Aceptado: <DetailsButton aceptado="aceptado" />,
       },
       {
         Tipo: <TableFiller name="Acciones Operativas" />,
@@ -223,6 +266,8 @@ export default function data() {
         Visto: <TableFiller name="--" />,
         Status: <StatusButton status="candado" />,
         Adjuntos: <AttachedDocButton adjuntos="doc" />,
+        Notas: <NotesButton notas="notas" />,
+        Aceptado: <DetailsButton aceptado="aceptado" />,
       },
       {
         Tipo: <TableFiller name="Acciones Operativas" />,
@@ -235,6 +280,8 @@ export default function data() {
         Visto: <TableFiller name="--" />,
         Status: <StatusButton status="candado" />,
         Adjuntos: <AttachedDocButton adjuntos="doc" />,
+        Notas: <NotesButton notas="notas" />,
+        Aceptado: <DetailsButton aceptado="aceptado" />,
       },
       {
         Tipo: <TableFiller name="Acciones Operativas" />,
@@ -247,6 +294,8 @@ export default function data() {
         Visto: <TableFiller name="--" />,
         Status: <StatusButton status="candado" />,
         Adjuntos: <AttachedDocButton adjuntos="doc" />,
+        Notas: <NotesButton notas="notas" />,
+        Aceptado: <DetailsButton aceptado="aceptado" />,
       },
       {
         Tipo: <TableFiller name="Acciones Operativas" />,
@@ -259,6 +308,8 @@ export default function data() {
         Visto: <TableFiller name="--" />,
         Status: <StatusButton status="candado" />,
         Adjuntos: <AttachedDocButton adjuntos="doc" />,
+        Notas: <NotesButton notas="notas" />,
+        Aceptado: <DetailsButton aceptado="aceptado" />,
       },
       {
         Tipo: <TableFiller name="Acciones Operativas" />,
@@ -271,6 +322,8 @@ export default function data() {
         Visto: <TableFiller name="--" />,
         Status: <StatusButton status="candado" />,
         Adjuntos: <AttachedDocButton adjuntos="doc" />,
+        Notas: <NotesButton notas="notas" />,
+        Aceptado: <DetailsButton aceptado="aceptado" />,
       },
       {
         Tipo: <TableFiller name="Acciones Operativas" />,
@@ -283,6 +336,8 @@ export default function data() {
         Visto: <TableFiller name="--" />,
         Status: <StatusButton status="candado" />,
         Adjuntos: <AttachedDocButton adjuntos="doc" />,
+        Notas: <NotesButton notas="notas" />,
+        Aceptado: <DetailsButton aceptado="aceptado" />,
       },
     ],
   };

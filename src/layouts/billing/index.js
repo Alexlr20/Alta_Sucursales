@@ -27,22 +27,37 @@ import Footer from "examples/Footer";
 // Billing page components
 import PaymentMethod from "layouts/billing/components/TipoInstruccion";
 import Invoices from "layouts/billing/components/RightForm";
-import BillingInformation from "layouts/billing/components/ActiveDays";
+
 import SearchForm from "layouts/billing/components/SearchForm";
+import MDTypography from "components/MDTypography";
 import Table from "./components/Table";
 
 function Billing() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <MDBox mt={8}>
+      <MDBox
+        style={{ zIndex: 10 }}
+        mx={1}
+        mt={2}
+        py={3}
+        px={2}
+        variant="gradient"
+        bgColor="info"
+        borderRadius="lg"
+        coloredShadow="info"
+      >
+        <MDTypography variant="h6" color="white">
+          Alta de Sucursales
+        </MDTypography>
+      </MDBox>
+
+      <MDBox mt={2}>
         <MDBox mb={3}>
           <Grid container spacing={3}>
             <Grid item xs={12} lg={8}>
-              <Grid container spacing={3}>
-                <Grid item xs={12}>
-                  <PaymentMethod />
-                </Grid>
+              <Grid item xs={12}>
+                <PaymentMethod />
               </Grid>
             </Grid>
             <Grid item xs={12} lg={4}>
@@ -51,20 +66,13 @@ function Billing() {
           </Grid>
         </MDBox>
         <MDBox mb={3}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={15}>
-              <BillingInformation />
-            </Grid>
-            <Grid item xs={12} md={15}>
-              <SearchForm />
-            </Grid>
+          <Grid item xs={12} md={15}>
+            <SearchForm />
           </Grid>
         </MDBox>
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={15}>
-            <Table />
-          </Grid>
-        </Grid>
+        <MDBox>
+          <Table />
+        </MDBox>
       </MDBox>
       <Footer />
     </DashboardLayout>

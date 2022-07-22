@@ -22,6 +22,9 @@ import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import MDBox from "components/MDBox";
+import MDTypography from "components/MDTypography";
+
+const Organigrama = require("./Organigrama.jpg");
 
 // Dashboard components
 
@@ -29,13 +32,22 @@ function Dashboard() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <MDBox pt={20} px={20}>
-        <img
-          src="src\layouts\dashboard\Organigrama.jpg"
-          alt="organigrama"
-          width="500px"
-          height="600px"
-        />
+      <MDBox
+        mx={0}
+        mt={0}
+        py={3}
+        px={2}
+        variant="gradient"
+        bgColor="info"
+        borderRadius="lg"
+        coloredShadow="info"
+      >
+        <MDTypography variant="h6" color="white">
+          Organigrama
+        </MDTypography>
+      </MDBox>
+      <MDBox pt={5}>
+        <img src={Organigrama} alt="organigrama" width="100%" style={{ objectFit: "contain" }} />
       </MDBox>
       <Footer />
     </DashboardLayout>

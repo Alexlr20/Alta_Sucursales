@@ -18,13 +18,13 @@ Coded by www.creative-tim.com
 // @mui icons
 
 // Material Dashboard 2 React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
 
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
+import MDBox from "components/MDBox";
+import MDTypography from "components/MDTypography";
 
 // Overview page components
 import Header from "layouts/profile/components/Header";
@@ -37,19 +37,23 @@ function Overview() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <MDBox mb={2} />
-      <Header>
-        <MDBox pt={2} px={2} lineHeight={1.25}>
-          <MDTypography variant="h6" fontWeight="medium">
-            Projects
-          </MDTypography>
-          <MDBox mb={1}>
-            <MDTypography variant="button" color="text">
-              Architects design houses
-            </MDTypography>
-          </MDBox>
-        </MDBox>
-      </Header>
+      <MDBox
+        style={{ zIndex: 10 }}
+        mx={1}
+        mt={2}
+        mb={4}
+        py={3}
+        px={2}
+        variant="gradient"
+        bgColor="info"
+        borderRadius="lg"
+        coloredShadow="info"
+      >
+        <MDTypography variant="h6" color="white">
+          Catalogos
+        </MDTypography>
+      </MDBox>
+      <Header />
       <Footer />
     </DashboardLayout>
   );

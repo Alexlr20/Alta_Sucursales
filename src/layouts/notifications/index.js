@@ -22,6 +22,8 @@ import MDTypography from "components/MDTypography";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
+import VerticalBarChart from "examples/Charts/BarCharts/VerticalBarChart";
+import MDBox from "components/MDBox";
 
 function Notifications() {
   // const [successSB, setSuccessSB] = useState(false);
@@ -105,7 +107,80 @@ function Notifications() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
+      <MDBox
+        style={{ zIndex: 10 }}
+        mx={1}
+        mt={2}
+        mb={4}
+        py={3}
+        px={2}
+        variant="gradient"
+        bgColor="info"
+        borderRadius="lg"
+        coloredShadow="info"
+      >
+        <MDTypography variant="h6" color="white">
+          Graficas
+        </MDTypography>
+      </MDBox>
       <MDTypography color="icon">Mandatos</MDTypography>
+      <MDBox mt={6} mb={6}>
+        <VerticalBarChart
+          description=""
+          chart={{
+            labels: ["Instrucciones", "Acciones", "Informacion"],
+            datasets: [
+              {
+                label: "Sales by age",
+                color: "info",
+                data: [11, 4, 1],
+              },
+            ],
+          }}
+        />
+      </MDBox>
+      <MDTypography color="icon">Tipos de Mandatos</MDTypography>
+      <MDBox mt={6}>
+        <VerticalBarChart
+          description=""
+          chart={{
+            labels: ["Sin Aprobar", "Aprobados", "Terminados"],
+            datasets: [
+              {
+                label: "Sales by age",
+                color: "info",
+                data: [5, 10, 1],
+              },
+            ],
+          }}
+        />
+      </MDBox>
+      <MDTypography color="icon">Tipos de Mandatos</MDTypography>
+      <MDBox mt={6}>
+        <VerticalBarChart
+          description=""
+          chart={{
+            labels: ["Sin Aprobar", "Aprobados", "Terminados"],
+            datasets: [
+              {
+                label: "a",
+                color: "info",
+                data: [4, 6, 0],
+              },
+              {
+                label: "b",
+                color: "info",
+                data: [1, 3, 0],
+              },
+              {
+                label: "c",
+                color: "info",
+                data: [0, 1, 0],
+              },
+            ],
+          }}
+        />
+      </MDBox>
       <Footer />
     </DashboardLayout>
   );
