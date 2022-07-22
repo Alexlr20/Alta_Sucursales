@@ -66,7 +66,7 @@ function Tables() {
                   <FormLabel className="block">Dirrecion</FormLabel>
                   <MDInput type="text" label="Dirrecion" fullWidth />
 
-                  <FormLabel className="block">Horario</FormLabel>
+                  <FormLabel className="block">Horario de entrada</FormLabel>
                   <MDInput type="time" />
                   <MDInput type="time" />
                   <MDInput type="time" />
@@ -74,7 +74,7 @@ function Tables() {
                   <MDInput type="time" />
                   <MDInput type="time" />
                   <MDInput type="time" />
-                  <FormLabel className="block">Horario</FormLabel>
+                  <FormLabel className="block">Horario de salida</FormLabel>
                   <MDInput type="time" />
                   <MDInput type="time" />
                   <MDInput type="time" />
