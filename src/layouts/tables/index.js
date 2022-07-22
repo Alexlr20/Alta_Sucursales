@@ -33,6 +33,7 @@ import authorsTableData from "layouts/tables/data/authorsTableData";
 import MDInput from "components/MDInput";
 import "./styles.css";
 import { Divider, FormLabel } from "@mui/material";
+import MDButton from "components/MDButton";
 
 function Tables() {
   const { columns, rows } = authorsTableData();
@@ -58,14 +59,14 @@ function Tables() {
                   Alta de Sucursales
                 </MDTypography>
               </MDBox>
+              <Grid sx={{ display: "flex" }}>
+                <MDBox pt={2} px={3}>
+                  <FormLabel className="block">Nombre de Sucursal</FormLabel>
+                  <MDInput type="text" label="Nombre" fullWidth />
+                  <FormLabel className="block">Dirrecion</FormLabel>
+                  <MDInput type="text" label="Dirrecion" fullWidth />
 
-              <MDBox pt={2} pb={3} px={2}>
-                <FormLabel className="block">Nombre de Sucursal</FormLabel>
-                <MDInput type="text" label="Nombre" />
-                <FormLabel className="block">Dirrecion</FormLabel>
-                <MDInput type="text" label="Dirrecion" />
-                <FormLabel className="block">Horario</FormLabel>
-                <Grid>
+                  <FormLabel className="block">Horario</FormLabel>
                   <MDInput type="time" />
                   <MDInput type="time" />
                   <MDInput type="time" />
@@ -73,58 +74,44 @@ function Tables() {
                   <MDInput type="time" />
                   <MDInput type="time" />
                   <MDInput type="time" />
-                </Grid>
-              </MDBox>
-              <MDBox pt={2} pb={3} px={2}>
-                <FormLabel className="block">Horario</FormLabel>
-                <MDInput type="time" />
-                <MDInput type="time" />
-                <MDInput type="time" />
-                <MDInput type="time" />
-                <MDInput type="time" />
-                <MDInput type="time" />
-                <MDInput type="time" />
-              </MDBox>
-            </Card>
-          </Grid>
-        </Grid>
-      </MDBox>
-      <MDBox pt={6} pb={3}>
-        <Grid container spacing={6}>
-          <Grid item xs={12}>
-            <Card>
-              <MDBox
-                mx={2}
-                mt={-3}
-                py={3}
-                px={2}
-                variant="gradient"
-                bgColor="info"
-                borderRadius="lg"
-                coloredShadow="info"
-              >
-                <MDTypography variant="h6" color="white">
-                  Listado de Sucursales
-                </MDTypography>
-              </MDBox>
-              <Grid item xs={12} md={6} xl={4} sx={{ display: "flex" }}>
-                <Divider orientation="horizontal" sx={{ mx: 0 }} />
-                <MDBox pt={3}>
-                  <DataTable
-                    table={{ columns, rows }}
-                    isSorted={false}
-                    entriesPerPage={false}
-                    showTotalEntries={false}
-                    noEndBorder
-                  />
+                  <FormLabel className="block">Horario</FormLabel>
+                  <MDInput type="time" />
+                  <MDInput type="time" />
+                  <MDInput type="time" />
+                  <MDInput type="time" />
+                  <MDInput type="time" />
+                  <MDInput type="time" />
+                  <MDInput type="time" />
+                  <MDBox pt={2} px={2}>
+                    <MDButton mx={2} color="info">
+                      Agregar Sucursales
+                    </MDButton>
+                    <MDButton sx={{ marginLeft: 1 }} color="info">
+                      Cancelar
+                    </MDButton>
+                    <Divider />
+                    <MDTypography>Listado de Sucursales</MDTypography>
+                    <MDBox pt={2} px={2}>
+                      <MDInput type="text" label="Listado de Sucursales" fullWidth />
+                    </MDBox>
+                  </MDBox>
+                  <MDBox pt={3}>
+                    <DataTable
+                      table={{ columns, rows }}
+                      isSorted={false}
+                      entriesPerPage={false}
+                      showTotalEntries={false}
+                      noEndBorder
+                    />
+                  </MDBox>
                 </MDBox>
-                <MDBox>
+                <MDBox pt={2} pb={3}>
                   <div className="mapouter">
                     <div className="gmap_canvas">
                       <iframe
                         title="map"
-                        width="600"
-                        height="500"
+                        width="800"
+                        height="925"
                         id="gmap_canvas"
                         src="https://maps.google.com/maps?q=chennai&t=&z=13&ie=UTF8&iwloc=&output=embed"
                         frameBorder="0"
@@ -136,6 +123,7 @@ function Tables() {
                   </div>
                 </MDBox>
               </Grid>
+              <Divider />
             </Card>
           </Grid>
         </Grid>

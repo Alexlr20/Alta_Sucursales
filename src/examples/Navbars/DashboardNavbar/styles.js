@@ -91,17 +91,22 @@ const navbarRow = ({ breakpoints }, { isMini }) => ({
 
   [breakpoints.up("md")]: {
     justifyContent: isMini ? "space-between" : "stretch",
-    width: isMini ? "100%" : "max-content",
+    width: "100%",
   },
 
   [breakpoints.up("xl")]: {
     justifyContent: "stretch !important",
-    width: "max-content !important",
+    width: "100%",
   },
 });
 
+const navbarIconContainer = () => ({
+  display: "flex",
+  width: "100%",
+});
+
 const navbarIconButton = ({ typography: { size }, breakpoints }) => ({
-  px: 1,
+  pl: 1,
 
   "& .material-icons, .material-icons-round": {
     fontSize: `${size.xl} !important`,
@@ -127,4 +132,11 @@ const navbarMobileMenu = ({ breakpoints }) => ({
   },
 });
 
-export { navbar, navbarContainer, navbarRow, navbarIconButton, navbarMobileMenu };
+export {
+  navbar,
+  navbarContainer,
+  navbarRow,
+  navbarIconButton,
+  navbarMobileMenu,
+  navbarIconContainer,
+};
