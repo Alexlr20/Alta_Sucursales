@@ -59,29 +59,43 @@ function Tables() {
                   Alta de Sucursales
                 </MDTypography>
               </MDBox>
-              <Grid sx={{ display: "flex" }}>
-                <MDBox pt={2} px={3}>
-                  <FormLabel className="block">Nombre de Sucursal</FormLabel>
-                  <MDInput type="text" label="Nombre" fullWidth />
-                  <FormLabel className="block">Dirrecion</FormLabel>
-                  <MDInput type="text" label="Dirrecion" fullWidth />
-
-                  <FormLabel className="block">Horario de entrada</FormLabel>
-                  <MDInput type="time" />
-                  <MDInput type="time" />
-                  <MDInput type="time" />
-                  <MDInput type="time" />
-                  <MDInput type="time" />
-                  <MDInput type="time" />
-                  <MDInput type="time" />
-                  <FormLabel className="block">Horario de salida</FormLabel>
-                  <MDInput type="time" />
-                  <MDInput type="time" />
-                  <MDInput type="time" />
-                  <MDInput type="time" />
-                  <MDInput type="time" />
-                  <MDInput type="time" />
-                  <MDInput type="time" />
+              <Grid sx={{ display: "flex", flexDirection: "row" }}>
+                <MDBox pt={2} px={3} sx={{ width: "50%" }}>
+                  <MDBox>
+                    <FormLabel className="block">Nombre de Sucursal</FormLabel>
+                    <MDInput type="text" label="Nombre" fullWidth />
+                    <FormLabel className="block">Dirrecion</FormLabel>
+                    <MDInput type="text" label="Dirrecion" fullWidth />
+                    <FormLabel className="block">Horario de entrada</FormLabel>
+                  </MDBox>
+                  <MDBox sx={{ display: "flex", justifyContent: "space-around" }}>
+                    <MDButton disabled>L</MDButton>
+                    <MDButton disabled>M</MDButton>
+                    <MDButton disabled>M</MDButton>
+                    <MDButton disabled>J</MDButton>
+                    <MDButton disabled>V</MDButton>
+                    <MDButton disabled>S</MDButton>
+                    <MDButton disabled>D</MDButton>
+                  </MDBox>
+                  <MDBox>
+                    <MDInput type="time" sx={{ width: "14.2857142857%" }} />
+                    <MDInput type="time" sx={{ width: "14.2857142857%" }} />
+                    <MDInput type="time" sx={{ width: "14.2857142857%" }} />
+                    <MDInput type="time" sx={{ width: "14.2857142857%" }} />
+                    <MDInput type="time" sx={{ width: "14.2857142857%" }} />
+                    <MDInput type="time" sx={{ width: "14.2857142857%" }} />
+                    <MDInput type="time" sx={{ width: "14.2857142857%" }} />
+                  </MDBox>
+                  <MDBox>
+                    <FormLabel className="block">Horario de salida</FormLabel>
+                    <MDInput type="time" sx={{ width: "14.2857142857%" }} />
+                    <MDInput type="time" sx={{ width: "14.2857142857%" }} />
+                    <MDInput type="time" sx={{ width: "14.2857142857%" }} />
+                    <MDInput type="time" sx={{ width: "14.2857142857%" }} />
+                    <MDInput type="time" sx={{ width: "14.2857142857%" }} />
+                    <MDInput type="time" sx={{ width: "14.2857142857%" }} />
+                    <MDInput type="time" sx={{ width: "14.2857142857%" }} />
+                  </MDBox>
                   <MDBox pt={2} px={2}>
                     <MDButton mx={2} color="info">
                       Agregar Sucursales
@@ -110,8 +124,8 @@ function Tables() {
                     <div className="gmap_canvas">
                       <iframe
                         title="map"
-                        width="800"
-                        height="925"
+                        width="200%"
+                        height="950px"
                         id="gmap_canvas"
                         src="https://maps.google.com/maps?q=chennai&t=&z=13&ie=UTF8&iwloc=&output=embed"
                         frameBorder="0"

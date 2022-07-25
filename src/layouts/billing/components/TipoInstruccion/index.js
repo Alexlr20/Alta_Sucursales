@@ -59,7 +59,9 @@ function TipoInstruccion() {
                   <option value="Informacion">Informacion</option>
                 </select>
               </MDBox>
-              <MDButton color="info">Sucursales</MDButton>
+              <MDBox mr={10} ml={2} mt={6}>
+                <MDButton color="button">Sucursales</MDButton>
+              </MDBox>
               <MDBox sx={{ marginLeft: 3 }}>
                 <MDTypography variant="h5" fontWeight="medium">
                   Fecha inicial
@@ -95,13 +97,13 @@ function TipoInstruccion() {
             <FormLabel>Sabado </FormLabel>
           </MDBox>
           <MDBox p={0} m={3} display="flex" sx={{ justifyContent: "space-between" }}>
-            <MDButton variant="gradient" color="secondary" />
-            <MDButton variant="gradient" color="secondary" />
-            <MDButton variant="gradient" color="secondary" />
-            <MDButton variant="gradient" color="secondary" />
-            <MDButton variant="gradient" color="secondary" />
-            <MDButton variant="gradient" color="secondary" />
-            <MDButton variant="gradient" color="secondary" />
+            <MDButton color="button" />
+            <MDButton color="button" />
+            <MDButton color="button" />
+            <MDButton color="button" />
+            <MDButton color="button" />
+            <MDButton color="button" />
+            <MDButton color="button" />
           </MDBox>
           <MDBox display="flex" justifyContent="flex-end" p={2}>
             <MDButton color="info">Guardar</MDButton>
