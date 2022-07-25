@@ -17,7 +17,7 @@ Coded by www.creative-tim.com
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 
-import { FormLabel } from "@mui/material";
+import { Checkbox, FormLabel } from "@mui/material";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
@@ -38,30 +38,9 @@ function TipoInstruccion() {
   return (
     <Card id="delete-account">
       <MDBox p={5}>
-        <Grid container spacing={1}>
-          <Grid item xs={10} md={10}>
-            <MDBox
-              borderRadius="lg"
-              display="flex"
-              justifyContent="space-between"
-              alignItems="center"
-              p={1}
-            >
-              <MDBox>
-                <MDTypography variant="h5" fontWeight="medium">
-                  Tipo de instrucción
-                </MDTypography>
-
-                <select color="info">
-                  <option value="SeleccionarTipo">Seleccionar Tipo</option>
-                  <option value="Instrucciones">Instrucciones</option>
-                  <option value="Acciones">Acciones</option>
-                  <option value="Informacion">Informacion</option>
-                </select>
-              </MDBox>
-              <MDBox mr={10} ml={2} mt={6}>
-                <MDButton color="button">Sucursales</MDButton>
-              </MDBox>
+        <Grid container spacing={2}>
+          <Grid item xs={8} md={11}>
+            <MDBox display="flex" justifyContent="space-between">
               <MDBox sx={{ marginLeft: 3 }}>
                 <MDTypography variant="h5" fontWeight="medium">
                   Fecha inicial
@@ -77,35 +56,26 @@ function TipoInstruccion() {
             </MDBox>
           </Grid>
         </Grid>
-        <MDBox pt={3} px={3}>
-          <MDTypography variant="h6" fontWeight="medium">
-            Dias Activos
-          </MDTypography>
-          <MDBox>
-            <MDInput type="checkbox" margin="dense" />
-            <FormLabel> Todos</FormLabel>
-          </MDBox>
+        <MDBox p={0} mt={2} display="flex" sx={{ justifyContent: "start" }}>
+          <FormLabel sx={{ marginLeft: 2.5 }}>D</FormLabel>
+          <FormLabel sx={{ marginLeft: 5 }}>L</FormLabel>
+          <FormLabel sx={{ marginLeft: 5 }}>M</FormLabel>
+          <FormLabel sx={{ marginLeft: 5 }}>M</FormLabel>
+          <FormLabel sx={{ marginLeft: 5 }}>J</FormLabel>
+          <FormLabel sx={{ marginLeft: 5 }}>V</FormLabel>
+          <FormLabel sx={{ marginLeft: 5 }}>S</FormLabel>
+          <FormLabel sx={{ marginLeft: 5 }}>Todos</FormLabel>
         </MDBox>
         <MDBox>
-          <MDBox p={0} m={3} display="flex" sx={{ justifyContent: "space-between" }}>
-            <FormLabel>Domingo </FormLabel>
-            <FormLabel>Lunes </FormLabel>
-            <FormLabel>Martes </FormLabel>
-            <FormLabel>Miercoles </FormLabel>
-            <FormLabel>Jueves </FormLabel>
-            <FormLabel>Viernes </FormLabel>
-            <FormLabel>Sabado </FormLabel>
-          </MDBox>
-          <MDBox p={0} m={3} display="flex" sx={{ justifyContent: "space-between" }}>
-            <MDButton color="button" />
-            <MDButton color="button" />
-            <MDButton color="button" />
-            <MDButton color="button" />
-            <MDButton color="button" />
-            <MDButton color="button" />
-            <MDButton color="button" />
-          </MDBox>
-          <MDBox display="flex" justifyContent="flex-end" p={2}>
+          <Checkbox sx={{ marginLeft: 1 }} defaultChecked />
+          <Checkbox sx={{ marginLeft: 2 }} defaultChecked />
+          <Checkbox sx={{ marginLeft: 2 }} defaultChecked />
+          <Checkbox sx={{ marginLeft: 2 }} defaultChecked />
+          <Checkbox sx={{ marginLeft: 2 }} defaultChecked />
+          <Checkbox sx={{ marginLeft: 2 }} defaultChecked />
+          <Checkbox sx={{ marginLeft: 2 }} defaultChecked />
+          <Checkbox sx={{ marginLeft: 4.5 }} defaultChecked />
+          <MDBox display="flex" justifyContent="flex-end" p={0}>
             <MDButton color="info">Guardar</MDButton>
             <MDButton sx={{ marginLeft: 3 }} color="info">
               Cancelar

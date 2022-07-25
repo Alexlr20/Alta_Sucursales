@@ -41,107 +41,101 @@ function Tables() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <MDBox pt={6} pb={3}>
-        <Grid container spacing={6}>
-          <Grid item xs={12}>
-            <Card p={10}>
-              <MDBox
-                mx={2}
-                mt={-3}
-                py={3}
-                px={2}
-                variant="gradient"
-                bgColor="info"
-                borderRadius="lg"
-                coloredShadow="info"
-              >
-                <MDTypography variant="h6" color="white">
-                  Alta de Sucursales
-                </MDTypography>
+      <Card p={10}>
+        <MDBox
+          py={3}
+          px={2}
+          variant="gradient"
+          bgColor="info"
+          borderRadius="lg"
+          coloredShadow="info"
+        >
+          <MDTypography variant="h6" color="white">
+            Alta de Sucursales
+          </MDTypography>
+        </MDBox>
+        <Grid sx={{ display: "flex", flexDirection: "row" }}>
+          <MDBox pt={2} px={3} sx={{ width: "50%" }}>
+            <MDBox>
+              <FormLabel className="block">Nombre de Sucursal</FormLabel>
+              <MDInput type="text" label="Nombre" fullWidth />
+              <FormLabel className="block">Dirrecion</FormLabel>
+              <MDInput type="text" label="Dirrecion" fullWidth />
+            </MDBox>
+            <MDBox sx={{ display: "none" }}>
+              <FormLabel className="block">Horario de entrada</FormLabel>
+              <MDBox sx={{ display: "flex", justifyContent: "space-around" }}>
+                <MDButton disabled>L</MDButton>
+                <MDButton disabled>M</MDButton>
+                <MDButton disabled>M</MDButton>
+                <MDButton disabled>J</MDButton>
+                <MDButton disabled>V</MDButton>
+                <MDButton disabled>S</MDButton>
+                <MDButton disabled>D</MDButton>
               </MDBox>
-              <Grid sx={{ display: "flex", flexDirection: "row" }}>
-                <MDBox pt={2} px={3} sx={{ width: "50%" }}>
-                  <MDBox>
-                    <FormLabel className="block">Nombre de Sucursal</FormLabel>
-                    <MDInput type="text" label="Nombre" fullWidth />
-                    <FormLabel className="block">Dirrecion</FormLabel>
-                    <MDInput type="text" label="Dirrecion" fullWidth />
-                    <FormLabel className="block">Horario de entrada</FormLabel>
-                  </MDBox>
-                  <MDBox sx={{ display: "flex", justifyContent: "space-around" }}>
-                    <MDButton disabled>L</MDButton>
-                    <MDButton disabled>M</MDButton>
-                    <MDButton disabled>M</MDButton>
-                    <MDButton disabled>J</MDButton>
-                    <MDButton disabled>V</MDButton>
-                    <MDButton disabled>S</MDButton>
-                    <MDButton disabled>D</MDButton>
-                  </MDBox>
-                  <MDBox>
-                    <MDInput type="time" sx={{ width: "14.2857142857%" }} />
-                    <MDInput type="time" sx={{ width: "14.2857142857%" }} />
-                    <MDInput type="time" sx={{ width: "14.2857142857%" }} />
-                    <MDInput type="time" sx={{ width: "14.2857142857%" }} />
-                    <MDInput type="time" sx={{ width: "14.2857142857%" }} />
-                    <MDInput type="time" sx={{ width: "14.2857142857%" }} />
-                    <MDInput type="time" sx={{ width: "14.2857142857%" }} />
-                  </MDBox>
-                  <MDBox>
-                    <FormLabel className="block">Horario de salida</FormLabel>
-                    <MDInput type="time" sx={{ width: "14.2857142857%" }} />
-                    <MDInput type="time" sx={{ width: "14.2857142857%" }} />
-                    <MDInput type="time" sx={{ width: "14.2857142857%" }} />
-                    <MDInput type="time" sx={{ width: "14.2857142857%" }} />
-                    <MDInput type="time" sx={{ width: "14.2857142857%" }} />
-                    <MDInput type="time" sx={{ width: "14.2857142857%" }} />
-                    <MDInput type="time" sx={{ width: "14.2857142857%" }} />
-                  </MDBox>
-                  <MDBox pt={2} px={2}>
-                    <MDButton mx={2} color="info">
-                      Agregar Sucursales
-                    </MDButton>
-                    <MDButton sx={{ marginLeft: 1 }} color="info">
-                      Cancelar
-                    </MDButton>
-                    <Divider />
-                    <MDTypography>Listado de Sucursales</MDTypography>
-                    <MDBox pt={2} px={2}>
-                      <MDInput type="text" label="Listado de Sucursales" fullWidth />
-                    </MDBox>
-                  </MDBox>
-                  <MDBox pt={3}>
-                    <DataTable
-                      table={{ columns, rows }}
-                      isSorted={false}
-                      entriesPerPage={false}
-                      showTotalEntries={false}
-                      noEndBorder
-                    />
-                  </MDBox>
-                </MDBox>
-                <MDBox pt={2} pb={3}>
-                  <div className="mapouter">
-                    <div className="gmap_canvas">
-                      <iframe
-                        title="map"
-                        width="200%"
-                        height="950px"
-                        id="gmap_canvas"
-                        src="https://maps.google.com/maps?q=chennai&t=&z=13&ie=UTF8&iwloc=&output=embed"
-                        frameBorder="0"
-                        scrolling="no"
-                        marginHeight="0"
-                        marginWidth="0"
-                      />
-                    </div>
-                  </div>
-                </MDBox>
-              </Grid>
+              <MDBox>
+                <MDInput type="time" sx={{ width: "14.2857142857%" }} />
+                <MDInput type="time" sx={{ width: "14.2857142857%" }} />
+                <MDInput type="time" sx={{ width: "14.2857142857%" }} />
+                <MDInput type="time" sx={{ width: "14.2857142857%" }} />
+                <MDInput type="time" sx={{ width: "14.2857142857%" }} />
+                <MDInput type="time" sx={{ width: "14.2857142857%" }} />
+                <MDInput type="time" sx={{ width: "14.2857142857%" }} />
+              </MDBox>
+              <MDBox>
+                <FormLabel className="block">Horario de salida</FormLabel>
+                <MDInput type="time" sx={{ width: "14.2857142857%" }} />
+                <MDInput type="time" sx={{ width: "14.2857142857%" }} />
+                <MDInput type="time" sx={{ width: "14.2857142857%" }} />
+                <MDInput type="time" sx={{ width: "14.2857142857%" }} />
+                <MDInput type="time" sx={{ width: "14.2857142857%" }} />
+                <MDInput type="time" sx={{ width: "14.2857142857%" }} />
+                <MDInput type="time" sx={{ width: "14.2857142857%" }} />
+              </MDBox>
+            </MDBox>
+            <MDBox pt={2} px={2}>
+              <MDButton mx={2} color="info">
+                Agregar Sucursales
+              </MDButton>
+              <MDButton sx={{ marginLeft: 1 }} color="info">
+                Cancelar
+              </MDButton>
               <Divider />
-            </Card>
-          </Grid>
+              <MDTypography>Listado de Sucursales</MDTypography>
+              <MDBox pt={2} px={2}>
+                <MDInput type="text" label="Listado de Sucursales" fullWidth />
+              </MDBox>
+            </MDBox>
+            <MDBox pt={3}>
+              <DataTable
+                table={{ columns, rows }}
+                isSorted={false}
+                entriesPerPage={false}
+                showTotalEntries={false}
+                noEndBorder
+              />
+            </MDBox>
+          </MDBox>
+          <MDBox pt={2} pb={3}>
+            <div className="mapouter">
+              <div className="gmap_canvas">
+                <iframe
+                  title="map"
+                  width="200%"
+                  height="750px"
+                  id="gmap_canvas"
+                  src="https://maps.google.com/maps?q=chennai&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                  frameBorder="0"
+                  scrolling="no"
+                  marginHeight="0"
+                  marginWidth="0"
+                />
+              </div>
+            </div>
+          </MDBox>
         </Grid>
-      </MDBox>
+        <Divider />
+      </Card>
       <Footer />
     </DashboardLayout>
   );

@@ -26,7 +26,7 @@ import Footer from "examples/Footer";
 
 // Billing page components
 import PaymentMethod from "layouts/billing/components/TipoInstruccion";
-import Invoices from "layouts/billing/components/RightForm";
+import Invoices from "layouts/billing/components/NameForm";
 
 import SearchForm from "layouts/billing/components/SearchForm";
 import MDTypography from "components/MDTypography";
@@ -38,8 +38,6 @@ function Billing() {
       <DashboardNavbar />
       <MDBox
         style={{ zIndex: 10 }}
-        mx={1}
-        mt={2}
         py={3}
         px={2}
         variant="gradient"
@@ -55,13 +53,13 @@ function Billing() {
       <MDBox mt={2}>
         <MDBox mb={3}>
           <Grid container spacing={3}>
-            <Grid item xs={12} lg={8}>
+            <Grid item xs={12} lg={4}>
               <Grid item xs={12}>
-                <PaymentMethod />
+                <Invoices />
               </Grid>
             </Grid>
-            <Grid item xs={12} lg={4}>
-              <Invoices />
+            <Grid item xs={12} lg={8}>
+              <PaymentMethod />
             </Grid>
           </Grid>
         </MDBox>

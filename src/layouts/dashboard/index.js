@@ -32,16 +32,7 @@ function Dashboard() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <MDBox
-        mx={0}
-        mt={0}
-        py={3}
-        px={2}
-        variant="gradient"
-        bgColor="info"
-        borderRadius="lg"
-        coloredShadow="info"
-      >
+      <MDBox py={3} px={2} variant="gradient" bgColor="info" borderRadius="lg" coloredShadow="info">
         <MDTypography variant="h6" color="white">
           Organigrama
         </MDTypography>

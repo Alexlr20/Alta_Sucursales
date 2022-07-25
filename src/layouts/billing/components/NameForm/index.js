@@ -14,6 +14,8 @@ Coded by www.creative-tim.com
 */
 
 // @mui material components
+import * as React from "react";
+import { TextField } from "@mui/material";
 import Card from "@mui/material/Card";
 
 // Material Dashboard 2 React components
@@ -24,23 +26,27 @@ import MDBox from "components/MDBox";
 import MDInput from "components/MDInput";
 import MDTypography from "components/MDTypography";
 
-function RightForm() {
+function NameForm() {
   return (
     <Card sx={{ height: "100%" }}>
       <MDBox p={2}>
-        <MDBox
-          component="ul"
-          display="flex"
-          flexDirection="column"
-          sx={{ justifyContent: "center" }}
-          p={0}
-          m={2}
-        >
+        <MDBox display="flex" flexDirection="column" m={2}>
           <MDBox display="flex" flexDirection="column">
+            <MDTypography variant="h6" fontWeight="medium">
+              Tipo de instrucción
+            </MDTypography>
+            <select>
+              <option disabled value="">
+                <em>Seleccionar tipo</em>
+              </option>
+              <option value="Insctrucciones"> Insctrucciones</option>
+              <option value="Acciones"> Acciones</option>
+              <option value="Informacion"> Informacion</option>
+            </select>
             <MDTypography variant="h6" fontWeight="medium">
               Nombre
             </MDTypography>
-            <MDInput />
+            <TextField />
             <MDTypography variant="h6" fontWeight="medium">
               Meta
             </MDTypography>
@@ -64,4 +70,4 @@ function RightForm() {
   );
 }
 
-export default RightForm;
+export default NameForm;

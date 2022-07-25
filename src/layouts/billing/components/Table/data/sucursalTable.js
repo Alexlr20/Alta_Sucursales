@@ -20,6 +20,7 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
 import { Icon } from "@mui/material";
+import MDButton from "components/MDButton";
 // import MDBadge from "components/MDBadge";
 
 // Images
@@ -61,56 +62,46 @@ export default function data() {
   // eslint-disable-next-line no-empty-pattern
   const StatusButton = ({}) => (
     <MDBox lineHeight={1} textAlign="left">
-      <Icon fontSize="small" color="info">
-        lock
-      </Icon>
+      <MDButton>
+        <Icon fontSize="small" color="info">
+          lock
+        </Icon>
+      </MDButton>
     </MDBox>
   );
 
   // eslint-disable-next-line no-empty-pattern
   const AttachedDocButton = ({}) => (
     <MDBox lineHeight={1} textAlign="left">
-      <Icon fontSize="small" color="info">
-        note_add
-      </Icon>
+      <MDButton>
+        <Icon fontSize="small" color="info">
+          note_add
+        </Icon>
+      </MDButton>
     </MDBox>
   );
 
   // eslint-disable-next-line no-empty-pattern
   const NotesButton = ({}) => (
     <MDBox lineHeight={1} textAlign="left">
-      <Icon fontSize="small" color="info">
-        description
-      </Icon>
+      <MDButton>
+        <Icon fontSize="small" color="info">
+          description
+        </Icon>
+      </MDButton>
     </MDBox>
   );
 
   // eslint-disable-next-line no-empty-pattern
   const DetailsButton = ({}) => (
     <MDBox lineHeight={1} textAlign="left">
-      <Icon fontSize="small" color="info">
-        add_circle{" "}
-      </Icon>
+      <MDButton>
+        <Icon fontSize="small" color="info">
+          add_circle{" "}
+        </Icon>
+      </MDButton>
     </MDBox>
   );
-
-  // const Map = () => (
-  //   <div className="mapouter">
-  //     <div className="gmap_canvas">
-  //       <iframe
-  //         title="map"
-  //         width="600"
-  //         height="500"
-  //         id="gmap_canvas"
-  //         src="https://maps.google.com/maps?q=chennai&t=&z=13&ie=UTF8&iwloc=&output=embed"
-  //         frameBorder="0"
-  //         scrolling="no"
-  //         marginHeight="0"
-  //         marginWidth="0"
-  //       />
-  //     </div>
-  //   </div>
-  // );
 
   return {
     columns: [

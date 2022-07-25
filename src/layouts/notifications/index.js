@@ -109,9 +109,6 @@ function Notifications() {
       <DashboardNavbar />
       <MDBox
         style={{ zIndex: 10 }}
-        mx={1}
-        mt={2}
-        mb={4}
         py={3}
         px={2}
         variant="gradient"
