@@ -15,7 +15,7 @@ Coded by www.creative-tim.com
 
 // @mui material components
 import * as React from "react";
-import { TextField } from "@mui/material";
+import { TextField, InputLabel, FormControl, Select, MenuItem } from "@mui/material";
 import Card from "@mui/material/Card";
 
 // Material Dashboard 2 React components
@@ -27,6 +27,11 @@ import MDInput from "components/MDInput";
 import MDTypography from "components/MDTypography";
 
 function NameForm() {
+  const [age, setAge] = React.useState("");
+
+  const handleChange = (event) => {
+    setAge(event.target.value);
+  };
   return (
     <Card sx={{ height: "100%" }}>
       <MDBox p={2}>
@@ -35,14 +40,17 @@ function NameForm() {
             <MDTypography variant="h6" fontWeight="medium">
               Tipo de instrucción
             </MDTypography>
-            <select>
-              <option disabled value="">
-                <em>Seleccionar tipo</em>
-              </option>
-              <option value="Insctrucciones"> Insctrucciones</option>
-              <option value="Acciones"> Acciones</option>
-              <option value="Informacion"> Informacion</option>
-            </select>
+            <FormControl variant="filled" size="medium" sx={{ mb: 1 }} fullWidth>
+              <InputLabel id="demo-simple-select-standard-label" />
+              <Select id="demo-simple-select-standard" value={age} onChange={handleChange}>
+                <MenuItem value="">
+                  <em>None</em>
+                </MenuItem>
+                <MenuItem value={10}>Ten</MenuItem>
+                <MenuItem value={20}>Twenty</MenuItem>
+                <MenuItem value={30}>Thirty</MenuItem>
+              </Select>
+            </FormControl>
             <MDTypography variant="h6" fontWeight="medium">
               Nombre
             </MDTypography>
