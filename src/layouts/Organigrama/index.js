@@ -24,11 +24,11 @@ import Footer from "examples/Footer";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 
-const Organigrama = require("./Organigrama.jpg");
+const OrganigramaImg = require("./Organigrama.jpg");
 
 // Dashboard components
 
-function Dashboard() {
+function Organigrama() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -38,11 +38,11 @@ function Dashboard() {
         </MDTypography>
       </MDBox>
       <MDBox pt={5}>
-        <img src={Organigrama} alt="organigrama" width="100%" style={{ objectFit: "contain" }} />
+        <img src={OrganigramaImg} alt="organigrama" width="100%" style={{ objectFit: "contain" }} />
       </MDBox>
       <Footer />
     </DashboardLayout>
   );
 }
 
-export default Dashboard;
+export default Organigrama;

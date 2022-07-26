@@ -32,7 +32,7 @@ import SearchForm from "layouts/billing/components/SearchForm";
 import MDTypography from "components/MDTypography";
 import Table from "./components/Table";
 
-function Billing() {
+function Mandatos() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -46,7 +46,7 @@ function Billing() {
         coloredShadow="info"
       >
         <MDTypography variant="h6" color="white">
-          Alta de Sucursales
+          Mandatos
         </MDTypography>
       </MDBox>
 
@@ -77,4 +77,4 @@ function Billing() {
   );
 }
 
-export default Billing;
+export default Mandatos;

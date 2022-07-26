@@ -33,11 +33,9 @@ import MDTypography from "components/MDTypography";
 
 // Images
 
-import MDInput from "components/MDInput";
-import MDButton from "components/MDButton";
-import { Divider } from "@mui/material";
-import DataTable from "examples/Tables/DataTable";
-import PaisesTable from "./PaisesTable";
+import Countries from "./CatalogPages/Countries";
+import State from "./CatalogPages/State";
+import Cities from "./CatalogPages/Cities";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -48,6 +46,7 @@ function TabPanel(props) {
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
+      // eslint-disable-next-line react/jsx-props-no-spreading
       {...other}
     >
       {value === index && (
@@ -79,8 +78,6 @@ function BasicTabs() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
-  const { columns, rows } = PaisesTable();
   return (
     <MDBox position="relative" mb={5}>
       <Grid container spacing={3} alignItems="center">
@@ -104,350 +101,43 @@ function BasicTabs() {
               </Tabs>
             </MDBox>
             <TabPanel value={value} index={0}>
-              <Grid item xs={12} md={6} xl={15} sx={{ display: "flex" }}>
-                <Divider orientation="horizontal" sx={{ mx: 0 }} />
-                <MDBox pt={3}>
-                  <MDTypography>Paises</MDTypography>
-                  <Divider />
-                  <MDTypography>Nombre</MDTypography>
-                  <MDInput />
-                  <MDTypography>Codigo</MDTypography>
-                  <MDInput />
-
-                  <Divider />
-                  <MDButton color="info">Guardar</MDButton>
-                </MDBox>
-                <MDBox m={10}>
-                  <DataTable
-                    table={{ columns, rows }}
-                    isSorted={false}
-                    entriesPerPage={false}
-                    showTotalEntries={false}
-                    noEndBorder
-                  />
-                </MDBox>
-              </Grid>
+              <Countries />
             </TabPanel>
             <TabPanel value={value} index={1}>
-              <Grid item xs={12} md={6} xl={15} sx={{ display: "flex" }}>
-                <Divider orientation="horizontal" sx={{ mx: 0 }} />
-                <MDBox pt={3}>
-                  <MDTypography>Estado</MDTypography>
-                  <Divider />
-                  <MDTypography>Pais</MDTypography>
-                  <select>
-                    <option>Seleccionar Pais</option>
-                  </select>
-                  <MDTypography>Nombre</MDTypography>
-                  <MDInput />
-                  <MDTypography>Codigo</MDTypography>
-                  <MDInput />
-
-                  <Divider />
-                  <MDButton color="info">Guardar</MDButton>
-                </MDBox>
-                <MDBox m={10}>
-                  <DataTable
-                    table={{ columns, rows }}
-                    isSorted={false}
-                    entriesPerPage={false}
-                    showTotalEntries={false}
-                    noEndBorder
-                  />
-                </MDBox>
-              </Grid>
+              <State />
             </TabPanel>
             <TabPanel value={value} index={2}>
-              <Grid item xs={12} md={6} xl={15} sx={{ display: "flex" }}>
-                <Divider orientation="horizontal" sx={{ mx: 0 }} />
-                <MDBox pt={3}>
-                  <MDTypography>Cuidades</MDTypography>
-                  <Divider />
-                  <MDTypography>Pais</MDTypography>
-                  <select>
-                    <option>Seleccionar Pais</option>
-                  </select>
-                  <MDTypography>Nombre</MDTypography>
-                  <select>
-                    <option>Seleccionar Estado</option>
-                  </select>
-                  <MDTypography>Nombre de cuidad</MDTypography>
-                  <MDInput />
-
-                  <Divider />
-                  <MDButton color="info">Guardar</MDButton>
-                </MDBox>
-                <MDBox m={10}>
-                  <DataTable
-                    table={{ columns, rows }}
-                    isSorted={false}
-                    entriesPerPage={false}
-                    showTotalEntries={false}
-                    noEndBorder
-                  />
-                </MDBox>
-              </Grid>
+              <Cities />
             </TabPanel>
             <TabPanel value={value} index={3}>
-              <Grid item xs={12} md={6} xl={15} sx={{ display: "flex" }}>
-                <Divider orientation="horizontal" sx={{ mx: 0 }} />
-                <MDBox pt={3}>
-                  <MDTypography>Zona</MDTypography>
-                  <Divider />
-                  <MDTypography>Aeropuerto</MDTypography>
-                  <select>
-                    <option>Seleccionar Aeropuerto</option>
-                  </select>
-                  <MDTypography>Nombre</MDTypography>
-                  <MDInput />
-                  <Divider />
-                  <MDButton color="info">Guardar</MDButton>
-                </MDBox>
-                <MDBox m={10}>
-                  <DataTable
-                    table={{ columns, rows }}
-                    isSorted={false}
-                    entriesPerPage={false}
-                    showTotalEntries={false}
-                    noEndBorder
-                  />
-                </MDBox>
-              </Grid>
+              <Countries />
             </TabPanel>
             <TabPanel value={value} index={4}>
-              <Grid item xs={12} md={6} xl={15} sx={{ display: "flex" }}>
-                <Divider orientation="horizontal" sx={{ mx: 0 }} />
-                <MDBox pt={3}>
-                  <MDTypography>Nombre</MDTypography>
-                  <MDInput />
-                  <DataTable
-                    table={{ columns, rows }}
-                    isSorted={false}
-                    entriesPerPage={false}
-                    showTotalEntries={false}
-                    noEndBorder
-                  />
-                  <Divider />
-                  <MDButton color="info">Guardar</MDButton>
-                </MDBox>
-                <MDBox m={10}>
-                  <DataTable
-                    table={{ columns, rows }}
-                    isSorted={false}
-                    entriesPerPage={false}
-                    showTotalEntries={false}
-                    noEndBorder
-                  />
-                </MDBox>
-              </Grid>
+              <Countries />
             </TabPanel>
             <TabPanel value={value} index={5}>
-              <Grid item xs={12} md={6} xl={15} sx={{ display: "flex" }}>
-                <Divider orientation="horizontal" sx={{ mx: 0 }} />
-                <MDBox pt={3}>
-                  <MDTypography>Zona</MDTypography>
-                  <Divider />
-                  <MDTypography>Aeropuerto</MDTypography>
-                  <select>
-                    <option>Seleccionar Aeropuerto</option>
-                  </select>
-                  <MDTypography>Nombre</MDTypography>
-                  <MDInput />
-                  <Divider />
-                  <MDButton color="info">Guardar</MDButton>
-                </MDBox>
-                <MDBox m={10}>
-                  <DataTable
-                    table={{ columns, rows }}
-                    isSorted={false}
-                    entriesPerPage={false}
-                    showTotalEntries={false}
-                    noEndBorder
-                  />
-                </MDBox>
-              </Grid>
+              <Countries />
             </TabPanel>
             <TabPanel value={value} index={6}>
-              <Grid item xs={12} md={6} xl={15} sx={{ display: "flex" }}>
-                <Divider orientation="horizontal" sx={{ mx: 0 }} />
-                <MDBox pt={3}>
-                  <MDTypography>Zona</MDTypography>
-                  <Divider />
-                  <MDTypography>Aeropuerto</MDTypography>
-                  <select>
-                    <option>Seleccionar Aeropuerto</option>
-                  </select>
-                  <MDTypography>Nombre</MDTypography>
-                  <MDInput />
-                  <Divider />
-                  <MDButton color="info">Guardar</MDButton>
-                </MDBox>
-                <MDBox m={10}>
-                  <DataTable
-                    table={{ columns, rows }}
-                    isSorted={false}
-                    entriesPerPage={false}
-                    showTotalEntries={false}
-                    noEndBorder
-                  />
-                </MDBox>
-              </Grid>
+              <Countries />
             </TabPanel>
             <TabPanel value={value} index={7}>
-              <Grid item xs={12} md={6} xl={15} sx={{ display: "flex" }}>
-                <Divider orientation="horizontal" sx={{ mx: 0 }} />
-                <MDBox pt={3}>
-                  <MDTypography>Zona</MDTypography>
-                  <Divider />
-                  <MDTypography>Aeropuerto</MDTypography>
-                  <select>
-                    <option>Seleccionar Aeropuerto</option>
-                  </select>
-                  <MDTypography>Nombre</MDTypography>
-                  <MDInput />
-                  <Divider />
-                  <MDButton color="info">Guardar</MDButton>
-                </MDBox>
-                <MDBox m={10}>
-                  <DataTable
-                    table={{ columns, rows }}
-                    isSorted={false}
-                    entriesPerPage={false}
-                    showTotalEntries={false}
-                    noEndBorder
-                  />
-                </MDBox>
-              </Grid>
+              <Countries />
             </TabPanel>
             <TabPanel value={value} index={8}>
-              <Grid item xs={12} md={6} xl={15} sx={{ display: "flex" }}>
-                <Divider orientation="horizontal" sx={{ mx: 0 }} />
-                <MDBox pt={3}>
-                  <MDTypography>Zona</MDTypography>
-                  <Divider />
-                  <MDTypography>Aeropuerto</MDTypography>
-                  <select>
-                    <option>Seleccionar Aeropuerto</option>
-                  </select>
-                  <MDTypography>Nombre</MDTypography>
-                  <MDInput />
-                  <Divider />
-                  <MDButton color="info">Guardar</MDButton>
-                </MDBox>
-                <MDBox m={10}>
-                  <DataTable
-                    table={{ columns, rows }}
-                    isSorted={false}
-                    entriesPerPage={false}
-                    showTotalEntries={false}
-                    noEndBorder
-                  />
-                </MDBox>
-              </Grid>
+              <Countries />
             </TabPanel>
             <TabPanel value={value} index={9}>
-              <Grid item xs={12} md={6} xl={15} sx={{ display: "flex" }}>
-                <Divider orientation="horizontal" sx={{ mx: 0 }} />
-                <MDBox pt={3}>
-                  <MDTypography>Zona</MDTypography>
-                  <Divider />
-                  <MDTypography>Aeropuerto</MDTypography>
-                  <select>
-                    <option>Seleccionar Aeropuerto</option>
-                  </select>
-                  <MDTypography>Nombre</MDTypography>
-                  <MDInput />
-                  <Divider />
-                  <MDButton color="info">Guardar</MDButton>
-                </MDBox>
-                <MDBox m={10}>
-                  <DataTable
-                    table={{ columns, rows }}
-                    isSorted={false}
-                    entriesPerPage={false}
-                    showTotalEntries={false}
-                    noEndBorder
-                  />
-                </MDBox>
-              </Grid>
+              <Countries />
             </TabPanel>
             <TabPanel value={value} index={10}>
-              <Grid item xs={12} md={6} xl={15} sx={{ display: "flex" }}>
-                <Divider orientation="horizontal" sx={{ mx: 0 }} />
-                <MDBox pt={3}>
-                  <MDTypography>Zona</MDTypography>
-                  <Divider />
-                  <MDTypography>Aeropuerto</MDTypography>
-                  <select>
-                    <option>Seleccionar Aeropuerto</option>
-                  </select>
-                  <MDTypography>Nombre</MDTypography>
-                  <MDInput />
-                  <Divider />
-                  <MDButton color="info">Guardar</MDButton>
-                </MDBox>
-                <MDBox m={10}>
-                  <DataTable
-                    table={{ columns, rows }}
-                    isSorted={false}
-                    entriesPerPage={false}
-                    showTotalEntries={false}
-                    noEndBorder
-                  />
-                </MDBox>
-              </Grid>
+              <Countries />
             </TabPanel>
             <TabPanel value={value} index={11}>
-              <Grid item xs={12} md={6} xl={15} sx={{ display: "flex" }}>
-                <Divider orientation="horizontal" sx={{ mx: 0 }} />
-                <MDBox pt={3}>
-                  <MDTypography>Zona</MDTypography>
-                  <Divider />
-                  <MDTypography>Aeropuerto</MDTypography>
-                  <select>
-                    <option>Seleccionar Aeropuerto</option>
-                  </select>
-                  <MDTypography>Nombre</MDTypography>
-                  <MDInput />
-                  <Divider />
-                  <MDButton color="info">Guardar</MDButton>
-                </MDBox>
-                <MDBox m={10}>
-                  <DataTable
-                    table={{ columns, rows }}
-                    isSorted={false}
-                    entriesPerPage={false}
-                    showTotalEntries={false}
-                    noEndBorder
-                  />
-                </MDBox>
-              </Grid>
+              <Countries />
             </TabPanel>
             <TabPanel value={value} index={12}>
-              <Grid item xs={12} md={6} xl={15} sx={{ display: "flex" }}>
-                <Divider orientation="horizontal" sx={{ mx: 0 }} />
-                <MDBox pt={3}>
-                  <MDTypography>Zona</MDTypography>
-                  <Divider />
-                  <MDTypography>Aeropuerto</MDTypography>
-                  <select>
-                    <option>Seleccionar Aeropuerto</option>
-                  </select>
-                  <MDTypography>Nombre</MDTypography>
-                  <MDInput />
-                  <Divider />
-                  <MDButton color="info">Guardar</MDButton>
-                </MDBox>
-                <MDBox m={10}>
-                  <DataTable
-                    table={{ columns, rows }}
-                    isSorted={false}
-                    entriesPerPage={false}
-                    showTotalEntries={false}
-                    noEndBorder
-                  />
-                </MDBox>
-              </Grid>
+              <Countries />
             </TabPanel>
           </AppBar>
         </Grid>

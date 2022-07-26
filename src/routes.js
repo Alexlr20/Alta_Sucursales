@@ -36,12 +36,12 @@ Coded by www.creative-tim.com
 */
 
 // Material Dashboard 2 React layouts
-import Dashboard from "layouts/dashboard";
-import Tables from "layouts/tables";
-import Billing from "layouts/billing";
+import Organigrama from "layouts/Organigrama";
+import Sucursales from "layouts/tables";
+import Mandatos from "layouts/billing";
 // import RTL from "layouts/rtl";
-import Notifications from "layouts/notifications";
-import Profile from "layouts/profile";
+import KPIs from "layouts/KPIs";
+import Catalogos from "layouts/profile";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -50,26 +50,26 @@ const routes = [
   {
     type: "collapse",
     name: "Organigrama",
-    key: "dashboard",
+    key: "Organigrama",
     icon: <Icon fontSize="small">dashboard</Icon>,
-    route: "/dashboard",
-    component: <Dashboard />,
+    route: "/Organigrama",
+    component: <Organigrama />,
   },
   {
     type: "collapse",
     name: "Sucursales",
-    key: "tables",
+    key: "Sucursales",
     icon: <Icon fontSize="small">table_view</Icon>,
-    route: "/tables",
-    component: <Tables />,
+    route: "/Sucursales",
+    component: <Sucursales />,
   },
   {
     type: "collapse",
     name: "Mandatos",
-    key: "billing",
+    key: "Mandatos",
     icon: <Icon fontSize="small">receipt_long</Icon>,
-    route: "/billing",
-    component: <Billing />,
+    route: "/Mandatos",
+    component: <Mandatos />,
   },
   // {
   //   type: "collapse",
@@ -82,18 +82,18 @@ const routes = [
   {
     type: "collapse",
     name: "KPIs",
-    key: "notifications",
+    key: "KPIs",
     icon: <Icon fontSize="small">notifications</Icon>,
-    route: "/notifications",
-    component: <Notifications />,
+    route: "/KPIs",
+    component: <KPIs />,
   },
   {
     type: "collapse",
     name: "Catalogos",
-    key: "profile",
+    key: "Catalogos",
     icon: <Icon fontSize="small">person</Icon>,
-    route: "/profile",
-    component: <Profile />,
+    route: "/Catalogos",
+    component: <Catalogos />,
   },
 ];
 

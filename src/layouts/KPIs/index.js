@@ -25,7 +25,7 @@ import Footer from "examples/Footer";
 import VerticalBarChart from "examples/Charts/BarCharts/VerticalBarChart";
 import MDBox from "components/MDBox";
 
-function Notifications() {
+function KPIs() {
   // const [successSB, setSuccessSB] = useState(false);
   // const [infoSB, setInfoSB] = useState(false);
   // const [warningSB, setWarningSB] = useState(false);
@@ -186,4 +186,4 @@ function Notifications() {
   );
 }
 
-export default Notifications;
+export default KPIs;

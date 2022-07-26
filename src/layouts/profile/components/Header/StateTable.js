@@ -19,6 +19,8 @@ Coded by www.creative-tim.com
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
+import MDButton from "components/MDButton";
+import { Icon } from "@mui/material";
 // import MDBadge from "components/MDBadge";
 
 // Images
@@ -37,29 +39,36 @@ export default function data() {
     </MDBox>
   );
 
-  // const Job = ({ title, description }) => (
-  //   <MDBox lineHeight={1} textAlign="left">
-  //     <MDTypography display="block" variant="caption" color="text" fontWeight="medium">
-  //       {title}
-  //     </MDTypography>
-  //     <MDTypography variant="caption">{description}</MDTypography>
-  //   </MDBox>
-  // );
+  // eslint-disable-next-line no-empty-pattern
+  const AccionesIcons = ({}) => (
+    <MDBox lineHeight={1} textAlign="left">
+      <MDButton>
+        <Icon fontSize="small" color="info">
+          delete{" "}
+        </Icon>
+      </MDButton>
+      <MDButton>
+        <Icon fontSize="small" color="info">
+          edit_note{" "}
+        </Icon>
+      </MDButton>
+    </MDBox>
+  );
 
   return {
     columns: [
       { Header: "Number", accessor: "Number" },
       { Header: "Nombre", accessor: "Nombre" },
       { Header: "Codigo", accessor: "Codigo" },
-      { Header: "Acciones", accessor: "Acciones" },
+      { Header: "Acciones", accessor: "Acciones", align: "center" },
     ],
 
     rows: [
       {
-        Number: <InsertData name="1" />,
-        Nombre: <InsertData name="Nombre" />,
-        Codigo: <InsertData name="Codigo" />,
-        Acciones: <InsertData name="Acciones" />,
+        Number: <InsertData name="2" />,
+        Nombre: <InsertData name="Nombre 2" />,
+        Codigo: <InsertData name="Codigo 2" />,
+        Acciones: <AccionesIcons />,
         // map: <Map />,
       },
     ],

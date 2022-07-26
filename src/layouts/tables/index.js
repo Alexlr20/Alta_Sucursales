@@ -35,7 +35,7 @@ import "./styles.css";
 import { Divider, FormLabel } from "@mui/material";
 import MDButton from "components/MDButton";
 
-function Tables() {
+function Sucursales() {
   const { columns, rows } = authorsTableData();
 
   return (
@@ -141,4 +141,4 @@ function Tables() {
   );
 }
 
-export default Tables;
+export default Sucursales;

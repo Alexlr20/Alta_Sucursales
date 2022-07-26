@@ -118,7 +118,7 @@ export default function App() {
     <CacheProvider value={rtlCache}>
       <ThemeProvider theme={darkMode ? themeDarkRTL : themeRTL}>
         <CssBaseline />
-        {layout === "dashboard" && (
+        {layout === "Organigrama" && (
           <>
             <Sidenav
               color={sidenavColor}
@@ -134,7 +134,7 @@ export default function App() {
         {layout === "vr" && <Configurator />}
         <Routes>
           {getRoutes(routes)}
-          <Route path="*" element={<Navigate to="/dashboard" />} />
+          <Route path="*" element={<Navigate to="/Organigrama" />} />
         </Routes>
       </ThemeProvider>
     </CacheProvider>
@@ -157,7 +157,7 @@ export default function App() {
       {layout === "vr" && <Configurator />}
       <Routes>
         {getRoutes(routes)}
-        <Route path="*" element={<Navigate to="/dashboard" />} />
+        <Route path="*" element={<Navigate to="/Organigrama" />} />
       </Routes>
     </ThemeProvider>
   );
