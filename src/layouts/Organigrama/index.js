@@ -19,7 +19,6 @@ Coded by www.creative-tim.com
 
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
@@ -31,7 +30,6 @@ const OrganigramaImg = require("./Organigrama.jpg");
 function Organigrama() {
   return (
     <DashboardLayout>
-      <DashboardNavbar />
       <MDBox py={3} px={2} variant="gradient" bgColor="info" borderRadius="lg" coloredShadow="info">
         <MDTypography variant="h6" color="white">
           Organigrama

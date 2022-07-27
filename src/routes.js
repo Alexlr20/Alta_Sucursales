@@ -52,7 +52,7 @@ const routes = [
     name: "Organigrama",
     key: "Organigrama",
     icon: <Icon fontSize="small">dashboard</Icon>,
-    route: "/Organigrama",
+    route: "/organigrama",
     component: <Organigrama />,
   },
   {
@@ -60,7 +60,7 @@ const routes = [
     name: "Sucursales",
     key: "Sucursales",
     icon: <Icon fontSize="small">table_view</Icon>,
-    route: "/Sucursales",
+    route: "/sucursales",
     component: <Sucursales />,
   },
   {
@@ -68,7 +68,7 @@ const routes = [
     name: "Mandatos",
     key: "Mandatos",
     icon: <Icon fontSize="small">receipt_long</Icon>,
-    route: "/Mandatos",
+    route: "/mandatos",
     component: <Mandatos />,
   },
   // {
@@ -84,7 +84,7 @@ const routes = [
     name: "KPIs",
     key: "KPIs",
     icon: <Icon fontSize="small">notifications</Icon>,
-    route: "/KPIs",
+    route: "/kpis",
     component: <KPIs />,
   },
   {
@@ -92,7 +92,7 @@ const routes = [
     name: "Catalogos",
     key: "Catalogos",
     icon: <Icon fontSize="small">person</Icon>,
-    route: "/Catalogos",
+    route: "/catalogos",
     component: <Catalogos />,
   },
 ];

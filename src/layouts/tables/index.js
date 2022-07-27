@@ -24,43 +24,44 @@ import MDTypography from "components/MDTypography";
 
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
 
 // Data
-import authorsTableData from "layouts/tables/data/authorsTableData";
+import directionTable from "layouts/tables/data/directionsTable";
 import MDInput from "components/MDInput";
-import "./styles.css";
-import { Divider, FormLabel } from "@mui/material";
+import { Divider, FormLabel, Icon, TextField } from "@mui/material";
+import InputAdornment from "@mui/material/InputAdornment";
 import MDButton from "components/MDButton";
 
 function Sucursales() {
-  const { columns, rows } = authorsTableData();
+  const { columns, rows } = directionTable();
 
   return (
     <DashboardLayout>
-      <DashboardNavbar />
+      <MDBox
+        py={3}
+        px={2}
+        mb={4}
+        variant="gradient"
+        bgColor="info"
+        borderRadius="lg"
+        coloredShadow="info"
+      >
+        <MDTypography variant="h6" color="white">
+          Alta de Sucursales
+        </MDTypography>
+      </MDBox>
       <Card p={10}>
-        <MDBox
-          py={3}
-          px={2}
-          variant="gradient"
-          bgColor="info"
-          borderRadius="lg"
-          coloredShadow="info"
-        >
-          <MDTypography variant="h6" color="white">
-            Alta de Sucursales
-          </MDTypography>
-        </MDBox>
         <Grid sx={{ display: "flex", flexDirection: "row" }}>
-          <MDBox pt={2} px={3} sx={{ width: "50%" }}>
-            <MDBox>
-              <FormLabel className="block">Nombre de Sucursal</FormLabel>
-              <MDInput type="text" label="Nombre" fullWidth />
-              <FormLabel className="block">Dirrecion</FormLabel>
-              <MDInput type="text" label="Dirrecion" fullWidth />
+          <MDBox pt={3} px={3} sx={{ width: "50%" }}>
+            <MDTypography>Nombre de Sucursal</MDTypography>
+            <MDBox pb={1} pt={1}>
+              <TextField fullWidth />
+            </MDBox>
+            <MDTypography>Direccion</MDTypography>
+            <MDBox pb={1} pt={1}>
+              <TextField fullWidth />
             </MDBox>
             <MDBox sx={{ display: "none" }}>
               <FormLabel className="block">Horario de entrada</FormLabel>
@@ -93,7 +94,7 @@ function Sucursales() {
                 <MDInput type="time" sx={{ width: "14.2857142857%" }} />
               </MDBox>
             </MDBox>
-            <MDBox pt={2} px={2}>
+            <MDBox pt={2}>
               <MDButton mx={2} color="info">
                 Agregar Sucursales
               </MDButton>
@@ -101,12 +102,21 @@ function Sucursales() {
                 Cancelar
               </MDButton>
               <Divider />
-              <MDTypography>Listado de Sucursales</MDTypography>
-              <MDBox pt={2} px={2}>
-                <MDInput type="text" label="Listado de Sucursales" fullWidth />
+              <MDTypography>Buscar Sucursales</MDTypography>
+              <MDBox pt={2}>
+                <TextField
+                  fullWidth
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <Icon>search</Icon>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
               </MDBox>
             </MDBox>
-            <MDBox pt={3}>
+            <MDBox pt={2}>
               <DataTable
                 table={{ columns, rows }}
                 isSorted={false}

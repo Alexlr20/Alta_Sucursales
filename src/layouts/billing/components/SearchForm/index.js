@@ -29,21 +29,21 @@ import MDTypography from "components/MDTypography";
 
 function SearchForm() {
   return (
-    <Card id="delete-account">
-      <MDBox borderRadius="lg" p={3}>
+    <Card>
+      <MDBox p={3}>
         <MDBox p={3} display="flex" flexDirection="column">
           <MDTypography variant="h5" fontWeight="medium">
             BUSQUEDA
           </MDTypography>
-          <MDTypography variant="h6" fontWeight="medium">
+          <MDTypography variant="h6" fontWeight="medium" sx={{ marginTop: 3, marginBottom: 2 }}>
             Elige una Sucursal
           </MDTypography>
           <MDBox display="flex" justifyContent="space-evenly">
-            <MDTypography variant="h6" fontWeight="medium">
-              Fehca inicial
+            <MDTypography variant="h6" fontWeight="medium" sx={{ marginTop: 1 }}>
+              Fecha inicial
             </MDTypography>
             <MDInput />
-            <MDTypography variant="h6" fontWeight="medium">
+            <MDTypography variant="h6" fontWeight="medium" sx={{ marginTop: 1 }}>
               Fecha final
             </MDTypography>
             <MDInput />

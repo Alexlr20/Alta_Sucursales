@@ -20,93 +20,13 @@ import MDTypography from "components/MDTypography";
 
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import VerticalBarChart from "examples/Charts/BarCharts/VerticalBarChart";
 import MDBox from "components/MDBox";
 
 function KPIs() {
-  // const [successSB, setSuccessSB] = useState(false);
-  // const [infoSB, setInfoSB] = useState(false);
-  // const [warningSB, setWarningSB] = useState(false);
-  // const [errorSB, setErrorSB] = useState(false);
-
-  // const openSuccessSB = () => setSuccessSB(true);
-  // const closeSuccessSB = () => setSuccessSB(false);
-  // const openInfoSB = () => setInfoSB(true);
-  // const closeInfoSB = () => setInfoSB(false);
-  // const openWarningSB = () => setWarningSB(true);
-  // const closeWarningSB = () => setWarningSB(false);
-  // const openErrorSB = () => setErrorSB(true);
-  // const closeErrorSB = () => setErrorSB(false);
-
-  // const alertContent = (name) => (
-  //   <MDTypography variant="body2" color="white">
-  //     A simple {name} alert with{" "}
-  //     <MDTypography component="a" href="#" variant="body2" fontWeight="medium" color="white">
-  //       an example link
-  //     </MDTypography>
-  //     . Give it a click if you like.
-  //   </MDTypography>
-  // );
-
-  // const renderSuccessSB = (
-  //   <MDSnackbar
-  //     color="success"
-  //     icon="check"
-  //     title="Material Dashboard"
-  //     content="Hello, world! This is a notification message"
-  //     dateTime="11 mins ago"
-  //     open={successSB}
-  //     onClose={closeSuccessSB}
-  //     close={closeSuccessSB}
-  //     bgWhite
-  //   />
-  // );
-
-  // const renderInfoSB = (
-  //   <MDSnackbar
-  //     icon="notifications"
-  //     title="Material Dashboard"
-  //     content="Hello, world! This is a notification message"
-  //     dateTime="11 mins ago"
-  //     open={infoSB}
-  //     onClose={closeInfoSB}
-  //     close={closeInfoSB}
-  //   />
-  // );
-
-  // const renderWarningSB = (
-  //   <MDSnackbar
-  //     color="warning"
-  //     icon="star"
-  //     title="Material Dashboard"
-  //     content="Hello, world! This is a notification message"
-  //     dateTime="11 mins ago"
-  //     open={warningSB}
-  //     onClose={closeWarningSB}
-  //     close={closeWarningSB}
-  //     bgWhite
-  //   />
-  // );
-
-  // const renderErrorSB = (
-  //   <MDSnackbar
-  //     color="error"
-  //     icon="warning"
-  //     title="Material Dashboard"
-  //     content="Hello, world! This is a notification message"
-  //     dateTime="11 mins ago"
-  //     open={errorSB}
-  //     onClose={closeErrorSB}
-  //     close={closeErrorSB}
-  //     bgWhite
-  //   />
-  // );
-
   return (
     <DashboardLayout>
-      <DashboardNavbar />
       <MDBox
         style={{ zIndex: 10 }}
         py={3}
@@ -125,12 +45,22 @@ function KPIs() {
         <VerticalBarChart
           description=""
           chart={{
-            labels: ["Instrucciones", "Acciones", "Informacion"],
+            labels: ["Tipos de mandatos"],
             datasets: [
               {
-                label: "Sales by age",
-                color: "info",
-                data: [11, 4, 1],
+                label: "Instrucciones",
+                data: [11],
+                color: "success"
+              },
+              {
+                label: "Acciones",
+                data: [4],
+                color: "warning",
+              },
+              {
+                label: "Informacion",
+                data: [1],
+                color: "error",
               },
             ],
           }}
@@ -146,8 +76,7 @@ function KPIs() {
               labels: ["Sin Aprobar", "Aprobados", "Terminados"],
               datasets: [
                 {
-                  label: "Sales by age",
-                  color: "info",
+                  label: "Sin Aprobar",
                   data: [5, 10, 1],
                 },
               ],
@@ -163,17 +92,17 @@ function KPIs() {
               datasets: [
                 {
                   label: "a",
-                  color: "info",
+                  color: "success",
                   data: [4, 6, 0],
                 },
                 {
                   label: "b",
-                  color: "info",
+                  color: "warning",
                   data: [1, 3, 0],
                 },
                 {
                   label: "c",
-                  color: "info",
+                  color: "error",
                   data: [0, 1, 0],
                 },
               ],

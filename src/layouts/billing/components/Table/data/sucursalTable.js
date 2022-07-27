@@ -38,7 +38,7 @@ import MDButton from "components/MDButton";
 
 export default function data() {
   const TableFiller = ({ image, name, calle }) => (
-    <MDBox display="flex" alignItems="center" lineHeight={1}>
+    <MDBox display="flex" alignItems="center" lineHeight={1} >
       <MDAvatar src={image} name={name} size="sm" />
       <MDBox ml={-1} lineHeight={1}>
         <MDTypography display="block" variant="caption" fontWeight="medium">

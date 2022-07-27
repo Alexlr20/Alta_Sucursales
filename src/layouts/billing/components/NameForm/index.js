@@ -15,66 +15,113 @@ Coded by www.creative-tim.com
 
 // @mui material components
 import * as React from "react";
-import { TextField, InputLabel, FormControl, Select, MenuItem } from "@mui/material";
-import Card from "@mui/material/Card";
-
+import { FormControl, Select, MenuItem, Grid, Card, TextField } from "@mui/material";
 // Material Dashboard 2 React components
-import MDBox from "components/MDBox";
 
 // Billing page components
-
-import MDInput from "components/MDInput";
 import MDTypography from "components/MDTypography";
+import MDBox from "components/MDBox";
 
 function NameForm() {
-  const [age, setAge] = React.useState("");
+  const [type, setType] = React.useState("");
 
   const handleChange = (event) => {
-    setAge(event.target.value);
+    setType(event.target.value);
   };
   return (
-    <Card sx={{ height: "100%" }}>
-      <MDBox p={2}>
-        <MDBox display="flex" flexDirection="column" m={2}>
-          <MDBox display="flex" flexDirection="column">
-            <MDTypography variant="h6" fontWeight="medium">
-              Tipo de instrucción
-            </MDTypography>
-            <FormControl variant="filled" size="medium" sx={{ mb: 1 }} fullWidth>
-              <InputLabel id="demo-simple-select-standard-label" />
-              <Select id="demo-simple-select-standard" value={age} onChange={handleChange}>
-                <MenuItem value="">
-                  <em>None</em>
-                </MenuItem>
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
-              </Select>
-            </FormControl>
-            <MDTypography variant="h6" fontWeight="medium">
-              Nombre
-            </MDTypography>
-            <TextField />
-            <MDTypography variant="h6" fontWeight="medium">
-              Meta
-            </MDTypography>
-            <MDInput />
-            <MDTypography variant="h6" fontWeight="medium">
-              Detalle
-            </MDTypography>
-            <MDInput />
-            <MDTypography variant="h6" fontWeight="medium">
-              Hora inicial
-            </MDTypography>
-            <MDInput />
-            <MDTypography variant="h6" fontWeight="medium">
-              Hora final
-            </MDTypography>
-            <MDInput />
-          </MDBox>
-        </MDBox>
-      </MDBox>
-    </Card>
+    <MDBox sx={{ flexGrow: 1 }}>
+      <Card>
+        <Grid container spacing={2} p={2} m={2}>
+          <Grid item xs={3}>
+            <MDBox
+              component="form"
+              noValidate
+              sx={{
+                display: "grid",
+                gridTemplateColumns: { sm: "1fr" },
+                gap: 10.75,
+              }}>
+              <div/>
+              <FormControl variant="" fullWidth sx={{ marginBottom: 2 }}>
+                <MDTypography variant="h6" fontWeight="medium">
+                  Tipo de instrucción
+                </MDTypography>
+                <Select value={type} onChange={handleChange} multiline>
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  <MenuItem value="Instrucciones">Instrucciones</MenuItem>
+                  <MenuItem value="Acciones">Acciones</MenuItem>
+                  <MenuItem value="Informacion">Informacion</MenuItem>
+                </Select>
+              </FormControl>
+            </MDBox>
+          </Grid>
+          <Grid item xs={7.5} sx={{ marginLeft: 10 }}>
+            <MDBox
+              component="form"
+              noValidate
+              sx={{
+                display: "grid",
+                gridTemplateColumns: { sm: "1fr 1fr" },
+                gap: 2,
+              }}
+            >
+              <FormControl variant="standard" sx={{ marginBottom: 2 }}>
+                <MDTypography variant="h6" fontWeight="medium">
+                  Nombre
+                </MDTypography>
+                <TextField fullWidth />
+              </FormControl>
+              <FormControl variant="standard">
+                <MDTypography variant="h6" fontWeight="medium">
+                  Meta
+                </MDTypography>
+                <TextField fullWidth />
+              </FormControl>
+            </MDBox>
+            <MDBox
+              component="form"
+              noValidate
+              sx={{
+                display: "grid",
+                gridTemplateColumns: { sm: "1fr 1fr" },
+                gap: 2,
+              }}
+            >
+              <FormControl variant="standard" sx={{ marginBottom: 2 }}>
+                <MDTypography variant="h6" fontWeight="medium">
+                  Hora inicial
+                </MDTypography>
+                <TextField fullWidth type="date" />
+              </FormControl>
+              <FormControl variant="standard">
+                <MDTypography variant="h6" fontWeight="medium">
+                  Hora final
+                </MDTypography>
+                <TextField fullWidth type="date" />
+              </FormControl>
+            </MDBox>
+            <MDBox
+              component="form"
+              noValidate
+              sx={{
+                display: "grid",
+                gridTemplateColumns: { sm: "1fr" },
+                gap: 2,
+              }}
+            >
+              <FormControl variant="standard">
+                <MDTypography variant="h6" fontWeight="medium">
+                  Detalle
+                </MDTypography>
+                <TextField fullWidth multiline rows={4} />
+              </FormControl>
+            </MDBox>
+          </Grid>
+        </Grid>
+      </Card>
+    </MDBox>
   );
 }
 

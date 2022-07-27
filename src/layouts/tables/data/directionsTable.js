@@ -28,7 +28,7 @@ export default function data() {
   const Author = ({ image, name, calle }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
       <MDAvatar src={image} name={name} size="sm" />
-      <MDBox ml={2} lineHeight={1}>
+      <MDBox ml={-1} lineHeight={1}>
         <MDTypography display="block" variant="button" fontWeight="medium">
           {name}
         </MDTypography>
@@ -37,17 +37,8 @@ export default function data() {
     </MDBox>
   );
 
-  // const Job = ({ title, description }) => (
-  //   <MDBox lineHeight={1} textAlign="left">
-  //     <MDTypography display="block" variant="caption" color="text" fontWeight="medium">
-  //       {title}
-  //     </MDTypography>
-  //     <MDTypography variant="caption">{description}</MDTypography>
-  //   </MDBox>
-  // );
-
   return {
-    columns: [{ Header: "dirección", accessor: "dirección", width: "50%", align: "left" }],
+    columns: [{ Header: "", accessor: "dirección", align: "left" }],
 
     rows: [
       {

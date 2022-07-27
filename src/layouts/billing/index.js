@@ -21,21 +21,19 @@ import MDBox from "components/MDBox";
 
 // Material Dashboard 2 React examples
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 
 // Billing page components
-import PaymentMethod from "layouts/billing/components/TipoInstruccion";
-import Invoices from "layouts/billing/components/NameForm";
+import NameForm from "layouts/billing/components/NameForm";
 
 import SearchForm from "layouts/billing/components/SearchForm";
 import MDTypography from "components/MDTypography";
 import Table from "./components/Table";
+import TipoInstruccion from "./components/TipoInstruccion";
 
 function Mandatos() {
   return (
     <DashboardLayout>
-      <DashboardNavbar />
       <MDBox
         style={{ zIndex: 10 }}
         py={3}
@@ -51,26 +49,20 @@ function Mandatos() {
       </MDBox>
 
       <MDBox mt={2}>
-        <MDBox mb={3}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} lg={4}>
-              <Grid item xs={12}>
-                <Invoices />
-              </Grid>
-            </Grid>
-            <Grid item xs={12} lg={8}>
-              <PaymentMethod />
-            </Grid>
+        <Grid container spacing={3}>
+          <Grid item xs={12}>
+            <NameForm />
           </Grid>
-        </MDBox>
-        <MDBox mb={3}>
-          <Grid item xs={12} md={15}>
+          <Grid item xs={12}>
+            <TipoInstruccion />
+          </Grid>
+          <Grid item xs={12}>
             <SearchForm />
           </Grid>
-        </MDBox>
-        <MDBox>
-          <Table />
-        </MDBox>
+          <Grid item xs={12}>
+            <Table />
+          </Grid>
+        </Grid>
       </MDBox>
       <Footer />
     </DashboardLayout>

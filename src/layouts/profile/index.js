@@ -21,7 +21,6 @@ Coded by www.creative-tim.com
 
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
@@ -36,7 +35,6 @@ import Header from "layouts/profile/components/Header";
 function Overview() {
   return (
     <DashboardLayout>
-      <DashboardNavbar />
       <MDBox
         style={{ zIndex: 10 }}
         mb={4}

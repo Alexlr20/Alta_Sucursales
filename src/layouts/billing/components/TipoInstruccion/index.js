@@ -14,14 +14,12 @@ Coded by www.creative-tim.com
 */
 
 // @mui material components
-import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 
-import { Checkbox, FormLabel } from "@mui/material";
+import { Checkbox, FormLabel, Card, TextField, FormControl } from "@mui/material";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
-import MDInput from "components/MDInput";
 import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
 
@@ -36,27 +34,33 @@ function TipoInstruccion() {
   const [controller] = useMaterialUIController();
 
   return (
-    <Card id="delete-account">
+    <Card>
       <MDBox p={5}>
-        <Grid container spacing={2}>
-          <Grid item xs={8} md={11}>
-            <MDBox display="flex" justifyContent="space-between">
-              <MDBox sx={{ marginLeft: 3 }}>
-                <MDTypography variant="h5" fontWeight="medium">
-                  Fecha inicial
-                </MDTypography>
-                <MDInput type="date" color="info" />
-              </MDBox>
-              <MDBox sx={{ marginLeft: 3 }}>
-                <MDTypography variant="h5" fontWeight="medium">
-                  Fecha final
-                </MDTypography>
-                <MDInput type="date" />
-              </MDBox>
-            </MDBox>
-          </Grid>
+        <Grid item xs={12}>
+          <MDBox
+            component="form"
+            noValidate
+            sx={{
+              display: "grid",
+              gridTemplateColumns: { sm: "1fr 1fr" },
+              gap: 2,
+            }}
+          >
+            <FormControl variant="standard">
+              <MDTypography variant="h5" fontWeight="medium">
+                Fecha inicial
+              </MDTypography>
+              <TextField fullWidth type="date" sx={{ marginTop: 3 }} />
+            </FormControl>
+            <FormControl variant="standard">
+              <MDTypography variant="h5" fontWeight="medium" fullWidth>
+                Fecha final
+              </MDTypography>
+              <TextField fullWidth type="date" sx={{ marginTop: 3 }} />
+            </FormControl>
+          </MDBox>
         </Grid>
-        <MDBox p={0} mt={2} display="flex" sx={{ justifyContent: "start" }}>
+        <MDBox mt={2}>
           <FormLabel sx={{ marginLeft: 2.5 }}>D</FormLabel>
           <FormLabel sx={{ marginLeft: 5 }}>L</FormLabel>
           <FormLabel sx={{ marginLeft: 5 }}>M</FormLabel>
@@ -75,7 +79,7 @@ function TipoInstruccion() {
           <Checkbox sx={{ marginLeft: 2 }} defaultChecked />
           <Checkbox sx={{ marginLeft: 2 }} defaultChecked />
           <Checkbox sx={{ marginLeft: 4.5 }} defaultChecked />
-          <MDBox display="flex" justifyContent="flex-end" p={0}>
+          <MDBox display="flex" justifyContent="flex-end">
             <MDButton color="info">Guardar</MDButton>
             <MDButton sx={{ marginLeft: 3 }} color="info">
               Cancelar
