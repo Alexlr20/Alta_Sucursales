@@ -45,12 +45,12 @@ function KPIs() {
         <VerticalBarChart
           description=""
           chart={{
-            labels: ["Tipos de mandatos"],
+            labels: ["Mandatos"],
             datasets: [
               {
                 label: "Instrucciones",
                 data: [11],
-                color: "success"
+                color: "success",
               },
               {
                 label: "Acciones",
@@ -73,11 +73,22 @@ function KPIs() {
           <VerticalBarChart
             description=""
             chart={{
-              labels: ["Sin Aprobar", "Aprobados", "Terminados"],
+              labels: ["Tipo de Mandatos"],
               datasets: [
                 {
                   label: "Sin Aprobar",
-                  data: [5, 10, 1],
+                  data: [5],
+                  color: "warning",
+                },
+                {
+                  label: "Aprobados",
+                  data: [10],
+                  color: "success",
+                },
+                {
+                  label: "Terminados",
+                  data: [0],
+                  color: "error",
                 },
               ],
             }}

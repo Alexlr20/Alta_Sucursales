@@ -35,28 +35,28 @@ function TipoInstruccion() {
 
   return (
     <Card>
-      <MDBox p={5}>
-        <Grid item xs={12}>
+      <Grid item p={5} xs={12}>
+        <Grid item xs={6.7}>
           <MDBox
             component="form"
             noValidate
             sx={{
               display: "grid",
-              gridTemplateColumns: { sm: "1fr 1fr" },
-              gap: 2,
+              gridTemplateColumns: { sm: "1fr 1fr " },
+              gap: 0,
             }}
           >
             <FormControl variant="standard">
               <MDTypography variant="h5" fontWeight="medium">
                 Fecha inicial
               </MDTypography>
-              <TextField fullWidth type="date" sx={{ marginTop: 3 }} />
+              <TextField type="date" sx={{ marginTop: 3, marginRight: 3 }} />
             </FormControl>
             <FormControl variant="standard">
-              <MDTypography variant="h5" fontWeight="medium" fullWidth>
+              <MDTypography variant="h5" fontWeight="medium">
                 Fecha final
               </MDTypography>
-              <TextField fullWidth type="date" sx={{ marginTop: 3 }} />
+              <TextField type="date" sx={{ marginTop: 3 }} />
             </FormControl>
           </MDBox>
         </Grid>
@@ -81,12 +81,12 @@ function TipoInstruccion() {
           <Checkbox sx={{ marginLeft: 4.5 }} defaultChecked />
           <MDBox display="flex" justifyContent="flex-end">
             <MDButton color="info">Guardar</MDButton>
-            <MDButton sx={{ marginLeft: 3 }} color="info">
+            <MDButton sx={{ marginLeft: 3, marginRight: 1 }} color="info">
               Cancelar
             </MDButton>
           </MDBox>
         </MDBox>
-      </MDBox>
+      </Grid>
     </Card>
   );
 }

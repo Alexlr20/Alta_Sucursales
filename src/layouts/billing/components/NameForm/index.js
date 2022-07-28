@@ -39,11 +39,12 @@ function NameForm() {
               sx={{
                 display: "grid",
                 gridTemplateColumns: { sm: "1fr" },
-                gap: 10.75,
-              }}>
-              <div/>
-              <FormControl variant="" fullWidth sx={{ marginBottom: 2 }}>
-                <MDTypography variant="h6" fontWeight="medium">
+                gap: 12.9,
+              }}
+            >
+              <div />
+              <FormControl fullWidth sx={{ marginBottom: 2 }}>
+                <MDTypography variant="h6" fontWeight="medium" sx={{ marginBottom: 2 }}>
                   Tipo de instrucción
                 </MDTypography>
                 <Select value={type} onChange={handleChange} multiline>
@@ -68,13 +69,13 @@ function NameForm() {
               }}
             >
               <FormControl variant="standard" sx={{ marginBottom: 2 }}>
-                <MDTypography variant="h6" fontWeight="medium">
+                <MDTypography variant="h6" fontWeight="medium" sx={{ marginBottom: 2 }}>
                   Nombre
                 </MDTypography>
                 <TextField fullWidth />
               </FormControl>
               <FormControl variant="standard">
-                <MDTypography variant="h6" fontWeight="medium">
+                <MDTypography variant="h6" fontWeight="medium" sx={{ marginBottom: 2 }}>
                   Meta
                 </MDTypography>
                 <TextField fullWidth />
@@ -90,13 +91,13 @@ function NameForm() {
               }}
             >
               <FormControl variant="standard" sx={{ marginBottom: 2 }}>
-                <MDTypography variant="h6" fontWeight="medium">
+                <MDTypography variant="h6" fontWeight="medium" sx={{ marginBottom: 2 }}>
                   Hora inicial
                 </MDTypography>
                 <TextField fullWidth type="date" />
               </FormControl>
               <FormControl variant="standard">
-                <MDTypography variant="h6" fontWeight="medium">
+                <MDTypography variant="h6" fontWeight="medium" sx={{ marginBottom: 2 }}>
                   Hora final
                 </MDTypography>
                 <TextField fullWidth type="date" />
@@ -112,7 +113,7 @@ function NameForm() {
               }}
             >
               <FormControl variant="standard">
-                <MDTypography variant="h6" fontWeight="medium">
+                <MDTypography variant="h6" fontWeight="medium" sx={{ marginBottom: 2 }}>
                   Detalle
                 </MDTypography>
                 <TextField fullWidth multiline rows={4} />

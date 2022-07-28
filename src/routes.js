@@ -41,7 +41,7 @@ import Sucursales from "layouts/tables";
 import Mandatos from "layouts/billing";
 // import RTL from "layouts/rtl";
 import KPIs from "layouts/KPIs";
-import Catalogos from "layouts/profile";
+// import Catalogos from "layouts/profile";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -87,14 +87,14 @@ const routes = [
     route: "/kpis",
     component: <KPIs />,
   },
-  {
-    type: "collapse",
-    name: "Catalogos",
-    key: "Catalogos",
-    icon: <Icon fontSize="small">person</Icon>,
-    route: "/catalogos",
-    component: <Catalogos />,
-  },
+  // {
+  //   type: "collapse",
+  //   name: "Catalogos",
+  //   key: "Catalogos",
+  //   icon: <Icon fontSize="small">person</Icon>,
+  //   route: "/catalogos",
+  //   component: <Catalogos />,
+  // },
 ];
 
 export default routes;

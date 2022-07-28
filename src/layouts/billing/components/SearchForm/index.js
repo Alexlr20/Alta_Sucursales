@@ -38,17 +38,25 @@ function SearchForm() {
           <MDTypography variant="h6" fontWeight="medium" sx={{ marginTop: 3, marginBottom: 2 }}>
             Elige una Sucursal
           </MDTypography>
-          <MDBox display="flex" justifyContent="space-evenly">
-            <MDTypography variant="h6" fontWeight="medium" sx={{ marginTop: 1 }}>
+          <MDBox display="flex">
+            <MDTypography variant="h6" fontWeight="medium" sx={{ marginTop: 1, marginRight: 2 }}>
               Fecha inicial
             </MDTypography>
             <MDInput />
-            <MDTypography variant="h6" fontWeight="medium" sx={{ marginTop: 1 }}>
+            <MDTypography
+              variant="h6"
+              fontWeight="medium"
+              sx={{ marginTop: 1, marginRight: 2, marginLeft: 2 }}
+            >
               Fecha final
             </MDTypography>
             <MDInput />
+          </MDBox>
+          <MDBox display="flex" justifyContent="flex-end">
             <MDButton color="info">Buscar</MDButton>
-            <MDButton color="info">Exportar CSV</MDButton>
+            <MDButton sx={{ marginLeft: 3 }} color="info">
+              Exportar CSV
+            </MDButton>
           </MDBox>
         </MDBox>
       </MDBox>
