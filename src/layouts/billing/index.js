@@ -29,7 +29,6 @@ import NameForm from "layouts/billing/components/NameForm";
 import SearchForm from "layouts/billing/components/SearchForm";
 import MDTypography from "components/MDTypography";
 import SucursalesTable from "./components/Table";
-import TipoInstruccion from "./components/TipoInstruccion";
 
 function Mandatos() {
   return (
@@ -52,9 +51,6 @@ function Mandatos() {
         <Grid container spacing={3}>
           <Grid item xs={11.9}>
             <NameForm />
-          </Grid>
-          <Grid item xs={11.9}>
-            <TipoInstruccion />
           </Grid>
           <Grid item xs={11.9}>
             <SearchForm />

@@ -33,13 +33,13 @@ export default function AttachedDialog({ textValue, id }) {
       <MDBox lineHeight={1} textAlign="left" sx={{ marginLeft: -1.5 }}>
         <Button onClick={handleClickOpen}>
           <Icon fontSize="small" color="info">
-            lock
+            upload_file
           </Icon>
         </Button>
       </MDBox>
       <Dialog open={open} onClose={handleClose} fullWidth maxWidth="md">
         <MDBox display="flex" justifyContent="space-between">
-          <DialogTitle fullWidth>DETALLE INSTRUCCION </DialogTitle>
+          <DialogTitle>DETALLE INSTRUCCION </DialogTitle>
           <Icon sx={{ marginRight: 1, marginTop: 0.5, cursor: "pointer" }} onClick={handleClose}>
             close
           </Icon>
