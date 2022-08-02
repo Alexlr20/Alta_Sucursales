@@ -14,6 +14,7 @@ Coded by www.creative-tim.com
 */
 
 // @mui material components
+import { Stack } from "@mui/material";
 import Card from "@mui/material/Card";
 // import Divider from "@mui/material/Divider";
 
@@ -22,45 +23,59 @@ import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";
 import MDInput from "components/MDInput";
 import MDTypography from "components/MDTypography";
+import DataTable from "examples/Tables/DataTable";
+import sucursalTable from "layouts/billing/components/SearchForm/data/sucursalTable";
 // import MDButton from "components/MDButton";
 
 // Billing page components
 // import Transaction from "layouts/billing/components/Transaction";
 
 function SearchForm() {
+  const { columns, rows } = sucursalTable();
   return (
-    <Card>
-      <MDBox p={3}>
-        <MDBox p={3} display="flex" flexDirection="column">
-          <MDTypography variant="h5" fontWeight="medium">
-            BUSQUEDA
-          </MDTypography>
-          <MDTypography variant="h6" fontWeight="medium" sx={{ marginTop: 3, marginBottom: 2 }}>
-            Elige una Sucursal
-          </MDTypography>
-          <MDBox display="flex">
-            <MDTypography variant="h6" fontWeight="medium" sx={{ marginTop: 1, marginRight: 2 }}>
-              Fecha inicial
+    <Stack spacing={3}>
+      <Card>
+        <MDBox p={3}>
+          <MDBox p={3} display="flex" flexDirection="column">
+            <MDTypography variant="h5" fontWeight="medium">
+              BUSQUEDA
             </MDTypography>
-            <MDInput />
-            <MDTypography
-              variant="h6"
-              fontWeight="medium"
-              sx={{ marginTop: 1, marginRight: 2, marginLeft: 2 }}
-            >
-              Fecha final
+            <MDTypography variant="h6" fontWeight="medium" sx={{ marginTop: 3, marginBottom: 2 }}>
+              Elige una Sucursal
             </MDTypography>
-            <MDInput />
-          </MDBox>
-          <MDBox display="flex" justifyContent="flex-end">
-            <MDButton color="info">Buscar</MDButton>
-            <MDButton sx={{ marginLeft: 3 }} color="info">
-              Exportar CSV
-            </MDButton>
+            <MDBox display="flex">
+              <MDTypography variant="h6" fontWeight="medium" sx={{ marginTop: 1, marginRight: 2 }}>
+                Fecha inicial
+              </MDTypography>
+              <MDInput />
+              <MDTypography
+                variant="h6"
+                fontWeight="medium"
+                sx={{ marginTop: 1, marginRight: 2, marginLeft: 2 }}
+              >
+                Fecha final
+              </MDTypography>
+              <MDInput />
+            </MDBox>
+            <MDBox display="flex" justifyContent="flex-end">
+              <MDButton color="info">Buscar</MDButton>
+              <MDButton sx={{ marginLeft: 3 }} color="info">
+                Exportar CSV
+              </MDButton>
+            </MDBox>
           </MDBox>
         </MDBox>
-      </MDBox>
-    </Card>
+      </Card>
+      <Card>
+        <DataTable
+          table={{ columns, rows }}
+          isSorted={false}
+          entriesPerPage={false}
+          showTotalEntries={false}
+          noEndBorder
+        />
+      </Card>
+    </Stack>
   );
 }
 

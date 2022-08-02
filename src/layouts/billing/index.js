@@ -12,23 +12,14 @@ Coded by www.creative-tim.com
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
-
-// @mui material components
 import Grid from "@mui/material/Grid";
-
-// Material Dashboard 2 React components
 import MDBox from "components/MDBox";
-
-// Material Dashboard 2 React examples
+import MDTypography from "components/MDTypography";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
-import Footer from "examples/Footer";
 
 // Billing page components
 import NameForm from "layouts/billing/components/NameForm";
-
 import SearchForm from "layouts/billing/components/SearchForm";
-import MDTypography from "components/MDTypography";
-import SucursalesTable from "./components/Table";
 
 function Mandatos() {
   return (
@@ -55,12 +46,8 @@ function Mandatos() {
           <Grid item xs={11.9}>
             <SearchForm />
           </Grid>
-          <Grid item xs={11.9}>
-            <SucursalesTable />
-          </Grid>
         </Grid>
       </MDBox>
-      <Footer />
     </DashboardLayout>
   );
 }

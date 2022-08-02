@@ -1,17 +1,21 @@
 import * as React from "react";
 import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
+// import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { Icon, Grid } from "@mui/material";
+import {
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  Grid,
+  Icon,
+  TextField,
+} from "@mui/material";
 import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";
 
 // eslint-disable-next-line react/prop-types
-export default function NotesDialog({ textValue, id }) {
+export default function AttachedDialog({ textValue, id }) {
   // eslint-disable-next-line no-console
   console.log(textValue, id);
   const [open, setOpen] = React.useState(false);
@@ -29,7 +33,7 @@ export default function NotesDialog({ textValue, id }) {
       <MDBox lineHeight={1} textAlign="left" sx={{ marginLeft: -1.5 }}>
         <Button onClick={handleClickOpen}>
           <Icon fontSize="small" color="info">
-            description
+            upload_file
           </Icon>
         </Button>
       </MDBox>
@@ -41,27 +45,34 @@ export default function NotesDialog({ textValue, id }) {
           </Icon>
         </MDBox>
         <MDBox>
-          <Grid container spacing={0}>
-            <Grid item xs={12}>
+          <Grid container spacing={2}>
+            <Grid item xs={6}>
               <DialogContent>
-                <DialogContentText> Nueva nota </DialogContentText>
-                <TextField fullWidth sx={{ marginTop: 2 }} multiline rows={4} value="Nota" />
-                <DialogActions>
-                  <MDButton color="info" sx={{ justifyContent: "flex-end" }}>
-                    Agregar
-                  </MDButton>
-                </DialogActions>
+                <DialogContentText> Archivo </DialogContentText>
+                <MDButton
+                  color="info"
+                  fullWidth
+                  sx={{ marginTop: 2 }}
+                  variant="contained"
+                  component="label"
+                >
+                  Elegir archivos
+                  <input hidden accept="image/* video/* audio/*" multiple type="file" />
+                </MDButton>
               </DialogContent>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={6}>
               <DialogContent>
-                <TextField fullWidth multiline rows={4} value="Fecha,  Hora,  Usuario" />
-              </DialogContent>
-              <DialogContent>
-                <TextField fullWidth multiline rows={4} value="Fecha,  Hora,  Usuario" />
+                <DialogContentText> Nombres </DialogContentText>
+                <TextField fullWidth sx={{ marginTop: 2 }} />
               </DialogContent>
             </Grid>
           </Grid>
+          <DialogActions>
+            <MDButton color="info" onClick={handleClose}>
+              Guardar
+            </MDButton>
+          </DialogActions>
         </MDBox>
       </Dialog>
     </div>
