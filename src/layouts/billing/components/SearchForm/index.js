@@ -12,23 +12,14 @@ Coded by www.creative-tim.com
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
-
-// @mui material components
 import { Stack } from "@mui/material";
 import Card from "@mui/material/Card";
-// import Divider from "@mui/material/Divider";
-
-// Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";
 import MDInput from "components/MDInput";
 import MDTypography from "components/MDTypography";
 import DataTable from "examples/Tables/DataTable";
-import sucursalTable from "layouts/billing/components/SearchForm/data/sucursalTable";
-// import MDButton from "components/MDButton";
-
-// Billing page components
-// import Transaction from "layouts/billing/components/Transaction";
+import sucursalTable from "layouts/billing/components/SearchForm/sucursalTable";
 
 function SearchForm() {
   const { columns, rows } = sucursalTable();

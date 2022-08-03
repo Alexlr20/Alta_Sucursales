@@ -14,28 +14,12 @@ Coded by www.creative-tim.com
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
-
-// Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
-import StatusDialog from "./StatusDialog";
-import AttachedDialog from "./AttachedDialog";
-import NotesDialog from "./NotesDialog";
-import DetailDialog from "./DetailDialog";
-// import MDBadge from "components/MDBadge";
-
-// Images
-// import team2 from "assets/images/team-2.jpg";
-
-// const Days = {
-//   Lunes: 0,
-//   Martes: 1,
-//   Mierocles: 2,
-//   Jueves: 3,
-//   Viernes: 4,
-//   Sabado: 5,
-//   Domingo: 6,
-// };
+import StatusDialog from "./dialogs/StatusDialog";
+import AttachedDialog from "./dialogs/AttachedDialog";
+import NotesDialog from "./dialogs/NotesDialog";
+import DetailDialog from "./dialogs/DetailDialog";
 
 export default function data() {
   const TableFiller = ({ name, calle }) => (

@@ -9,11 +9,13 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { Icon, IconButton, InputAdornment } from "@mui/material";
 import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";
+// import { asMuiTextField } from "../asMuiTextField";
+// import useForm from "../useForm";
 
 // eslint-disable-next-line react/prop-types
-export default function NotesDialog({ textValue, id }) {
+export default function NotesDialog({ textValue, tableId }) {
   // eslint-disable-next-line no-console
-  console.log(textValue, id);
+  console.log(textValue, tableId);
   const [open, setOpen] = React.useState(false);
   const [scroll, setScroll] = React.useState("paper");
 
@@ -35,6 +37,19 @@ export default function NotesDialog({ textValue, id }) {
       }
     }
   }, [open]);
+
+  const [items, setItems] = React.useState([]);
+
+  const addNote = React.useCallback(() => {
+    setItems([...items, new Date().getTime()]);
+  }, [items]);
+
+  const removeNote = React.useCallback(
+    (itemId) => {
+      setItems(items.filter((id) => id !== itemId));
+    },
+    [items]
+  );
 
   return (
     <div>
@@ -83,7 +98,7 @@ export default function NotesDialog({ textValue, id }) {
         <DialogContent dividers={scroll === "paper"}>
           <DialogContentText id="scroll-dialog-description" ref={descriptionElementRef}>
             <MDBox>
-              {[...new Array(50)].map(() => (
+              {[...new Array(5)].map(() => (
                 <TextField
                   fullWidth
                   multiline
@@ -93,7 +108,7 @@ export default function NotesDialog({ textValue, id }) {
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end" sx={{ marginBottom: 10, marginRight: -1 }}>
-                        <IconButton onClick={handleClose}>
+                        <IconButton onClick={removeNote}>
                           <Icon fontSize="small">close</Icon>
                         </IconButton>
                       </InputAdornment>
@@ -105,7 +120,7 @@ export default function NotesDialog({ textValue, id }) {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <MDButton color="info" sx={{ justifyContent: "flex-end" }}>
+          <MDButton color="info" sx={{ justifyContent: "flex-end" }} onClick={addNote}>
             Agregar
           </MDButton>
         </DialogActions>
