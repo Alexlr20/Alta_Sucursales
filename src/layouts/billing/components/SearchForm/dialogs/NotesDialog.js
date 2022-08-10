@@ -6,18 +6,38 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { Icon, IconButton, InputAdornment } from "@mui/material";
+import { Icon, IconButton } from "@mui/material";
 import MDBox from "components/MDBox";
+import { makeStyles, createStyles } from "@mui/styles";
 import MDButton from "components/MDButton";
-// import { asMuiTextField } from "../asMuiTextField";
-// import useForm from "../useForm";
+import { asMuiTextField } from "../asMuiTextField";
+import useForm from "../useForm";
+import Note from "./NotesComponent";
 
-// eslint-disable-next-line react/prop-types
+const useStyles = makeStyles(() =>
+  createStyles({
+    dialogPaper: {
+      minHeight: "60vh",
+      maxHeight: "60vh",
+    },
+  })
+);
+
+// eslint-disable-next-line react/prop-types, no-unused-vars
 export default function NotesDialog({ textValue, tableId }) {
   // eslint-disable-next-line no-console
-  console.log(textValue, tableId);
+  // console.log(textValue, tableId);
+
+  const initialFieldValues = {
+    noteText: "",
+  };
+
+  const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [scroll, setScroll] = React.useState("paper");
+  const descriptionElementRef = React.useRef(null);
+  const [items, setItems] = React.useState([]);
+  const { register, validateForm, values, setValues } = useForm(initialFieldValues);
 
   const handleClickOpen = (scrollType) => () => {
     setOpen(true);
@@ -28,7 +48,6 @@ export default function NotesDialog({ textValue, tableId }) {
     setOpen(false);
   };
 
-  const descriptionElementRef = React.useRef(null);
   React.useEffect(() => {
     if (open) {
       const { current: descriptionElement } = descriptionElementRef;
@@ -38,21 +57,37 @@ export default function NotesDialog({ textValue, tableId }) {
     }
   }, [open]);
 
-  const [items, setItems] = React.useState([]);
-
   const addNote = React.useCallback(() => {
-    setItems([...items, new Date().getTime()]);
-  }, [items]);
+    const currentH = new Date();
+    const currentHour = `${currentH.getHours()}:${currentH.getMinutes()}`;
+    setItems([
+      ...items,
+      {
+        id: new Date().getTime(),
+        text: values.noteText,
+        currentDate: new Date().toDateString(),
+        currentHour,
+      },
+    ]);
+    setValues(initialFieldValues);
+  }, [items, values.noteText]);
 
   const removeNote = React.useCallback(
     (itemId) => {
-      setItems(items.filter((id) => id !== itemId));
+      setItems(items.filter(({ id }) => id !== itemId));
     },
     [items]
   );
 
+  const onSubmit = () => {
+    if (validateForm()) {
+      // Success process
+      addNote();
+    }
+  };
+
   return (
-    <div>
+    <MDBox>
       <MDBox lineHeight={1} textAlign="left" sx={{ marginLeft: -1.5 }}>
         <Button onClick={handleClickOpen("paper")}>
           <Icon fontSize="small" color="info">
@@ -66,6 +101,8 @@ export default function NotesDialog({ textValue, tableId }) {
         scroll={scroll}
         aria-labelledby="scroll-dialog-title"
         aria-describedby="scroll-dialog-description"
+        maxWidth="md"
+        classes={{ paper: classes.dialogPaper }}
       >
         <MDBox display="flex" justifyContent="flex-end" sx={{ marginRight: 1, marginTop: 0.5 }}>
           <Icon sx={{ cursor: "pointer" }} onClick={handleClose}>
@@ -89,8 +126,8 @@ export default function NotesDialog({ textValue, tableId }) {
               fullWidth
               multiline
               rows={4}
-              defaultValue="Fecha,  Hora,  Usuario"
               sx={{ marginTop: 2 }}
+              {...asMuiTextField(register("noteText")((v) => v.length > 0))}
             />
           </DialogTitle>
         </MDBox>
@@ -98,33 +135,27 @@ export default function NotesDialog({ textValue, tableId }) {
         <DialogContent dividers={scroll === "paper"}>
           <DialogContentText id="scroll-dialog-description" ref={descriptionElementRef}>
             <MDBox>
-              {[...new Array(5)].map(() => (
-                <TextField
-                  fullWidth
-                  multiline
-                  rows={4}
-                  defaultValue="Fecha,  Hora,  Usuario"
-                  sx={{ marginBottom: 2 }}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end" sx={{ marginBottom: 10, marginRight: -1 }}>
-                        <IconButton onClick={removeNote}>
-                          <Icon fontSize="small">close</Icon>
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-              ))}
+              <div>
+                {items.map(({ id, text, currentDate, currentHour }) => (
+                  <Note
+                    key={id}
+                    id={id}
+                    setNoteValue={text}
+                    removeNote={removeNote}
+                    currentDate={currentDate}
+                    currentHour={currentHour}
+                  />
+                ))}
+              </div>
             </MDBox>
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <MDButton color="info" sx={{ justifyContent: "flex-end" }} onClick={addNote}>
+          <MDButton color="info" sx={{ justifyContent: "flex-end" }} onClick={onSubmit}>
             Agregar
           </MDButton>
         </DialogActions>
       </Dialog>
-    </div>
+    </MDBox>
   );
 }

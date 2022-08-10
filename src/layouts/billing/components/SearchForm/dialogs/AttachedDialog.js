@@ -11,14 +11,37 @@ import {
   Icon,
   TextField,
 } from "@mui/material";
+// import { makeStyles, createStyles } from "@mui/styles";
 import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";
+// import { DropzoneArea } from "material-ui-dropzone";
+import FileUploader from "./FileUploader";
+
+// const useStyles = makeStyles(() =>
+//   createStyles({
+//     previewChip: {
+//       minWidth: 160,
+//       height: 45,
+//       minHeight: "0 !important",
+//       marginTop: 16,
+//     },
+//     previewText: {
+//       fontSize: "1rem !important",
+//       fontFamily: "Roboto",
+//       fontWeight: 400,
+//       lineHeight: "0 !important",
+//       letterSpacing: "0em",
+//     },
+//   })
+// );
 
 // eslint-disable-next-line react/prop-types
 export default function AttachedDialog({ textValue, id }) {
   // eslint-disable-next-line no-console
   console.log(textValue, id);
   const [open, setOpen] = React.useState(false);
+
+  // const classes = useStyles();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -45,20 +68,27 @@ export default function AttachedDialog({ textValue, id }) {
           </Icon>
         </MDBox>
         <MDBox>
-          <Grid container spacing={2}>
+          <Grid container spacing={0}>
             <Grid item xs={6}>
               <DialogContent>
-                <DialogContentText> Archivo </DialogContentText>
-                <MDButton
-                  color="info"
-                  fullWidth
-                  sx={{ marginTop: 2 }}
-                  variant="contained"
-                  component="label"
-                >
-                  Elegir archivos
-                  <input hidden accept="image/* video/* audio/*" multiple type="file" />
-                </MDButton>
+                <DialogContentText sx={{ marginBottom: 2 }}> Archivo </DialogContentText>
+                {/* <DropzoneArea
+                  showPreviews
+                  showPreviewsInDropzone={false}
+                  useChipsForPreview
+                  dropzoneClass={classes.previewChip}
+                  dropzoneParagraphClass={classes.previewText}
+                  getFileAddedMessage={false}
+                  getFileRemovedMessage={false}
+                  filesLimit={10}
+                  getPreviewIcon={false}
+                  initialFiles
+                  acceptedFiles={["image/* audio/* video/*"]}
+                  onChange={handleSubmit}
+                  name="fileToUpload"
+                  id="fileToUpload"
+                /> */}
+                <FileUploader />
               </DialogContent>
             </Grid>
             <Grid item xs={6}>
