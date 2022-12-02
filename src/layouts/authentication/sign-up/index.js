@@ -21,8 +21,8 @@ import { TextField } from "@mui/material";
 import MDButton from "components/MDButton";
 import CoverLayout from "layouts/authentication/components/BasicSignUp";
 import bgImage from "assets/images/bg-sign-up-cover.jpeg";
-import { asMuiTextField } from "layouts/billing/components/SearchForm/asMuiTextField";
-import useForm from "layouts/billing/components/SearchForm/useForm";
+import { asMuiTextField } from "layouts/mandates/components/SearchForm/asMuiTextField";
+import useForm from "layouts/mandates/components/SearchForm/useForm";
 
 function Cover() {
   const initialValues = {

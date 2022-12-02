@@ -1,0 +1,17 @@
+.closeIcon{
+    padding: 0;
+    align-self: flex-end;
+    /* z-index: 99; */
+    /* position: fixed; */
+}
+
+.closeIcon:hover{
+    cursor: pointer;
+}
+
+.flexColCtr{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

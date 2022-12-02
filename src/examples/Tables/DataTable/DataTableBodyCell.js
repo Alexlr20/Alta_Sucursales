@@ -33,7 +33,7 @@ function DataTableBodyCell({ noBorder, align, children }) {
     >
       <MDBox
         display="inline-block"
-        width="max-content"
+        width="100%"
         color="text"
         sx={{ verticalAlign: "middle" }}
       >

@@ -23,14 +23,25 @@ import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import Footer from "examples/Footer";
 import VerticalBarChart from "examples/Charts/BarCharts/VerticalBarChart";
 import MDBox from "components/MDBox";
+import { Card } from "@mui/material";
+import { useState } from "react";
 
 function KPIs() {
+  const [aprobados] = useState(11);
+  const [sinAprobar] = useState(11);
+  const [terminados] = useState(11);
+
+  const [accion] = useState(11);
+  const [informativos] = useState(11);
+  const [metas] = useState(11);
+
   return (
     <DashboardLayout>
       <MDBox
         style={{ zIndex: 10 }}
         py={3}
         px={2}
+        mb={3}
         variant="gradient"
         bgColor="info"
         borderRadius="lg"
@@ -40,88 +51,91 @@ function KPIs() {
           Graficas
         </MDTypography>
       </MDBox>
-      <MDTypography color="icon">Mandatos</MDTypography>
-      <MDBox mt={6} mb={6}>
-        <VerticalBarChart
-          description=""
-          chart={{
-            labels: ["Mandatos"],
-            datasets: [
-              {
-                label: "Instrucciones",
-                data: [11],
-                color: "success",
-              },
-              {
-                label: "Acciones",
-                data: [4],
-                color: "warning",
-              },
-              {
-                label: "Informacion",
-                data: [1],
-                color: "error",
-              },
-            ],
-          }}
-        />
-      </MDBox>
 
-      <MDBox mt={0} display="flex">
-        <MDBox width="50%">
-          <MDTypography color="icon">Tipos de Mandatos</MDTypography>
+      <Card sx={{ padding: "2rem" }}>
+        <MDTypography color="icon">Mandatos</MDTypography>
+        <MDBox mt={6} mb={6}>
           <VerticalBarChart
             description=""
             chart={{
-              labels: ["Tipo de Mandatos"],
+              labels: ["Mandatos"],
               datasets: [
                 {
-                  label: "Sin Aprobar",
-                  data: [5],
-                  color: "warning",
+                  label: "Aprobados",
+                  data: [aprobados],
+                  color: "success",
                 },
                 {
-                  label: "Aprobados",
-                  data: [10],
-                  color: "success",
+                  label: "Sin Aprobar",
+                  data: [sinAprobar],
+                  color: "warning",
                 },
                 {
                   label: "Terminados",
-                  data: [0],
+                  data: [terminados],
                   color: "error",
                 },
               ],
             }}
           />
         </MDBox>
-        <MDBox width="50%">
-          <MDTypography color="icon">Tipos de mandatos por fecha</MDTypography>
-          <VerticalBarChart
-            description=""
-            chart={{
-              labels: ["Sin Aprobar", "Aprobados", "Terminados"],
-              datasets: [
-                {
-                  label: "a",
-                  color: "success",
-                  data: [4, 6, 0],
-                },
-                {
-                  label: "b",
-                  color: "warning",
-                  data: [1, 3, 0],
-                },
-                {
-                  label: "c",
-                  color: "error",
-                  data: [0, 1, 0],
-                },
-              ],
-            }}
-          />
+
+        <MDBox mt={0} display="flex">
+          <MDBox width="50%">
+            <MDTypography color="icon">Tipos de Mandatos</MDTypography>
+            <VerticalBarChart
+              description=""
+              chart={{
+                labels: ["Tipo de Mandatos"],
+                datasets: [
+                  {
+                    label: "Acción",
+                    data: [accion],
+                    color: "warning",
+                  },
+                  {
+                    label: "Informativos",
+                    data: [informativos],
+                    color: "success",
+                  },
+                  {
+                    label: "Metas",
+                    data: [metas],
+                    color: "error",
+                  },
+                ],
+              }}
+            />
+          </MDBox>
+          <MDBox width="50%">
+            <MDTypography color="icon">Tipos de mandatos por fecha</MDTypography>
+            <VerticalBarChart
+              description=""
+              chart={{
+                labels: ["Sin Aprobar", "Aprobados", "Terminados"],
+                datasets: [
+                  {
+                    label: "a",
+                    color: "success",
+                    data: [4, 6, 0],
+                  },
+                  {
+                    label: "b",
+                    color: "warning",
+                    data: [1, 3, 0],
+                  },
+                  {
+                    label: "c",
+                    color: "error",
+                    data: [0, 1, 0],
+                  },
+                ],
+              }}
+            />
+          </MDBox>
         </MDBox>
-      </MDBox>
-      <Footer />
+        <Footer />
+      </Card>
     </DashboardLayout>
   );
 }

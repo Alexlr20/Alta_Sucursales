@@ -49,6 +49,9 @@ import { useMaterialUIController, setMiniSidenav } from "context";
 import brandWhite from "assets/images/logo-ct.png";
 import brandDark from "assets/images/logo-ct-dark.png";
 
+// require('./styles/Table.css');
+import './styles/adjust_icon.css';
+
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
   const {
@@ -103,7 +106,9 @@ export default function App() {
 
   const getRoutes = (allRoutes) =>
     allRoutes.map((route) => {
+      // console.log('RUTAS DE ROUTES', route);
       if (route.collapse) {
+        // console.log('HOLA SOY ESTE', route.collapse)
         return getRoutes(route.collapse);
       }
 
@@ -134,6 +139,9 @@ export default function App() {
         {layout === "vr" && <Configurator />}
         <Routes>
           {getRoutes(routes)}
+
+          {/* <Route path="ola2" element={<div>ola2</div>}/> */}
+          {/* </Route> */}
           <Route path="*" element={<Navigate to="/Organigrama" />} />
         </Routes>
       </ThemeProvider>
