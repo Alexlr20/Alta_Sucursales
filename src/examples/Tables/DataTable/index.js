@@ -146,7 +146,7 @@ function DataTable({
   }
 
   return (
-    <TableContainer sx={{ boxShadow: "none" }}>
+    <TableContainer sx={{ boxShadow: "none", overflowY: "scroll"}}>
       {entriesPerPage || canSearch ? (
         <MDBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
           {entriesPerPage && (
@@ -163,7 +163,7 @@ function DataTable({
                 renderInput={(params) => <MDInput {...params} />}
               />
               <MDTypography variant="caption" color="secondary">
-                &nbsp;&nbsp;entries per page
+                &nbsp;&nbsp;registros por pagina
               </MDTypography>
             </MDBox>
           )}
@@ -230,7 +230,7 @@ function DataTable({
         {showTotalEntries && (
           <MDBox mb={{ xs: 3, sm: 0 }}>
             <MDTypography variant="button" color="secondary" fontWeight="regular">
-              Showing {entriesStart} to {entriesEnd} of {rows.length} entries
+              MOSTRANDO DE {entriesStart} A {entriesEnd} DE {rows.length} REGISTROS
             </MDTypography>
           </MDBox>
         )}

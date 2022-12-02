@@ -8,32 +8,17 @@ Coded by www.creative-tim.com
  =========================================================
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
-
 import { useState, useEffect } from "react";
-
-// react-router components
 import { Link } from "react-router-dom";
-
-// prop-types is a library for typechecking of props.
 import PropTypes from "prop-types";
-
-// @mui material components
 import Container from "@mui/material/Container";
 import Icon from "@mui/material/Icon";
-
-// Material Dashboard 2 React components
 import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
-
-// Material Dashboard 2 React example components
+import MDTypography from "components/MDTypography";
 import DefaultNavbarLink from "examples/Navbars/DefaultNavbar/DefaultNavbarLink";
 import DefaultNavbarMobile from "examples/Navbars/DefaultNavbar/DefaultNavbarMobile";
-
-// Material Dashboard 2 React base styles
 import breakpoints from "assets/theme/base/breakpoints";
-
-// Material Dashboard 2 React context
 import { useMaterialUIController } from "context";
 
 function DefaultNavbar({ transparent, light, action }) {
@@ -47,7 +32,6 @@ function DefaultNavbar({ transparent, light, action }) {
   const closeMobileNavbar = () => setMobileNavbar(false);
 
   useEffect(() => {
-    // A function that sets the display state for the DefaultNavbarMobile.
     function displayMobileNavbar() {
       if (window.innerWidth < breakpoints.values.lg) {
         setMobileView(true);
@@ -57,17 +41,8 @@ function DefaultNavbar({ transparent, light, action }) {
         setMobileNavbar(false);
       }
     }
-
-    /** 
-     The event listener that's calling the displayMobileNavbar function when 
-     resizing the window.
-    */
     window.addEventListener("resize", displayMobileNavbar);
-
-    // Call the displayMobileNavbar function to set the state with the initial value.
     displayMobileNavbar();
-
-    // Remove event listener on cleanup
     return () => window.removeEventListener("resize", displayMobileNavbar);
   }, []);
 
@@ -106,12 +81,10 @@ function DefaultNavbar({ transparent, light, action }) {
           pl={{ xs: 0, lg: 1 }}
         >
           <MDTypography variant="button" fontWeight="bold" color={light ? "white" : "dark"}>
-            Material Dashboard 2
+            Home
           </MDTypography>
         </MDBox>
         <MDBox color="inherit" display={{ xs: "none", lg: "flex" }} m={0} p={0}>
-          <DefaultNavbarLink icon="donut_large" name="dashboard" route="/dashboard" light={light} />
-          <DefaultNavbarLink icon="person" name="profile" route="/profile" light={light} />
           <DefaultNavbarLink
             icon="account_circle"
             name="sign up"

@@ -84,6 +84,11 @@ const colors = {
     focus: "#2c3c58",
   },
 
+  button: {
+    main: "#00B2CA",
+    focus: "#00B2CA",
+  },
+
   grey: {
     100: "#f8f9fa",
     200: "#f0f2f5",

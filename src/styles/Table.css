@@ -1,0 +1,88 @@
+table {
+    /* width: max-content; */
+    table-layout: fixed;
+    width: 100%;
+}
+
+thead {
+    margin-bottom: 2rem;
+}
+
+th {
+    font-size: 0.7rem;
+    text-transform: capitalize;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    border: 1px solid #D2D6DA;
+    color: #344767;
+}
+
+td {
+    text-align: center;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    border: solid 1px #D2D6DA;
+}
+
+
+.card {
+    /* width: 100%; */
+    background-color: #FFF;
+    padding: 2rem;
+    border-radius: 5px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+/* .org-btn{
+    background-color: red;
+    width: fit-content;
+    align-self: flex-end;
+    margin: 1rem 1rem 0;
+    border-radius: 5px;
+} */
+
+
+table{
+    border-collapse: collapse;
+    box-shadow: 0 5px 10px #e1e5ee;
+    background-color: white;
+    text-align: left;
+    overflow: hidden;
+}
+
+thead {
+    box-shadow: 0 5px 10px #e1e5ee;
+}
+
+th {
+    padding: 1rem 2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    font-size: 0.7rem;
+    font-weight: 900;
+}
+
+td {
+    padding: 1rem 2rem;
+}
+
+.status {
+    border-radius: 0.2rem;
+    background-color: red;
+    padding: 0.2rem 1rem;
+    text-align: center;
+}
+
+.amount {
+    text-align: right;
+}
+
+tr:nth-child(even) {
+    background-color: #f4f6fb;
+}
+
+.hide{
+    display: none;
+}

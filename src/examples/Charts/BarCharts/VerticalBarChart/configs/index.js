@@ -27,7 +27,7 @@ function configs(labels, datasets) {
       maintainAspectRatio: false,
       plugins: {
         legend: {
-          display: false,
+          display: true,
         },
       },
       scales: {

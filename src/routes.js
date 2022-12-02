@@ -36,40 +36,68 @@ Coded by www.creative-tim.com
 */
 
 // Material Dashboard 2 React layouts
-import Dashboard from "layouts/dashboard";
-import Tables from "layouts/tables";
-import Billing from "layouts/billing";
+import Organigrama from "layouts/orgchart";
+import Sucursales from "layouts/locations";
+import Mandatos from "layouts/mandates";
 // import RTL from "layouts/rtl";
-import Notifications from "layouts/notifications";
-import Profile from "layouts/profile";
+import KPIs from "layouts/KPIs";
+// import Catalogos from "layouts/profile";
+import SignIn from "layouts/authentication/sign-in";
+import SignUp from "layouts/authentication/sign-up";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
+import Personal from "layouts/personal";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faChartColumn,
+  faLayerGroup,
+  faList,
+  faMapLocationDot,
+  faSitemap,
+  faUsers,
+} from "@fortawesome/free-solid-svg-icons";
+// import { Catalogues } from "layouts/catalogues";
+// import { Mandatos2 } from "layouts/mandates_copy";
+import { Catalogues } from "layouts/catalogues";
 
 const routes = [
   {
     type: "collapse",
-    name: "Organigrama",
-    key: "dashboard",
-    icon: <Icon fontSize="small">dashboard</Icon>,
-    route: "/dashboard",
-    component: <Dashboard />,
+    name: "Sucursales",
+    key: "Sucursales",
+    // icon: <Icon fontSize="small">table_view</Icon>,
+    icon: <FontAwesomeIcon icon={faMapLocationDot} />,
+    route: "/sucursales",
+    component: <Sucursales />,
   },
   {
     type: "collapse",
-    name: "Sucursales",
-    key: "tables",
-    icon: <Icon fontSize="small">table_view</Icon>,
-    route: "/tables",
-    component: <Tables />,
+    name: "Organigrama",
+    key: "Organigrama",
+    // icon: <Icon fontSize="small">dashboard</Icon>,
+    icon: <FontAwesomeIcon icon={faSitemap} />,
+    route: "/organigrama",
+    component: <Organigrama />,
+  },
+  {
+    type: "collapse",
+    name: "Personal",
+    key: "personal",
+    // icon: <Icon fontSize="small">login</Icon>,
+    icon: <FontAwesomeIcon icon={faUsers} />,
+    route: "/personal",
+    component: <Personal />,
   },
   {
     type: "collapse",
     name: "Mandatos",
-    key: "billing",
-    icon: <Icon fontSize="small">receipt_long</Icon>,
-    route: "/billing",
-    component: <Billing />,
+    key: "Mandatos",
+    icon: <FontAwesomeIcon icon={faList} />,
+    // icon: <Icon fontSize="small">receipt_long</Icon>,
+    route: "/mandatos",
+    component: <Mandatos />,
   },
   // {
   //   type: "collapse",
@@ -82,19 +110,63 @@ const routes = [
   {
     type: "collapse",
     name: "KPIs",
-    key: "notifications",
-    icon: <Icon fontSize="small">notifications</Icon>,
-    route: "/notifications",
-    component: <Notifications />,
+    key: "KPIs",
+    icon: <FontAwesomeIcon icon={faChartColumn} />,
+    // icon: <Icon fontSize="small">notifications</Icon>,
+    route: "/kpis",
+    component: <KPIs />,
+  },
+  // {
+  //   type: "collapse",
+  //   name: "Catalogos",
+  //   key: "Catalogos",
+  //   icon: <Icon fontSize="small">person</Icon>,
+  //   route: "/catalogos",
+  //   component: <Catalogos />,
+  // },
+
+  {
+    type: "collapse",
+    name: "Sign In",
+    key: "sign-in",
+    icon: <Icon fontSize="small">login</Icon>,
+    route: "/authentication/sign-in",
+    component: <SignIn />,
   },
   {
     type: "collapse",
-    name: "Catalogos",
-    key: "profile",
-    icon: <Icon fontSize="small">person</Icon>,
-    route: "/profile",
-    component: <Profile />,
+    name: "Sign Up",
+    key: "sign-up",
+    icon: <Icon fontSize="small">assignment</Icon>,
+    route: "/authentication/sign-up",
+    component: <SignUp />,
   },
+  {
+    type: "collapse",
+    name: "Catálogos",
+    key: "catalogues",
+    icon: <FontAwesomeIcon icon={faLayerGroup} />,
+    route: "/catalogos",
+    component: <Catalogues />,
+    // collapse: [
+    //   {
+    //     type: "collapse",
+    //     name: "Estados",
+    //     key: "states",
+    //     icon: <FontAwesomeIcon icon={faLayerGroup} />,
+    //     route: "estados",
+    //     component: <State />,
+    //   }
+    // ]
+  },
+  // {
+  //   type: "collapse",
+  //   name: "Estados",
+  //   key: "states",
+  //   icon: <FontAwesomeIcon icon={faLayerGroup} />,
+  //   route: "/catalogos/estados",
+  //   component: <State />,
+  // }
 ];
 
 export default routes;

@@ -12,44 +12,48 @@ Coded by www.creative-tim.com
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
-
 import { useState } from "react";
-
-// react-router-dom components
-import { Link } from "react-router-dom";
-
-// @mui material components
+import { Link, useNavigate } from "react-router-dom";
 import Card from "@mui/material/Card";
 import Switch from "@mui/material/Switch";
-import Grid from "@mui/material/Grid";
-import MuiLink from "@mui/material/Link";
-
-// @mui icons
-import FacebookIcon from "@mui/icons-material/Facebook";
-import GitHubIcon from "@mui/icons-material/GitHub";
-import GoogleIcon from "@mui/icons-material/Google";
-
-// Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
-import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
-
-// Authentication layout components
-import BasicLayout from "layouts/authentication/components/BasicLayout";
-
-// Images
+import BasicLayout from "layouts/authentication/components/BasicSignIn";
 import bgImage from "assets/images/bg-sign-in-basic.jpeg";
+import { TextField } from "@mui/material";
+import { asMuiTextField } from "layouts/mandates/components/SearchForm/asMuiTextField";
+import useForm from "layouts/mandates/components/SearchForm/useForm";
 
 function Basic() {
+  const initialValues = {
+    usuario: "",
+    contraseña: "",
+  };
+  const { register, validateForm } = useForm(initialValues);
   const [rememberMe, setRememberMe] = useState(false);
-
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
+  const navigate = useNavigate();
+
+  const navigateOrganigrama = () => {
+    navigate("../Organigrama");
+  };
+
+  const onSubmit = () => {
+    if (validateForm()) {
+      // Success process
+      navigateOrganigrama();
+    } else {
+      // Error p
+    }
+  };
 
   return (
     <BasicLayout image={bgImage}>
       <Card>
         <MDBox
+          display="flex"
+          justifyContent="center"
           variant="gradient"
           bgColor="info"
           borderRadius="lg"
@@ -63,7 +67,7 @@ function Basic() {
           <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
             Sign in
           </MDTypography>
-          <Grid container spacing={3} justifyContent="center" sx={{ mt: 1, mb: 2 }}>
+          {/* <Grid container spacing={3} justifyContent="center" sx={{ mt: 1, mb: 2 }}>
             <Grid item xs={2}>
               <MDTypography component={MuiLink} href="#" variant="body1" color="white">
                 <FacebookIcon color="inherit" />
@@ -79,18 +83,28 @@ function Basic() {
                 <GoogleIcon color="inherit" />
               </MDTypography>
             </Grid>
-          </Grid>
+          </Grid> */}
         </MDBox>
         <MDBox pt={4} pb={3} px={3}>
           <MDBox component="form" role="form">
             <MDBox mb={2}>
-              <MDInput type="email" label="Email" fullWidth />
+              <TextField
+                type="email"
+                label="Usuario"
+                fullWidth
+                {...asMuiTextField(register("usuario")((v) => v.length > 0))}
+              />
             </MDBox>
             <MDBox mb={2}>
-              <MDInput type="password" label="Password" fullWidth />
+              <TextField
+                type="password"
+                label="Contraseña"
+                fullWidth
+                {...asMuiTextField(register("contraseña")((v) => v.length > 0))}
+              />
             </MDBox>
             <MDBox display="flex" alignItems="center" ml={-1}>
-              <Switch checked={rememberMe} onChange={handleSetRememberMe} />
+              <Switch checked={rememberMe} onChange={handleSetRememberMe} color="primary" />
               <MDTypography
                 variant="button"
                 fontWeight="regular"
@@ -98,17 +112,17 @@ function Basic() {
                 onClick={handleSetRememberMe}
                 sx={{ cursor: "pointer", userSelect: "none", ml: -1 }}
               >
-                &nbsp;&nbsp;Remember me
+                &nbsp;&nbsp;Recuérdame
               </MDTypography>
             </MDBox>
-            <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" color="info" fullWidth>
+            <MDBox display="flex" justifyContent="center" mt={4} mb={1}>
+              <MDButton variant="gradient" color="info" fullWidth onClick={onSubmit}>
                 sign in
               </MDButton>
             </MDBox>
             <MDBox mt={3} mb={1} textAlign="center">
               <MDTypography variant="button" color="text">
-                Don&apos;t have an account?{" "}
+                No tienes una cuenta ?{" "}
                 <MDTypography
                   component={Link}
                   to="/authentication/sign-up"

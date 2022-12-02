@@ -1,0 +1,271 @@
+{
+  "orgdata": [
+    {
+      "nombre_area": "Director de Operaciones",
+      "responde_a": "",
+      "id": 1
+    },
+    {
+      "nombre_area": "Gerente Distrital",
+      "responde_a": "Director de Operaciones",
+      "id": 2
+    },
+    {
+      "nombre_area": "Gerente General de Tienda",
+      "responde_a": "Gerente Distrital",
+      "id": 3
+    },
+    {
+      "nombre_area": "Enlace",
+      "responde_a": "Gerente Distrital",
+      "id": 4
+    },
+    {
+      "nombre_area": "Tecnología",
+      "responde_a": "Gerente Distrital",
+      "id": 5
+    },
+    {
+      "nombre_area": "Pedro",
+      "responde_a": "Gerente General de Tienda",
+      "id": 6
+    }
+  ],
+  "mandates": [
+    {
+      "tipo": "Informativa",
+      "nombre": "Junta Miercoles",
+      "cant": "",
+      "detalles": "Proyecto noviembre ",
+      "fecha_inicial": "2022-11-02",
+      "fecha_final": "2022-11-02",
+      "hora_inicial": "10:30",
+      "hora_final": "00:00",
+      "dias": "MI",
+      "visto": "",
+      "status": "",
+      "detalle": {
+        "fecha_creacion": "3/10/2022 8:57",
+        "fecha_modificacion": null,
+        "fecha_terminado": null,
+        "fecha_autorizacion": null
+      },
+      "id": 1
+    },
+    {
+      "tipo": "Meta",
+      "nombre": "Combo 5",
+      "cant": "80",
+      "detalles": "Realizar 5 ventas como mínimo del combo 5",
+      "fecha_inicial": "2022-11-30",
+      "fecha_final": "2022-11-30",
+      "hora_inicial": "07:00",
+      "hora_final": "20:00",
+      "dias": "L M MI J V S",
+      "visto": "",
+      "status": "",
+      "detalle": {
+        "fecha_creacion": "3/10/2022 9:0",
+        "fecha_modificacion": null,
+        "fecha_terminado": null,
+        "fecha_autorizacion": null
+      },
+      "id": 2
+    },
+    {
+      "tipo": "Acción",
+      "nombre": "Limpieza pasillo",
+      "cant": "10",
+      "detalles": "Probar equipo de limpieza nuevo",
+      "fecha_inicial": "",
+      "fecha_final": "",
+      "hora_inicial": "07:00",
+      "hora_final": "08:00",
+      "dias": "L M MI J V",
+      "visto": "",
+      "status": "",
+      "detalle": {
+        "fecha_creacion": "3/10/2022 9:2",
+        "fecha_modificacion": null,
+        "fecha_terminado": null,
+        "fecha_autorizacion": null
+      },
+      "id": 3
+    }
+  ],
+  "personal": [
+    {
+      "nombre": "Pedro",
+      "ap_paterno": "Sanchez",
+      "ap_materno": "Cruz",
+      "telefono": "81124124",
+      "extension": "52",
+      "area": "Tecnología",
+      "detalles": {
+        "rfc": "AGRAREGDS124124",
+        "curp": "HTAREGASDF124124",
+        "nombreComercial": "LKJADSFOWE ",
+        "ubicacion": {
+          "nombre_vialidad": "kamsdfoi",
+          "numero_interior": "124235",
+          "numero_exterior": "12451",
+          "tipo_vialidad": "calle",
+          "colonia": "Caeggeffadf",
+          "nombre_localidad": "Hefafsdfawe",
+          "municipio": "sanpedro"
+        }
+      },
+      "usuario": false,
+      "id": 1
+    },
+    {
+      "nombre": "Juan ",
+      "ap_paterno": "Rodriguez",
+      "ap_materno": "Gonazales",
+      "telefono": "81535125",
+      "extension": 52,
+      "area": "Director de Operaciones",
+      "detalles": {
+        "rfc": "GAEFADF12412",
+        "curp": "ASDFAWEF1412",
+        "ubicacion": {
+          "nombre_vialidad": "Puentes",
+          "numero_interior": "6041",
+          "numero_exterior": "1234",
+          "tipo_vialidad": "avenida",
+          "colonia": "Los rosales",
+          "nombre_localidad": "Habanero 1ra sección",
+          "estado": "sinaloa",
+          "municipio": "monterrey"
+        }
+      },
+      "usuario": true,
+      "id": 2
+    },
+    {
+      "nombre": "Luis",
+      "ap_paterno": "Lopez",
+      "ap_materno": "Trujillo",
+      "telefono": "811241243",
+      "extension": 52,
+      "area": "Gerente General de Tienda",
+      "detalles": {
+        "rfc": "AFEAF12412",
+        "curp": "ASDFAET23124",
+        "ubicacion": {
+          "nombre_vialidad": "Mango ",
+          "numero_interior": "1241",
+          "numero_exterior": "",
+          "tipo_vialidad": "avenida",
+          "colonia": "Frutas",
+          "nombre_localidad": "El manjar",
+          "estado": "nuevo leon",
+          "municipio": "monterrey"
+        }
+      },
+      "usuario": false,
+      "id": 3
+    }
+  ],
+  "locations": [
+    {
+      "nombre_sucursal": "Plaza Cumbres",
+      "direccion": "Av. Hacienda Peñuelos 6771 Local 2174, Residencial Cumbres Las Palmas, 64349 Monterrey, NL",
+      "horarios_entrada": {
+        "he_lunes": "10:00",
+        "he_martes": "",
+        "he_miercoles": "",
+        "he_jueves": "",
+        "he_viernes": "",
+        "he_sabado": "",
+        "he_domingo": ""
+      },
+      "horarios_salida": {
+        "hs_lunes": "18:00",
+        "hs_martes": "",
+        "hs_miercoles": "",
+        "hs_jueves": "",
+        "hs_viernes": "",
+        "hs_sabado": "",
+        "hs_domingo": ""
+      },
+      "id": 1
+    },
+    {
+      "nombre_sucursal": "Plaza Real",
+      "direccion": "Plaza Real Monterrey, Dr. José Eleuterio González (Gonzalitos) 315, Jardines del Cerro, 64050 Monterrey, N.L",
+      "horarios_entrada": {
+        "he_lunes": "10:49",
+        "he_martes": "",
+        "he_miercoles": "",
+        "he_jueves": "",
+        "he_viernes": "",
+        "he_sabado": "",
+        "he_domingo": ""
+      },
+      "horarios_salida": {
+        "hs_lunes": "13:53",
+        "hs_martes": "",
+        "hs_miercoles": "",
+        "hs_jueves": "",
+        "hs_viernes": "",
+        "hs_sabado": "",
+        "hs_domingo": ""
+      },
+      "id": 2
+    },
+    {
+      "nombre_sucursal": "Filosofos",
+      "direccion": "Filósofos 207 local 2, Tecnológico, 64700 Monterrey, N.L.",
+      "horarios_entrada": {
+        "he_lunes": "",
+        "he_martes": "",
+        "he_miercoles": "",
+        "he_jueves": "",
+        "he_viernes": "",
+        "he_sabado": "10:50",
+        "he_domingo": ""
+      },
+      "horarios_salida": {
+        "hs_lunes": "",
+        "hs_martes": "",
+        "hs_miercoles": "",
+        "hs_jueves": "",
+        "hs_viernes": "",
+        "hs_sabado": "23:55",
+        "hs_domingo": ""
+      },
+      "id": 3
+    }
+  ],
+  "states": [
+    {
+      "nombre": "Nuevo León",
+      "codigo": "NL",
+      "id": 1
+    }
+  ],
+  "cities": [
+    {
+      "estado": "Nuevo León",
+      "nombre": "Monterrey",
+      "clave": "MTY",
+      "id": 1
+    }
+  ],
+  "localities": [
+    {
+      "estado": "Nuevo León",
+      "ciudad": "Monterrey",
+      "nombre": "Los Morales",
+      "codPos": "63421",
+      "id": 1
+    }
+  ],
+  "road-types": [
+    {
+      "tipo": "Avenida",
+      "id": 2
+    }
+  ]
+}
