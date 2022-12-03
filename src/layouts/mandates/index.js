@@ -37,6 +37,106 @@ import { useState, useEffect } from "react";
 // eslint-disable-next-line no-unused-vars
 import MandateTable from "./components/MandateTable";
 
+
+
+
+
+const CheckBoxRow = ({title}) => {
+  const [checked, setChecked] = useState(false);
+  const handleChange = () => {
+    setChecked(prev => !prev);
+  };
+  return (
+    <Box sx={{display: "flex", gap: "0.5rem", justifyContent: "center", alignItems: "center"}}>
+
+      <Checkbox
+        checked={checked}
+        onChange={handleChange}
+        inputProps={{ 'aria-label': 'controlled' }}
+      />
+
+      <MDTypography variant="h6" fontWeight="medium">{title}</MDTypography>
+    </Box>
+  )
+}
+
+
+
+// const test = {
+//   estados: [
+//   {
+//     selected: false,
+//     id: 1,
+//     nombre: 'Estado 01',
+//     sucursal: [
+//       {
+//         selected: false,
+//         id: 1,
+//         nombre: 'Sucursal 01',
+//         areas: [
+//           {
+//             selected: false,
+//             id: 1,
+//             nombre: 'Area 01'
+//           },
+//           {
+//             selected: false,
+//             id: 2,
+//             nombre: 'Area 02'
+//           },
+//         ]
+//       },
+//     ]
+//   },
+//   {
+//     selected: false,
+//     id: 2,
+//     nombre: 'Estado 02',
+//     sucursal: [
+//       {
+//         selected: false,
+//         id: 1,
+//         nombre: 'Sucursal 01',
+//         areas: [
+//           {
+//             selected: false,
+//             id: 1,
+//             nombre: 'Area 01'
+//           },
+//           {
+//             selected: false,
+//             id: 2,
+//             nombre: 'Area 02'
+//           },
+//         ]
+//       },
+//       {
+//         selected: false,
+//         id: 1,
+//         nombre: 'Sucursal 02',
+//         areas: [
+//           {
+//             selected: false,
+//             id: 1,
+//             nombre: 'Area 01'
+//           }
+//         ]
+//       }
+//     ]
+//   },
+// ]
+// };
+
+
+
+
+
+
+
+
+
+
+
 function Mandatos() {
   // eslint-disable-next-line no-unused-vars
   const [isPending, setIsPending] = useState(true);
@@ -105,29 +205,6 @@ function Mandatos() {
 
   const [widthOfTable, setWidthOfTable] = useState(0);
 
-  const estados = [
-    {
-      estado: "Nuevo Leon",
-    },
-    {
-      estado: "Sinaloa",
-    },
-  ];
-
-  const municipios = [
-    {
-      municipio: "Municipio 1",
-    },
-    {
-      municipio: "Municipio 2",
-    },
-  ];
-
-  const sucursales = [{ sucursal: "Sucursal 1" }, { sucursal: "Sucursal 2" }];
-
-  const areas = [{ area: "Area 1" }, { area: "Area 2" }];
-
-  const usuarios = [{ usuario: "Usuario 1" }, { usuario: "Usuario 2" }];
 
   const [selectedCities, setSelectedCities] = useState([]);
   const handleCityChange = (e) => {
@@ -139,45 +216,6 @@ function Mandatos() {
     }
   };
 
-  const [selectedStates, setSelectedStates] = useState([]);
-  const handleStateChange = (e) => {
-    const index = selectedStates.indexOf(e.target.value);
-    if (index === -1) {
-      setSelectedStates([...selectedStates, e.target.value]);
-    } else {
-      setSelectedStates(selectedStates.filter((state) => state !== e.target.value));
-    }
-  };
-
-  const [selectedLocations, setSelectedLocations] = useState([]);
-  const handleLocationChange = (e) => {
-    const index = selectedLocations.indexOf(e.target.value);
-    if (index === -1) {
-      setSelectedLocations([...selectedLocations, e.target.value]);
-    } else {
-      setSelectedLocations(selectedLocations.filter((loc) => loc !== e.target.value));
-    }
-  };
-
-  const [selectedAreas, setSelectedAreas] = useState([]);
-  const handleAreaChange = (e) => {
-    const index = selectedAreas.indexOf(e.target.value);
-    if (index === -1) {
-      setSelectedAreas([...selectedAreas, e.target.value]);
-    } else {
-      setSelectedAreas(selectedAreas.filter((area) => area !== e.target.value));
-    }
-  };
-
-  const [selectedUsers, setSelectedUsers] = useState([]);
-  const handleUserChange = (e) => {
-    const index = selectedUsers.indexOf(e.target.value);
-    if (index === -1) {
-      setSelectedUsers([...selectedUsers, e.target.value]);
-    } else {
-      setSelectedUsers(selectedUsers.filter((user) => user !== e.target.value));
-    }
-  };
 
   // estados.map(e => console.log(e.estado));
 
@@ -241,7 +279,16 @@ function Mandatos() {
 
             <Modal open={showAdd} onClose={handleShowAdd}>
               <Card sx={modalStyle}>
-                <Box>
+                <ul>
+                  <li>
+                    <CheckBoxRow title='ola' />
+                  </li>
+
+                  <li>
+                    <CheckBoxRow title='ola2' />
+                  </li>
+                </ul>
+                {/* <Box>
                   <ul>
                     {estados.map((edo) => (
                       <li>
@@ -304,7 +351,7 @@ function Mandatos() {
                       </li>
                     ))}
                   </ul>
-                </Box>
+                </Box> */}
               </Card>
             </Modal>
 

@@ -1,7 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable prettier/prettier */
-/* eslint-disable react/prop-types */
-// import { Box } from "@mui/system";;
 import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import MDBox from "components/MDBox";

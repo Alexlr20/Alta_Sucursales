@@ -30,6 +30,7 @@
 
         // AllStates && AllStatus
         case $baseFilter && $location->id:
+            echo 'IN ID';
             $locationRecords=array();
             $locationRecords["sucursal"]=array(); 
     

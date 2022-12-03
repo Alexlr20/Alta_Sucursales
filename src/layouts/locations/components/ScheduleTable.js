@@ -1,8 +1,4 @@
-/* eslint-disable no-param-reassign */
-/* eslint-disable react/prop-types */
-
 import React from "react";
-
 
 const ScheduleTable = React.memo(({data, column})=>{
     console.log('Tabla renderizada');
@@ -28,33 +24,6 @@ const ScheduleTable = React.memo(({data, column})=>{
         </table>
     );
 });
-
-// function ScheduleTable({ data, column }) {
-//     console.log('Tabla renderizada');
-//     // console.log('data in OrgTable -> ', data);
-//     // console.log('column in OrgTable -> ', column);
-
-//     return (
-//         <table className="org-table">
-//             <thead>
-//                 <tr>
-//                     {column.map((item) => (
-//                         <TableHeadItem item={item} />
-//                     ))}
-//                 </tr>
-//             </thead>
-//             <tbody>
-//                 {data.map((item) => (
-//                     <TableRow item={item} column={column} />
-//                 ))}
-//             </tbody>
-//         </table>
-//     );
-// }
-
-// const MemoizedScheduleTable = useMemo((data, column) =>  ScheduleTable(data, column));
-// const MemoizedScheduleTable = React.memo(ScheduleTable);
-
 
   function tConvert (time) {
     // Check correct time format and split into components

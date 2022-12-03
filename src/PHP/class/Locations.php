@@ -24,10 +24,7 @@ class Location
     {
 
         switch ($this) {
-            case $this->id:
-                // $stmt = $this->conn->prepare("SELECT ciudad.id, ciudad.nombre_ciud AS nombre, ciudad.clave, ciudad.id_edo, estado.nombre_edo FROM estado INNER JOIN ciudad ON estado.id = ciudad.id_edo");
-                // $stmt = $this->conn->prepare("INSERT INTO ubicacion_suc(nombre_vialidad, numero_int, numero_ext,id_tipo_vialidad,nombre_localidad,id_colonia, codigo_postal) VALUES(?,?,?,?,?,?,?);");
-                
+            case !empty($this->id):
                 $stmt = $this->conn->prepare("SELECT 
                 sucursal.nombre,
                 tipo_vialidad.tipo,

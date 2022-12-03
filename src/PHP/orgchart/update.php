@@ -10,44 +10,31 @@
      }  
 
     include_once '../config/Database.php';
-    include_once '../class/Cities.php';
+    include_once '../class/Orgchart.php';
 
     $database = new Database();
     $db = $database->getConnection();
 
-    $city = new City($db);
+    $orgchart = new Orgchart($db);
 
     $data = json_decode(file_get_contents('php://input'));
 
     print_r($data);
 
-    // echo $data->id;
-    // echo $data->nombre;
-    // echo $data->clave;
-
-    // $city->id = $data->clave;
-    // echo $city->id;
-
-    // echo "ID vacio? ".empty($data->id);
-    
-
     if(
         !empty($data->id) &&
-        !empty($data->nombre_ciud) &&
-        !empty($data->clave) &&
-        !empty($data->id_edo)
+        !empty($data->area)
     ){
-        $city->id = $data->id;
-        $city->name = $data->nombre_ciud;
-        $city->code = $data->clave;
-        $city->state_id = $data->id_edo;
+        $orgchart->id = $data->id;
+        $orgchart->area = !empty($data->area)? $data->area : "NULL";
+        $orgchart->responds_to = $data->responde_a;
 
-        if($city->update()){
+        if($orgchart->update()){
             http_response_code(200);
-            echo json_encode(array("message" => "City was uploaded :D"));
+            echo json_encode(array("message" => "Area was uploaded :D"));
         } else {
             http_response_code(503);
-            echo json_encode(array("message" => "Unable to update city"));
+            echo json_encode(array("message" => "Unable to update area"));
         }
     }
     else {

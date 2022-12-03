@@ -30,6 +30,7 @@ import MDTypography from "components/MDTypography";
 import "../../styles/Table.css";
 import CreatePersonal from "./components/CreatePersonal";
 import PersonalTable from "./components/PersonalTable";
+import UpdatePersonal from "./components/UpdatePersonal";
 // import PersonalTable  from "./components/PersonalTable";
 
 // const OrganigramaImg = require("./Organigrama.jpg");
@@ -42,6 +43,12 @@ function Personal() {
   const [personal, setPersonal] = useState(null);
   const [showCreate, setShowCreate] = useState(false);
   const [searchInput, setSearchInput] = useState("");
+
+  const [showEdit, setShowEdit] = useState(false);
+
+  const handleShowEdit = () => {
+    setShowEdit(prev => !prev);
+  };
 
   const [refresh, setRefresh] = useState(false);
 
@@ -72,6 +79,9 @@ function Personal() {
   const handleSearchChange = ({ target }) => {
     setSearchInput(target.value);
   };
+
+  const [idToUpdate, setIdToUpdate] = useState(0);
+  const [employeeIsUser, setEmployeeIsUser] = useState(false);
 
   const modalStyle = {
     width: "80%",
@@ -138,10 +148,16 @@ function Personal() {
             </MDBox>
           </Modal>
 
+          <Modal open={showEdit} onClose={handleShowEdit}>
+            <MDBox mt={2} sx={modalStyle}>
+              <UpdatePersonal idToUpdate={idToUpdate} employeeIsUser={employeeIsUser} handleShowEdit={handleShowEdit} handleRefresh={handleRefresh}/>
+            </MDBox>
+          </Modal>
+
           <MDBox mb={2} mt={2}>
             {/* {error && <div>{error}</div>} */}
             {/* {isPending && <div>Cargando...</div>} */}
-            {personal && <PersonalTable personal={personal} />}
+            {personal && <PersonalTable personal={personal} handleShowEdit={handleShowEdit} setIdToUpdate={setIdToUpdate} setEmployeeIsUser={setEmployeeIsUser}/>}
           </MDBox>
         </Grid>
       </Card>

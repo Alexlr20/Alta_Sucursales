@@ -47,7 +47,7 @@
 
         $location->location_name = $data['nombre_sucursal'];
         $location->road_name = $data['nombre_vialidad'];
-        $location->int_number = !empty($data['num_interior']) ? $data['num_interior'] : "NULL";
+        $location->int_number = !empty($data['num_interior']) ? $data['num_interior'] : 'NULL';
         $location->ext_number = $data['num_exterior'];
         $location->road_type_id = $data['tipo_vialidad'];
         $location->locality_name = $data['nombre_localidad'];

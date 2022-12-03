@@ -14,6 +14,7 @@
     
     
     $orgchart->id = (isset($_GET['id']) && $_GET['id']) ? $_GET['id'] : '0';
+    $orgchart->area_id = (isset($_GET['area_id']) && $_GET['area_id']) ? $_GET['area_id'] : '0';
 
     $result = $orgchart->read();
 
@@ -22,6 +23,24 @@
     // print_r($result->fetch_assoc());
 
     switch($orgchart){
+            case $baseFilter && $orgchart->id && $orgchart->area_id:
+            $orgchartRecords=array();
+            $orgchartRecords["organigrama"]=array(); 
+    
+            while ($item = $result->fetch_assoc()) { 	
+                extract($item); 
+                $itemDetails=array(
+                    "id" => $id,
+                    "nombre_area" => $nombre,
+                    "responde_a" => $responde_a,
+                ); 
+               array_push($orgchartRecords["organigrama"], $itemDetails);
+            }    
+            
+            http_response_code(200);     
+            echo json_encode($orgchartRecords);
+            break;
+
             case $baseFilter && $orgchart->id:
             $orgchartRecords=array();
             $orgchartRecords["organigrama"]=array(); 

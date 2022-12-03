@@ -2,6 +2,7 @@
     class Orgchart{
         private $orgchartTable = 'areas';
         public $id;
+        public $area_id;
         public $area;
         public $responds_to;
         private $conn;
@@ -12,6 +13,15 @@
 
         function read(){
             switch($this){
+
+                case !empty($this->area_id):
+                    $stmt = $this->conn->prepare("SELECT area.id, area.nombre, area.responde_a FROM area
+                    INNER JOIN area_x_sucursal ON area.id = area_x_sucursal.id_area
+                    WHERE area_x_sucursal.id_sucursal = ? AND area_x_sucursal.id_area=? AND area_x_sucursal.suspendida=0 AND area.suspendida=0;");
+
+                    $stmt->bind_param("ii", $this->id, $this->area_id);
+                    break;
+
                 default:
                     $stmt = $this->conn->prepare("SELECT
                     sucursal.nombre,
@@ -53,12 +63,12 @@
 
         function update(){
             $stmt = $this->conn->prepare("
-            UPDATE ".$this->orgchartTable." SET area=?, responde_a=? WHERE id=?");
+            UPDATE area SET area.nombre=?, area.responde_a=? WHERE id=?");
             $this->id = htmlspecialchars(strip_tags($this->id));
-            $this->area = htmlspecialchars(strip_tags($this->area));
-            $this->responde_a = htmlspecialchars(strip_tags($this->responde_a));
+            $this->area = htmlspecialchars(strip_tags($this->area)); 
+            $this->responds_to = htmlspecialchars(strip_tags($this->responds_to));
 
-            $stmt->bind_param("ssi", $this->area, $this->responde_a, $this->id);
+            $stmt->bind_param("ssi", $this->area, $this->responds_to, $this->id);
 
             if($stmt->execute()){
                 return true;

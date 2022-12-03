@@ -10,21 +10,25 @@
      }  
 
     include_once '../config/Database.php';
-    include_once '../class/Cities.php';
+    include_once '../class/Personal.php';
 
     $database = new Database();
     $db = $database->getConnection();
 
-    $city = new City($db);
+    $person = new Personal($db);
 
-    $data = json_decode(file_get_contents('php://input'));
+    $data = json_decode(file_get_contents('php://input'), true);
+    $data = $data['newPerson'];
 
-    print_r($data);
+    // $personal->employeeToUser = (isset($_GET['employeeToUser']) && $_GET['employeeToUser']) ? $_GET['employeeToUser'] : '0';
+    $queries = array();
+    parse_str($_SERVER['QUERY_STRING'], $queries);
 
-    // echo $data->id;
+    $person->employeeToUser = isset($queries['employeeToUser']) && $queries['employeeToUser'] ? $queries['employeeToUser'] : '0';
+
+    // print_r($data);
     // echo $data->nombre;
     // echo $data->clave;
-
     // $city->id = $data->clave;
     // echo $city->id;
 
@@ -32,25 +36,61 @@
     
 
     if(
-        !empty($data->id) &&
-        !empty($data->nombre_ciud) &&
-        !empty($data->clave) &&
-        !empty($data->id_edo)
-    ){
-        $city->id = $data->id;
-        $city->name = $data->nombre_ciud;
-        $city->code = $data->clave;
-        $city->state_id = $data->id_edo;
+        !empty($data['nombre']) &&
+        !empty($data['ap_paterno']) &&
+        !empty($data['ap_materno']) &&
+        !empty($data['telefono']) &&
+        !empty($data['area']) &&
+        !empty($data['rfc']) &&
+        !empty($data['curp']) &&
+        !empty($data['sucursal']) &&
 
-        if($city->update()){
+        !empty($data['nombre_vialidad']) &&
+        !empty($data['numero_exterior']) &&
+        !empty($data['tipo_vialidad']) &&
+        !empty($data['nombre_localidad']) &&
+        !empty($data['colonia']) &&
+        !empty($data['municipio']) &&
+        !empty($data['id'])
+
+    ){
+        $person->name = $data['nombre'];
+        $person->paternal_surname = $data['ap_paterno'];
+        $person->maternal_surname = $data['ap_materno'];
+        $person->phone = $data['telefono'];
+        $person->area_id = $data['area'];
+        $person->rfc = $data['rfc'];
+        $person->curp = $data['curp'];
+        $person->location_id = $data['sucursal'];
+
+        $person->road_name = $data['nombre_vialidad'];
+        $person->int_number = !empty($data['numero_interior']) ? $data['numero_interior'] : null;
+        $person->ext_number = $data['numero_exterior'];
+        $person->road_type_id = $data['tipo_vialidad'];
+        $person->locality_name = $data['nombre_localidad'];
+        $person->locality = $data['colonia'];
+        $person->city = $data['municipio'];
+
+        $person->id = $data['id'];
+
+        if(!empty($data['usuario'])){
+            $person->user = $data['usuario'];
+        }
+
+        if($person->user){
+            $person->email = $data['correo'];
+            $person->password = $data['contrasena'];
+        }
+
+        if($person->update()){
             http_response_code(200);
-            echo json_encode(array("message" => "City was uploaded :D"));
+            echo json_encode(array("message" => "Person was uploaded :D"));
         } else {
             http_response_code(503);
-            echo json_encode(array("message" => "Unable to update city"));
+            echo json_encode(array("message" => "Unable to update person"));
         }
     }
     else {
         http_response_code(400);
-        echo json_encode(array("message" => "Unable to update city. Data is incomplete."));
+        echo json_encode(array("message" => "Unable to update person. Data is incomplete."));
     }

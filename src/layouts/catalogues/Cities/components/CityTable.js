@@ -143,7 +143,6 @@ function ActionButtons({ id, handleRefresh }) {
         // axios.patch('http://localhost/ddsoftware/Alta_Sucursales/src/PHP/cities/delete.php', {data: {id:id}});
 
         axios.patch(`http://localhost/ddsoftware/Alta_Sucursales/src/PHP/cities/delete.php`, {
-            // eslint-disable-next-line object-shorthand
             id: id,
         })
             .then((response) => console.log('Borrado :D', response))

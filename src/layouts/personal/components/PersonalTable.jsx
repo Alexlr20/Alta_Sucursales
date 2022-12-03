@@ -11,20 +11,27 @@ import React from "react";
 // import mandateData from "../SearchForm/mandateData";
 
 // eslint-disable-next-line react/prop-types
-export const ActionButtons = () => {
+export const ActionButtons = ({ id, handleShowEdit, setIdToUpdate, setEmployeeIsUser, isUser }) => {
   return (
-    <div style={{display: "flex", gap: "1rem", alignSelf: "center", justifyContent: "center"}}>
-    <FontAwesomeIcon icon={faPenToSquare} size="sm" style={{ cursor: "pointer"}}
-    // onClick={handleShowAdd}
-    />
-    <FontAwesomeIcon icon={faTrash} size="sm" style={{ cursor: "pointer" }}
-    // onClick={handleShowDelete} 
-    />
-  </div>
+    <div style={{ display: "flex", gap: "1rem", alignSelf: "center", justifyContent: "center" }}>
+      <FontAwesomeIcon icon={faPenToSquare} size="sm" style={{ cursor: "pointer" }}
+        onClick={() => {
+          console.log('IDDD ->>> ', id);
+          console.log('ISUSER? ->>', isUser);
+          setEmployeeIsUser(isUser);
+          setIdToUpdate(id);
+
+          handleShowEdit()
+        }}
+      />
+      <FontAwesomeIcon icon={faTrash} size="sm" style={{ cursor: "pointer" }}
+      // onClick={handleShowDelete} 
+      />
+    </div>
   )
 }
 
-export default function PersonalTable({ personal }) {
+export default function PersonalTable({ personal, handleShowEdit, setIdToUpdate, setEmployeeIsUser}) {
   // const { columns, rows } = mandateData();
 
   // eslint-disable-next-line react/no-unstable-nested-components
@@ -70,7 +77,7 @@ export default function PersonalTable({ personal }) {
     Telefono: <TableFiller name={elem.telefono} />,
     Area: <TableFiller name={elem.area} />,
     Usuario: <TableFiller name={elem.id_usuario !== null ? "Si" : "No"} />,
-    Acciones: <ActionButtons />
+    Acciones: <ActionButtons id={elem.id} handleShowEdit={handleShowEdit} setIdToUpdate={setIdToUpdate} setEmployeeIsUser={setEmployeeIsUser} isUser={elem.id_usuario !== null}/>
 
   }));
 
