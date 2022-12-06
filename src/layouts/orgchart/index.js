@@ -91,7 +91,10 @@ const ActionButtons = ({ area_id, setShowEdit, setShowDelete, setAreaId }) => {
         }}
       />
       <FontAwesomeIcon icon={faTrash} size="sm" style={{ cursor: "pointer" }}
-        onClick={() => setShowDelete(true)}
+        onClick={() => {
+          setAreaId(area_id);
+          setShowDelete(true);
+        }}
       />
     </div>
   )
@@ -100,21 +103,7 @@ const ActionButtons = ({ area_id, setShowEdit, setShowDelete, setAreaId }) => {
 
 
 function Organigrama() {
-  const areasFromTree = [
-    { nombre_area: 'Director General', responde_a: null },
-    { nombre_area: 'Equipo Operativo', responde_a: 'Director General' },
-    { nombre_area: 'Equipo Comercial', responde_a: 'Director General' },
-    { nombre_area: 'Comunicacion Sistemas', responde_a: 'Equipo Operativo' },
-    { nombre_area: 'Sistemas', responde_a: 'Equipo Operativo' },
-    { nombre_area: 'Venta Comunicacion', responde_a: 'Equipo Comercial' },
-    { nombre_area: 'Venta Sistemas', responde_a: 'Equipo Comercial' },
-  ];
-
-
-
   const [areas, setAreas] = useState([]);
-  // const [areasPending, setAreasPending] = useState(true);
-  // const [areasError, setAreasError] = useState(null);
 
   const [locationValues, setLocationValues] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState("");
@@ -127,14 +116,11 @@ function Organigrama() {
 
   const [refresh, setRefresh] = useState(false);
 
-  console.log('SELECTED LOCATIOON ->  ', selectedLocation);
-
   const handleRefresh = () => {
     setRefresh((current) => !current);
   };
 
   useEffect(() => {
-    // axios.get('http://localhost:8000/states/')
     if (selectedLocation !== '') {
       axios.get(`http://localhost/ddsoftware/Alta_Sucursales/src/PHP/orgchart/read.php?id=${selectedLocation}`)
         .then((response) => {
@@ -143,7 +129,6 @@ function Organigrama() {
           console.log('organigramawtff -> ', organigrama);
           const x = getFormatedAreas(organigrama);
           setAreas(x);
-          // setListedStates(estado);
         })
         .catch((error) => console.log(error));
     }
@@ -152,7 +137,6 @@ function Organigrama() {
 
 
   useEffect(() => {
-    // axios.get('http://localhost:8000/states/')
     axios.get('http://localhost/ddsoftware/Alta_Sucursales/src/PHP/locations/read.php')
       .then((response) => {
         const { data } = response;
@@ -203,15 +187,16 @@ function Organigrama() {
 
   const confirmDelete = (e) => {
     e.preventDefault();
-    console.log('BORRADO SEGUUUN');
-    // axios.delete(`http://localhost:8000/cities/${id}`)
-    // axios.patch('http://localhost/ddsoftware/Alta_Sucursales/src/PHP/cities/delete.php', {data: {id:id}});
-
-    // axios.patch(`http://localhost/ddsoftware/Alta_Sucursales/src/PHP/cities/delete.php`, {
-
-    // })
-      // .then((response) => console.log('Borrado :D', response))
-      // .catch(error => console.log(error))
+    axios.patch('http://localhost/ddsoftware/Alta_Sucursales/src/PHP/orgchart/delete.php', {
+      id: areaId,
+    })
+      .then((response) => console.log('Borrado :D', response))
+      .catch(error => {
+        if(error.message == 'Request failed with status code 503'){
+          alert('La sucursal no se puede borrar por que ya se está utilizando');
+        }
+        console.log(error)
+      })
 
     handleShowDelete();
     handleRefresh();
@@ -236,18 +221,8 @@ function Organigrama() {
 
   return (
     <DashboardLayout>
-      <MDBox
-        py={3}
-        px={2}
-        variant="gradient"
-        bgColor="info"
-        borderRadius="lg"
-        coloredShadow="info"
-        mb={4}
-      >
-        <MDTypography variant="h6" color="white">
-          Organigrama
-        </MDTypography>
+      <MDBox py={3} px={2} variant="gradient" bgColor="info" borderRadius="lg" coloredShadow="info" mb={4}>
+        <MDTypography variant="h6" color="white">Organigrama</MDTypography>
       </MDBox>
       <MDBox mt={4} className="org-chart">
         <Card sx={{ padding: "1rem", height: "77vh" }}>
@@ -316,21 +291,7 @@ function Organigrama() {
               />
             </Box>
           </Modal>
-
-
-          {/* <Modal
-            open={showDelete}
-            onClose={handleShowDelete}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-          >
-            <Box sx={modalStyle}>
-              <MDTypography>Estás seguro?</MDTypography>
-            </Box>
-          </Modal> */}
-
           
-
           <Modal open={showDelete} onClose={handleShowDelete}>
             <Card style={modalStyle2} sx={{ display: "flex", gap: "1.5rem" }}>
               <div style={{ width: "100%", display: "flex", justifyContent: "flex-end" }}>
@@ -344,34 +305,7 @@ function Organigrama() {
               </Box>
             </Card>
           </Modal>
-
-
-
-
-
-
-
-
-
-
-          {/* 
-          <Modal
-            open={showEdit}
-            onClose={handleShowEdit}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-          >
-            <Box sx={modalStyle}>
-              <OrgPopUp
-                close={setShowEdit(false)}
-                handleClose={handleShowEdit}
-                handleRefresh={handleRefresh}
-                selectedLocation={selectedLocation}
-              />
-            </Box>
-          </Modal> */}
-
-
+          
           <div style={{ overflowY: "scroll", display: "block" }}>
             {areas && <Table data={rows} column={column} />}
           </div>

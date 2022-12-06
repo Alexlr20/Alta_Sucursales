@@ -41,22 +41,22 @@ import MandateTable from "./components/MandateTable";
 
 
 
-const CheckBoxRow = ({title}) => {
+const CheckBoxRow = ({ title }) => {
   const [checked, setChecked] = useState(false);
   const handleChange = () => {
     setChecked(prev => !prev);
   };
   return (
-    <Box sx={{display: "flex", gap: "0.5rem", justifyContent: "center", alignItems: "center"}}>
-
-      <Checkbox
-        checked={checked}
-        onChange={handleChange}
-        inputProps={{ 'aria-label': 'controlled' }}
-      />
-
-      <MDTypography variant="h6" fontWeight="medium">{title}</MDTypography>
-    </Box>
+    <li>
+      <Box sx={{ display: "flex", gap: "0.5rem", alignItems: "center"}}>
+        <Checkbox
+          checked={checked}
+          onChange={handleChange}
+          inputProps={{ 'aria-label': 'controlled' }}
+        />
+        <MDTypography variant="h6" fontWeight="medium">{title}</MDTypography>
+      </Box>
+    </li>
   )
 }
 
@@ -219,6 +219,12 @@ function Mandatos() {
 
   // estados.map(e => console.log(e.estado));
 
+  const noBullet = {
+    listStyleType: 'none'
+  };
+
+
+
   return (
     <DashboardLayout>
       <MDBox
@@ -279,79 +285,20 @@ function Mandatos() {
 
             <Modal open={showAdd} onClose={handleShowAdd}>
               <Card sx={modalStyle}>
-                <ul>
-                  <li>
-                    <CheckBoxRow title='ola' />
-                  </li>
+                <ul style={noBullet}>
+                  <CheckBoxRow title='ola'/>
 
-                  <li>
-                    <CheckBoxRow title='ola2' />
-                  </li>
-                </ul>
-                {/* <Box>
-                  <ul>
-                    {estados.map((edo) => (
-                      <li>
-                        <Checkbox
-                          value={edo.estado}
-                          name={edo.estado}
-                          checked={selectedStates.includes(edo.estado)}
-                          onChange={handleStateChange}
-                        />
-                        <label htmlFor={edo.estado}>{edo.estado}</label>
-                        <ul>
-                          {municipios.map((mun) => (
-                            <li>
-                              <Checkbox
-                                value={mun.municipio}
-                                checked={selectedCities.includes(mun.municipio)}
-                                onChange={handleCityChange}
-                              />
-                              <label htmlFor={mun.municipio}>{mun.municipio}</label>
-                              <ul>
-                                {sucursales.map((suc) => (
-                                  <li>
-                                    <Checkbox
-                                      value={suc.sucursal}
-                                      checked={selectedLocations.includes(suc.sucursal)}
-                                      onChange={handleLocationChange}
-                                    />
-                                    <label htmlFor={suc.sucursal}>{suc.sucursal}</label>
-                                    <ul>
-                                      x
-                                      {areas.map((area) => (
-                                        <li>
-                                          <Checkbox
-                                            value={area.area}
-                                            checked={selectedAreas.includes(area.area)}
-                                            onChange={handleAreaChange}
-                                          />
-                                          <label htmlFor={area.area}>{area.area}</label>
-                                          <ul>
-                                            {usuarios.map((usr) => (
-                                              <li>
-                                                <Checkbox
-                                                  value={usr.usuario}
-                                                  checked={selectedUsers.includes(usr.usuario)}
-                                                  onChange={handleUserChange}
-                                                />
-                                                <label htmlFor={usr.usuario}>{usr.usuario}</label>
-                                              </li>
-                                            ))}
-                                          </ul>
-                                        </li>
-                                      ))}
-                                    </ul>
-                                  </li>
-                                ))}
-                              </ul>
-                            </li>
-                          ))}
-                        </ul>
-                      </li>
-                    ))}
+                  <ul style={noBullet}>
+                    <CheckBoxRow title='ola 1.1' />
+
+                    <ul style={noBullet}>
+                      <CheckBoxRow title='Ola 1.1.1' />
+                    </ul>
+
                   </ul>
-                </Box> */}
+
+                  <CheckBoxRow title='ola2' />
+                </ul>
               </Card>
             </Modal>
 

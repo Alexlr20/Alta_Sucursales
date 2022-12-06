@@ -1,7 +1,3 @@
-/* eslint-disable prettier/prettier */
-/* eslint-disable object-shorthand */
-/* eslint-disable camelcase */
-/* eslint-disable react/prop-types */
 import { faPenToSquare, faTrash, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Box, Button, Modal, TextField, Card } from "@mui/material";
@@ -11,7 +7,6 @@ import MDTypography from "components/MDTypography";
 import DataTable from "examples/Tables/DataTable";
 import React, { useState } from "react";
 
-// eslint-disable-next-line react/prop-types
 function ActionButtons({ id, handleRefresh }) {
     const [openEdit, setOpenEdit] = useState(false);
     const handleEdit = () => {
@@ -90,11 +85,17 @@ function ActionButtons({ id, handleRefresh }) {
 
     const confirmDelete = (e) => {
         e.preventDefault();
+
         axios.patch('http://localhost/ddsoftware/Alta_Sucursales/src/PHP/road_types/delete.php', {
             id: id,
         })
             .then((response) => console.log('Borrado :D', response))
-            .catch(error => console.log(error))
+            .catch(error => {
+                if (error.message == 'Request failed with status code 503') {
+                    alert('La sucursal no se puede borrar por que ya se está utilizando');
+                }
+                console.log(error);
+            })
 
         handleDelete();
         handleRefresh();
@@ -140,7 +141,7 @@ function ActionButtons({ id, handleRefresh }) {
 
                     <MDTypography variant="h6" fontWeight="medium">Borrar?, esta opción no es reversible</MDTypography>
                     <Box sx={{ display: "flex", justifyContent: "space-around" }}>
-                        <Button style={{ width: "fit-content", color: "#FFF", backgroundColor: '#1A73E8' }} variant="contained" onClick={confirmDelete}>Borrar estado</Button>
+                        <Button style={{ width: "fit-content", color: "#FFF", backgroundColor: '#1A73E8' }} variant="contained" onClick={confirmDelete}>Borrar tipo de vialidad</Button>
                         <Button style={{ width: "fit-content", color: "#FFF", backgroundColor: '#1A73E8' }} variant="contained" onClick={handleDelete}>Cancelar</Button>
                     </Box>
 
@@ -156,9 +157,6 @@ function ActionButtons({ id, handleRefresh }) {
 };
 
 export default function RoadTypeTable({ allRoadTypes, handleRefresh }) {
-    // const { columns, rows } = mandateData();
-
-    // eslint-disable-next-line react/no-unstable-nested-components
     function TableFiller({ name, calle }) {
         return (
             <MDBox display="flex" alignItems="center">
@@ -181,50 +179,18 @@ export default function RoadTypeTable({ allRoadTypes, handleRefresh }) {
         { Header: "Editar", accessor: "Editar", align: "left" },
     ];
 
-    // const prefakeddata = [
-    //     { id: 10, nombre: "Nuevo león", codigo: "NL"},
-    // ];
-
-
-
     const rows = allRoadTypes.map((elem) => ({
         ID: <TableFiller name={elem.id} />,
         Nombre: <TableFiller name={elem.tipo} />,
         Editar: <ActionButtons id={elem.id} handleRefresh={handleRefresh} />,
-
-        // Fechas: <TableFiller name={elem.fecha_inicial} calle={elem.fecha_final} />,
-        // Horario: <TableFiller name={elem.hora_inicial} calle={elem.hora_final} />,
-        // Dias: <DatesSelect dias={elem.dias} />,
-        // Visto: <TableFiller name={elem.visto} />,
-        // Status: <StatusDialog status="candado" id="status_id_0" textValue="" />,
-        // Detalle: (
-        //   <DetailDialog
-        //     detalle="detalle"
-        //     id="elem.id"
-        //     textValue=""
-        //     fechaInicial="fechacreacion"
-        //     fechaFinal="fechacreacion2"
-        //     horaInicial="horacreacion"
-        //     horaFinal="horacreacion2"
-
-        //     // fechaCreacion="fechainicial - hora"
-        //     // fechaModificacion="fechademod - horamod"
-        //     // fechaTerminado="fechaterminada - horaterminada"
-        //     // fechaAutorizacion="fechaautorizacion - horaautorizacion"
-        //   />
-        // ),
     }));
-
 
     return (
         <Card>
             <DataTable
                 table={{ columns, rows }}
                 isSorted={false}
-
-            entriesPerPage={false}
-            // showTotalEntries={false}
-            // noEndBorder
+                entriesPerPage={false}
             />
         </Card>
     );

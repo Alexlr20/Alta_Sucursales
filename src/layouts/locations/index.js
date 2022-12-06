@@ -18,29 +18,31 @@ Coded by www.creative-tim.com
 // import SearchContextProvider from "context/SearchContext";
 import { useEffect, useState } from "react";
 import axios from "axios";
-// @mui material components
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
-
-// Material Dashboard 2 React components
+import { Button, Modal } from "@mui/material";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
-
-// Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import Footer from "examples/Footer";
-// import DataTable from "examples/Tables/DataTable";
-
-// Data
-// import MDInput from "components/MDInput";
-import { Modal } from "@mui/material";
-// import InputAdornment from "@mui/material/InputAdornment";
-// import MDButton from "components/MDButton";
-// import { useState } from "react";
 import LocationForm from "./components/CreateLocation";
 import SearchForm from "./components/SearchForm";
 import Locations from "./components/Locations";
-// import Geocoding from "./components/Geocoding";
+import EditLocation from "./components/EditLocation";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { Box } from "@mui/system";
+
+const modalStyle2 = {
+  width: "30%",
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  backgroundColor: "#FFF",
+  padding: "1rem"
+};
+
 
 function Sucursales() {
   const [locations, setLocations] = useState(null);
@@ -48,71 +50,39 @@ function Sucursales() {
   const [isPending, setIsPending] = useState(true);
   const [showAdd, setShowAdd] = useState(false);
 
-  
+  const [locationIdToUpdate, setLocationIdToUpdate] = useState(0);
+  const [locationIdToDelete, setLocationIdToDelete] = useState(0);
+
+
+
   useEffect(() => {
-    // axios.get('http://localhost:8000/states/')
     axios.get('http://localhost/ddsoftware/Alta_Sucursales/src/PHP/locations/read.php')
-        .then((response) => {
-            const { data } = response;
-            const {sucursal} = data;
-            console.log('DATA FROM LOCALITIES -> ',sucursal);
+      .then((response) => {
+        const { data } = response;
+        const { sucursal } = data;
+        // console.log('DATA FROM LOCALITIES -> ',sucursal);
 
-            const formatedData = sucursal?.map(e => ({
-              id: e.id,
-              nombre_sucursal: e.nombre,
-              direccion: `${e.tipo === 'Avenida'? 'Av. ':''} ${e.nombre_vialidad} ${e.numero_ext}, ${e.numero_int === '' || e.numero_int === 'NULL' ? '' : `${e.numero_int},`} ${e.nombre_colonia}, ${e.codigo_postal}, ${e.nombre_ciud}, ${e.nombre_edo}`
-            }));
+        const formatedData = sucursal?.map(e => ({
+          id: e.id,
+          nombre_sucursal: e.nombre,
+          direccion: `${e.tipo === 'Avenida' ? 'Av. ' : ''} ${e.nombre_vialidad} ${e.numero_ext}, ${e.numero_int === '' || e.numero_int === 'NULL' ? '' : `${e.numero_int},`} ${e.nombre_colonia}, ${e.codigo_postal}, ${e.nombre_ciud}, ${e.nombre_edo}`
+        }));
 
-            console.log('FormatedData -> ', formatedData);
+        // console.log('FormatedData -> ', formatedData);
 
-            setLocations(formatedData);
-            setIsPending(false);
-            setError(null);
-        })
-        .catch((err) => {
-          console.log(err)
-          setIsPending(false);
-          setError(err.message);
-        });
-
-        
-
-}, []);
+        setLocations(formatedData);
+        setIsPending(false);
+        setError(null);
+      })
+      .catch((err) => {
+        console.log(err)
+        setIsPending(false);
+        setError(err.message);
+      });
 
 
-// useEffect(() => {
-//   // setTableReady(true);
-//   const abortCont = new AbortController();
 
-//   fetch("http://localhost:8000/locations", { signal: abortCont.signal })
-//     .then((res) => {
-//       if (!res.ok) {
-//         // error coming back from server
-//         throw Error("could not fetch the data for that resource");
-//       }
-//       return res.json();
-//     })
-//     .then((t) => {
-//       console.log("LOCATIONSINFETCH", t);
-//       setLocations(t);
-//       setIsPending(false);
-//       setError(null);
-//     })
-//     .catch((err) => {
-//       if (err.name === "AbortError") {
-//         // eslint-disable-next-line no-console
-//         console.log("fetch aborted");
-//       } else {
-//         // auto catches network / connection error
-//         setIsPending(false);
-//         setError(err.message);
-//       }
-//     });
-
-//   return () => abortCont.abort();
-// }, []);
-
-
+  }, []);
 
 
   const handleShowAdd = () => {
@@ -135,17 +105,35 @@ function Sucursales() {
     console.log(searchInput);
   };
 
+  const [showEdit, setShowEdit] = useState(false);
+
+  const handleShowEdit = () => {
+    setShowEdit(prev => !prev);
+  };
+
+  const [showDelete, setShowDelete] = useState(false);
+
+  const handleShowDelete = () => {
+    setShowDelete(prev => !prev);
+  };
+
+  const confirmDelete = (id) => {
+    axios.patch('http://localhost/ddsoftware/Alta_Sucursales/src/PHP/locations/delete.php', {
+      id: id,
+    })
+      .then((response) => console.log('Borrado :D', response))
+      .catch(error => {
+        if(error.message == 'Request failed with status code 503'){
+          alert('La sucursal no se puede borrar por que ya se está utilizando');
+        }
+        console.log(error)
+      })
+    setShowDelete(false);
+  };
+
   return (
     <DashboardLayout>
-      <MDBox
-        py={3}
-        px={2}
-        mb={4}
-        variant="gradient"
-        bgColor="info"
-        borderRadius="lg"
-        coloredShadow="info"
-      >
+      <MDBox py={3} px={2} mb={4} variant="gradient" bgColor="info" borderRadius="lg" coloredShadow="info">
         <MDTypography variant="h6" color="white">
           Alta de Sucursales
         </MDTypography>
@@ -156,15 +144,42 @@ function Sucursales() {
         <div style={{ display: "flex" }}>
           <MDBox pt={3} px={3} style={{ width: "50%", padding: "1rem" }}>
 
-
-
             <Modal open={showAdd} onClose={handleShowAdd}>
               <Card sx={modalStyle} style={{ width: "50%" }}>
                 <LocationForm handleShowAdd={handleShowAdd} />
               </Card>
             </Modal>
 
-            
+            <Modal open={showEdit} onClose={handleShowEdit}>
+              <Card sx={modalStyle} style={{ width: "50%" }}>
+                {/* <div>Ola</div> */}
+                <EditLocation handleShowAdd={handleShowEdit} locationIdToUpdate={locationIdToUpdate} />
+                {/* <LocationForm handleShowAdd={handleShowEdit} /> */}
+              </Card>
+            </Modal>
+
+            {/* <Modal open={showDelete} onClose={handleShowDelete}>
+              <Card sx={modalStyle} style={{ width: "50%" }}>
+                <DeleteLocation handleShowAdd={handleShowDelete} locationIdToUpdate={locationIdToUpdate}/>
+              </Card>
+            </Modal> */}
+
+            <Modal open={showDelete} onClose={handleShowDelete}>
+              <Card style={modalStyle2} sx={{ display: "flex", gap: "1.5rem" }}>
+                <div style={{ width: "100%", display: "flex", justifyContent: "flex-end" }}>
+                  <FontAwesomeIcon icon={faXmark} size="lg" style={{ cursor: "pointer" }} onClick={handleShowDelete} />
+                </div>
+
+                <MDTypography variant="h6" fontWeight="medium" style={{ textAlign: "center" }} >Borrar?, esta opción no es reversible</MDTypography>
+                <Box sx={{ display: "flex", justifyContent: "space-around" }}>
+                  <Button style={{ width: "fit-content", color: "#FFF", backgroundColor: '#1A73E8' }} variant="contained" onClick={() => confirmDelete(locationIdToDelete)}>Borrar ciudad</Button>
+                  <Button style={{ width: "fit-content", color: "#FFF", backgroundColor: '#1A73E8' }} variant="contained" onClick={handleShowDelete}>Cancelar</Button>
+                </Box>
+              </Card>
+            </Modal>
+
+
+
 
             <SearchForm
               searchInput={searchInput}
@@ -181,7 +196,10 @@ function Sucursales() {
                 <Locations
                   locations={locations}
                   searchInput={searchInput}
-                  handleShowAdd={handleShowAdd}
+                  handleShowEdit={handleShowEdit}
+                  setLocationIdToUpdate={setLocationIdToUpdate}
+                  handleShowDelete={handleShowDelete}
+                  setLocationIdToDelete={setLocationIdToDelete}
                 />
               )}
             </Grid>
@@ -278,5 +296,12 @@ function Sucursales() {
     </DashboardLayout>
   );
 }
+
+const DeleteLocation = () => {
+  return (
+    <div>Olacomoestas</div>
+  )
+}
+
 
 export default Sucursales;

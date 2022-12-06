@@ -11,6 +11,19 @@
             $this->conn = $db;
         }
 
+        function viewRelations(){
+            $stmt = $this->conn->prepare("SELECT area_x_sucursal.id AS area_suc, empleado.id AS area_empleado FROM area
+            LEFT JOIN area_x_sucursal ON area_x_sucursal.id_area = area.id
+            LEFT JOIN empleado ON empleado.id_area = area.id WHERE area.id = ?;");
+    
+            $this->id = htmlspecialchars(strip_tags($this->id));
+            $stmt->bind_param("i", $this->id);
+    
+            $stmt->execute();			
+            $result = $stmt->get_result();		
+            return $result;
+        }
+
         function read(){
             switch($this){
 
@@ -74,6 +87,18 @@
                 return true;
             }
 
+            return false;
+        }
+
+        function delete(){
+            $stmt = $this->conn->prepare("UPDATE area SET suspendida=1 WHERE id= ?");
+    
+            $this->id = htmlspecialchars(strip_tags($this->id));
+            $stmt->bind_param("i", $this->id);
+    
+            if ($stmt->execute()) {
+                return true;
+            }
             return false;
         }
 

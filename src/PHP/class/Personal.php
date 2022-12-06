@@ -30,6 +30,18 @@
             $this->conn = $db;
         }
 
+        function viewRelations(){
+            $stmt = $this->conn->prepare("SELECT usuario.id_empleado AS usuario_empleado FROM empleado
+            INNER JOIN usuario ON usuario.id_empleado = empleado.id WHERE empleado.id = ?;");
+    
+            $this->id = htmlspecialchars(strip_tags($this->id));
+            $stmt->bind_param("i", $this->id);
+    
+            $stmt->execute();			
+            $result = $stmt->get_result();		
+            return $result;
+        }
+
         function read(){
 
             switch($this){
@@ -65,6 +77,7 @@
                     FROM empleado
                     INNER JOIN area ON empleado.id_area = area.id
                     LEFT JOIN usuario ON empleado.id = usuario.id_empleado
+                    WHERE empleado.suspendido=0
                     ORDER BY empleado.id;");
                     break;
                 }
@@ -285,7 +298,7 @@
 
         function delete(){
             // $stmt = $this->conn->prepare("DELETE FROM ".$this->cityTable." WHERE id= ?");
-            $stmt = $this->conn->prepare("UPDATE ".$this->cityTable." SET visible= 0 WHERE id= ?");
+            $stmt = $this->conn->prepare("UPDATE empleado SET suspendido=1 WHERE id= ?");
 
             $this->id = htmlspecialchars(strip_tags($this->id));
             $stmt->bind_param("i", $this->id);

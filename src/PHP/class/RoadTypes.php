@@ -10,6 +10,21 @@
             $this->conn = $db;
         }
 
+        function viewRelations(){
+            $stmt = $this->conn->prepare("SELECT
+            ubicacion_suc.id_tipo_vialidad AS ubi_suc_id_tipo_vialidad, ubicacion_empleado.tipo_vialidad AS ubi_emp_tipo_vialidad
+            FROM tipo_vialidad
+            LEFT JOIN ubicacion_suc ON ubicacion_suc.id_tipo_vialidad = tipo_vialidad.id
+            LEFT JOIN ubicacion_empleado ON ubicacion_empleado.tipo_vialidad = tipo_vialidad.id WHERE tipo_vialidad.id = ?;");
+
+            $this->id = htmlspecialchars(strip_tags($this->id));
+            $stmt->bind_param("i", $this->id);
+
+            $stmt->execute();			
+		    $result = $stmt->get_result();		
+		    return $result;
+        }
+
         function read(){
             if($this->id){
                 // $stmt = $this->conn->prepare("SELECT * FROM ".$this->roadTypeTable." WHERE id = ?");

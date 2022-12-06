@@ -35,7 +35,7 @@ function ActionButtons({ id, handleRefresh }) {
             .then((response) => {
                 const { data } = response;
                 const { ciudad } = data;
-                console.log('CIUDAD SI',ciudad);
+                console.log('CIUDAD SI', ciudad);
                 // console.log('NOPUEDESERESTADO', state);
                 console.log('OLASOYCIUDAD', ciudad[0]);
                 setState(ciudad[0].id_edo);
@@ -142,11 +142,16 @@ function ActionButtons({ id, handleRefresh }) {
         // axios.delete(`http://localhost:8000/cities/${id}`)
         // axios.patch('http://localhost/ddsoftware/Alta_Sucursales/src/PHP/cities/delete.php', {data: {id:id}});
 
-        axios.patch(`http://localhost/ddsoftware/Alta_Sucursales/src/PHP/cities/delete.php`, {
+        axios.patch('http://localhost/ddsoftware/Alta_Sucursales/src/PHP/cities/delete.php', {
             id: id,
         })
             .then((response) => console.log('Borrado :D', response))
-            .catch(error => console.log(error))
+            .catch(error => {
+                if (error.message == 'Request failed with status code 503') {
+                    alert('La sucursal no se puede borrar por que ya se está utilizando');
+                }
+                console.log(error);
+            })
 
         handleDelete();
         handleRefresh();
@@ -275,7 +280,7 @@ export default function CityTable({ allCities, handleRefresh }) {
 
 
     return (
-        <Card style={{ height: "75%"}}>
+        <Card style={{ height: "75%" }}>
             <DataTable
                 table={{ columns, rows }}
                 isSorted={false}
