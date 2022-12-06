@@ -19,28 +19,47 @@ class Location
     {
         $this->conn = $db;
     }
+    
+    function viewRelations(){
+        $stmt = $this->conn->prepare("SELECT horario_x_sucursal.id AS horario_sucursal, area_x_sucursal.id AS area_sucursal FROM sucursal
+        LEFT JOIN horario_x_sucursal ON sucursal.id = horario_x_sucursal.id_sucursal
+        LEFT JOIN area_x_sucursal ON sucursal.id = area_x_sucursal.id_sucursal WHERE sucursal.id = ?;");
+
+        $this->id = htmlspecialchars(strip_tags($this->id));
+        $stmt->bind_param("i", $this->id);
+
+        $stmt->execute();			
+        $result = $stmt->get_result();		
+        return $result;
+    }
+
 
     function read()
     {
 
         switch ($this) {
-            case $this->id:
-                // $stmt = $this->conn->prepare("SELECT ciudad.id, ciudad.nombre_ciud AS nombre, ciudad.clave, ciudad.id_edo, estado.nombre_edo FROM estado INNER JOIN ciudad ON estado.id = ciudad.id_edo");
-                // $stmt = $this->conn->prepare("INSERT INTO ubicacion_suc(nombre_vialidad, numero_int, numero_ext,id_tipo_vialidad,nombre_localidad,id_colonia, codigo_postal) VALUES(?,?,?,?,?,?,?);");
-                
-                $stmt = $this->conn->prepare("SELECT 
-                sucursal.nombre,
-                tipo_vialidad.tipo,
-                ubicacion_suc.nombre_vialidad, ubicacion_suc.numero_int, ubicacion_suc.numero_ext, ubicacion_suc.codigo_postal,
-                colonia.nombre AS nombre_colonia,
-                ciudad.nombre_ciud,
-                estado.nombre_edo
+            case !empty($this->id):
+                // $stmt = $this->conn->prepare("SELECT 
+                // sucursal.nombre,
+                // tipo_vialidad.tipo,
+                // ubicacion_suc.nombre_vialidad, ubicacion_suc.numero_int, ubicacion_suc.numero_ext, ubicacion_suc.codigo_postal,
+                // colonia.nombre AS nombre_colonia,
+                // ciudad.nombre_ciud,
+                // estado.nombre_edo
+                // FROM sucursal
+                // INNER JOIN ubicacion_suc ON sucursal.ubicacion = ubicacion_suc.id AND sucursal.id = ?
+                // INNER JOIN tipo_vialidad ON tipo_vialidad.id = ubicacion_suc.id_tipo_vialidad
+                // INNER JOIN colonia ON colonia.id = ubicacion_suc.id_colonia
+                // INNER JOIN ciudad ON colonia.id_ciud = ciudad.id
+                // INNER JOIN estado ON ciudad.id_edo = estado.id;");
+
+                $stmt = $this->conn->prepare("SELECT
+                sucursal.id AS id_sucursal, sucursal.nombre, ubicacion_suc.nombre_vialidad, ubicacion_suc.numero_int, ubicacion_suc.numero_ext, ubicacion_suc.id_tipo_vialidad, ubicacion_suc.nombre_localidad, ubicacion_suc.codigo_postal, ubicacion_suc.id_colonia,
+                ciudad.id AS id_ciudad, ciudad.id_edo
                 FROM sucursal
-                INNER JOIN ubicacion_suc ON sucursal.ubicacion = ubicacion_suc.id AND sucursal.id = ?
-                INNER JOIN tipo_vialidad ON tipo_vialidad.id = ubicacion_suc.id_tipo_vialidad
+                INNER JOIN ubicacion_suc ON ubicacion_suc.id = sucursal.ubicacion
                 INNER JOIN colonia ON colonia.id = ubicacion_suc.id_colonia
-                INNER JOIN ciudad ON colonia.id_ciud = ciudad.id
-                INNER JOIN estado ON ciudad.id_edo = estado.id;");
+                INNER JOIN ciudad ON ciudad.id = colonia.id_ciud WHERE sucursal.id = ?;");
 
                 $stmt->bind_param("i", $this->id);
 
@@ -135,10 +154,8 @@ class Location
         return false;
     }
 
-    function delete()
-    {
-        // $stmt = $this->conn->prepare("DELETE FROM ".$this->cityTable." WHERE id= ?");
-        $stmt = $this->conn->prepare("UPDATE " . $this->cityTable . " SET visible= 0 WHERE id= ?");
+    function delete(){
+        $stmt = $this->conn->prepare("UPDATE sucursal SET suspendida=1 WHERE id= ?");
 
         $this->id = htmlspecialchars(strip_tags($this->id));
         $stmt->bind_param("i", $this->id);

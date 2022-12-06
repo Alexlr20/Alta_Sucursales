@@ -69,7 +69,87 @@ function ValidatePassword(password) {
 }
 
 // eslint-disable-next-line react/prop-types, no-unused-vars
-function CreatePersonal({ handleShowCreate, handleRefresh }) {
+function UpdatePersonal({ idToUpdate, handleShowEdit, handleRefresh, employeeIsUser }) {
+  const [formValues, setFormValues] = useState(initialFormValues);
+
+  console.log('ID TO UPDATE IN UPDATE PERSONAL -> ', idToUpdate);
+  console.log('EMPLOYEE IS USER IN UPDATE PERSONAL -> ', employeeIsUser);
+
+  const [isUser, setIsUser] = useState(false);
+
+
+  useEffect(() => {
+    if (employeeIsUser) {
+      axios.get(`http://localhost/ddsoftware/Alta_Sucursales/src/PHP/personal/read.php?id=${idToUpdate}&isUser=1`)
+        .then((response) => {
+          const { data } = response;
+          const { personal: p } = data;
+          console.log('Personal IF USER -> ', p[0]);
+
+          setFormValues({
+            nombre: p[0].nombre,
+            ap_paterno: p[0].ap_paterno,
+            ap_materno: p[0].ap_materno,
+            telefono: p[0].telefono,
+            area: p[0].id_area,
+            sucursal: p[0].id_sucursal,
+            rfc: p[0].rfc,
+            curp: p[0].curp,
+            nombre_vialidad: p[0].nombre_vialidad,
+            num_exterior: p[0].numero_ext,
+            num_interior: p[0].numero_int,
+            tipo_vialidad: p[0].tipo_vialidad,
+            colonia: p[0].colonia,
+            nombre_localidad: p[0].nombre_localidad,
+            estado: p[0].id_edo,
+            municipio: p[0].id_ciudad,
+            correo: p[0].correo,
+            contrasena: p[0].contrasena,
+            conf_contrasena: p[0].contrasena,
+            usuario: true,
+          });
+
+          setIsUser(true);
+
+        })
+        .catch((err) => console.log(err));
+    } else {
+      axios.get(`http://localhost/ddsoftware/Alta_Sucursales/src/PHP/personal/read.php?id=${idToUpdate}`)
+        .then((response) => {
+          const { data } = response;
+          const { personal: p } = data;
+          console.log('Personal IF USER -> ', p[0]);
+
+          setFormValues({
+            nombre: p[0].nombre,
+            ap_paterno: p[0].ap_paterno,
+            ap_materno: p[0].ap_materno,
+            telefono: p[0].telefono,
+            area: p[0].id_area,
+            sucursal: p[0].id_sucursal,
+            rfc: p[0].rfc,
+            curp: p[0].curp,
+            nombre_vialidad: p[0].nombre_vialidad,
+            num_exterior: p[0].numero_ext,
+            num_interior: p[0].numero_int,
+            tipo_vialidad: p[0].tipo_vialidad,
+            colonia: p[0].colonia,
+            nombre_localidad: p[0].nombre_localidad,
+            estado: p[0].id_edo,
+            municipio: p[0].id_ciudad,
+            correo: '',
+            contrasena: '',
+            conf_contrasena: '',
+            usuario: false,
+          });
+        })
+        .catch((err) => console.log(err));
+    }
+
+  }, []);
+
+
+
   const [areaValues, setAreaValues] = useState(null);
   const [locationValues, setLocationValues] = useState(null);
 
@@ -79,9 +159,7 @@ function CreatePersonal({ handleShowCreate, handleRefresh }) {
   const [allListedLocations, setAllListedLocations] = useState([]);
   const [allListedAreas, setAllListedAreas] = useState([]);
 
-  const [formValues, setFormValues] = useState(initialFormValues);
   const [formErrors, setFormErrors] = useState({});
-  const [isUser, setIsUser] = useState(false);
   // const [setIsPending] = useState(true);
   // const [setError] = useState(null);
 
@@ -290,7 +368,8 @@ function CreatePersonal({ handleShowCreate, handleRefresh }) {
         municipio: formValues.municipio,
         usuario: 1,
         correo: formValues.correo,
-        contrasena: formValues.contrasena
+        contrasena: formValues.contrasena,
+        id: idToUpdate
       } : {
         nombre: formValues.nombre,
         ap_paterno: formValues.ap_paterno,
@@ -308,17 +387,39 @@ function CreatePersonal({ handleShowCreate, handleRefresh }) {
         colonia: formValues.colonia,
         nombre_localidad: formValues.nombre_localidad,
         estado: formValues.estado,
-        municipio: formValues.municipio
+        municipio: formValues.municipio,
+
+        usuario: formValues.usuario ? 1 : null, 
+        correo: formValues.correo ? formValues : null,
+        contrasena: formValues.contrasena ? formValues : null,
+
+        id: idToUpdate
       };
 
       console.log(newPerson);
 
-      axios
-        .post("http://localhost/ddsoftware/Alta_Sucursales/src/PHP/personal/create.php", {
+      if(!employeeIsUser && formValues.usuario){
+        axios
+        .patch(`http://localhost/ddsoftware/Alta_Sucursales/src/PHP/personal/update.php?id=${idToUpdate}&employeeToUser=1`, {
           newPerson,
         })
         .then((response) => console.log("ENVIADO AHHHHHHHHHH!", response))
         .catch((error) => console.log(error));
+      } else if(!employeeisUser){
+        axios
+          .patch(`http://localhost/ddsoftware/Alta_Sucursales/src/PHP/personal/update.php?id=${idToUpdate}&isUser=1`, {
+            newPerson,
+          })
+          .then((response) => console.log("ENVIADO AHHHHHHHHHH!", response))
+          .catch((error) => console.log(error));
+      } else {
+        axios.patch(`http://localhost/ddsoftware/Alta_Sucursales/src/PHP/personal/update.php?id=${idToUpdate}`, {
+          newPerson
+        })
+          .then((response) => console.log('ENVIADO AHHHHHHHHHH!', response))
+          .catch(error => console.log(error))
+      }
+
 
       // fetch("http://localhost:8000/personal", {
       //   method: "POST",
@@ -349,7 +450,7 @@ function CreatePersonal({ handleShowCreate, handleRefresh }) {
       </Box> */}
 
       <Box sx={{ alignSelf: "flex-end", justifyContent: "center" }}>
-        <FontAwesomeIcon className="closeIcon" icon={faXmark} onClick={handleShowCreate} />
+        <FontAwesomeIcon className="closeIcon" icon={faXmark} onClick={handleShowEdit} />
       </Box>
 
       <Box sx={{ overflowY: "scroll", paddingRight: "1rem" }}>
@@ -731,7 +832,7 @@ function CreatePersonal({ handleShowCreate, handleRefresh }) {
         <MDButton color="info" onClick={handleSubmit}>
           Guardar
         </MDButton>
-        <MDButton sx={{ marginLeft: 3 }} onClick={handleShowCreate} color="info">
+        <MDButton sx={{ marginLeft: 3 }} onClick={handleShowEdit} color="info">
           Cancelar
         </MDButton>
       </MDBox>
@@ -739,4 +840,4 @@ function CreatePersonal({ handleShowCreate, handleRefresh }) {
   );
 }
 
-export default CreatePersonal;
+export default UpdatePersonal;

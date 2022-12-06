@@ -14,6 +14,18 @@ class Locality
         $this->conn = $db;
     }
 
+    function viewRelations(){
+        $stmt = $this->conn->prepare("SELECT ubicacion_suc.id AS colonia_ubic_suc FROM colonia
+        LEFT JOIN ubicacion_suc ON ubicacion_suc.id_colonia = colonia.id WHERE colonia.id = ?;");
+
+        $this->id = htmlspecialchars(strip_tags($this->id));
+        $stmt->bind_param("i", $this->id);
+
+        $stmt->execute();			
+        $result = $stmt->get_result();		
+        return $result;
+    }
+
     function read()
     {
         // if ($this->id) {

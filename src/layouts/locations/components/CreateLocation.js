@@ -1,7 +1,3 @@
-/* eslint-disable no-console */
-/* eslint-disable prettier/prettier */
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/prop-types */
 import { faPenToSquare, faTrash, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -110,7 +106,6 @@ export default function LocationForm({ handleShowAdd }) {
     axios.get('http://localhost/ddsoftware/Alta_Sucursales/src/PHP/road_types/read.php')
       .then(resp => {
         const { data } = resp;
-        // eslint-disable-next-line prettier/prettier, camelcase
         const { tipo_vialidad } = data;
         setAllListedRoadTypes(tipo_vialidad);
         console.log(allListedRoadTypes);

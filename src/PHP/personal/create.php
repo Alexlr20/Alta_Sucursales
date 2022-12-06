@@ -56,12 +56,12 @@
         $person->location_id = $data['sucursal'];
 
         $person->road_name = $data['nombre_vialidad'];
-        $person->int_number = !empty($data['numero_interior']) ? $data['numero_interior'] : "NULL";
+        $person->int_number = !empty($data['numero_interior']) ? $data['numero_interior'] : null;
         $person->ext_number = $data['numero_exterior'];
         $person->road_type_id = $data['tipo_vialidad'];
         $person->locality_name = $data['nombre_localidad'];
         $person->locality = $data['colonia'];
-        $person->locality = $data['municipio'];
+        $person->city = $data['municipio'];
 
         if(!empty($data['usuario'])){
             $person->user = $data['usuario'];

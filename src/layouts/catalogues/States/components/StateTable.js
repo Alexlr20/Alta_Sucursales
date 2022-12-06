@@ -118,14 +118,25 @@ function ActionButtons({ id, handleRefresh }) {
 
   const confirmDelete = (e) => {
     e.preventDefault();
-
-    axios
-      .patch(`http://localhost/ddsoftware/Alta_Sucursales/src/PHP/states/delete.php`, {
-        // eslint-disable-next-line object-shorthand
+    console.log('ID ->>>>',id);
+    
+      axios.patch('http://localhost/ddsoftware/Alta_Sucursales/src/PHP/states/delete.php', {
         id: id,
       })
-      .then((response) => console.log("ENVIADO PATCH!", response))
-      .catch((error) => console.log(error));
+        .then((response) => console.log('Borrado :D', response))
+        .catch(error => {
+          if(error.message == 'Request failed with status code 503'){
+            alert('La sucursal no se puede borrar por que ya se está utilizando');
+          }
+          console.log(error)
+        })
+
+
+
+
+
+
+
 
     // .then(((response) => console.log('ESTADO BORRADO :D', response))
     // .catch(error => console.log(error))

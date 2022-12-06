@@ -192,12 +192,16 @@ function ActionButtons({ id, handleRefresh }) {
         e.preventDefault();
         // axios.delete(`http://localhost:8000/localities/${id}`);
 
-        axios.patch(`http://localhost/ddsoftware/Alta_Sucursales/src/PHP/localities/delete.php`, {
-            // eslint-disable-next-line object-shorthand
+        axios.patch('http://localhost/ddsoftware/Alta_Sucursales/src/PHP/localities/delete.php', {
             id: id,
         })
             .then((response) => console.log('Borrado :D', response))
-            .catch(error => console.log(error))
+            .catch(error => {
+                if (error.message == 'Request failed with status code 503') {
+                    alert('La sucursal no se puede borrar por que ya se está utilizando');
+                }
+                console.log(error);
+            })
 
         handleDelete();
         handleRefresh();

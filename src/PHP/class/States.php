@@ -12,8 +12,21 @@
             $this->conn = $db;
         }
 
-        function read(){
+        function viewRelations(){
+            $stmt = $this->conn->prepare("SELECT ciudad.id_edo AS estado_ciudad, colonia.id_edo AS estado_colonia FROM estado
+            LEFT JOIN  ciudad ON ciudad.id_edo = estado.id
+            LEFT JOIN colonia ON colonia.id_edo = estado.id
+            WHERE estado.id = ?;");
 
+            $this->id = htmlspecialchars(strip_tags($this->id));
+            $stmt->bind_param("i", $this->id);
+
+            $stmt->execute();			
+		    $result = $stmt->get_result();		
+		    return $result;
+        }
+
+        function read(){
             if($this->id){
                 $stmt = $this->conn->prepare("SELECT * FROM ".$this->stateTable." WHERE NOT visible = 0 AND id = ?");
                 // SELECT * FROM ddsoftware.ciudad WHERE NOT visible = 0;

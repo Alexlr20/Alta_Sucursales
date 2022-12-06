@@ -19,18 +19,58 @@
 
     $data = json_decode(file_get_contents('php://input'));
 
-    print_r($data);
 
     if(!empty($data->id)){
         $locality->id = $data->id;
-        if($locality->delete()){
-            http_response_code(200);
-            echo json_encode(array("message" => "Locality was deleted :D"));
-        } else {
-            http_response_code(503);
-            echo json_encode(array("message" => "Unable to delete locality"));
+        $relations = $locality->viewRelations();
+
+        if($relations){
+            // $rowHasNull = false;
+            $colA = false;
+            while ($row = $relations->fetch_assoc()) {
+                extract($row);
+                echo 'Fila -> ';
+                print_r($row);
+
+                $colA = is_null($colonia_ubic_suc) ==  1; 
+
+                // if(is_null($colonia_ubic_suc) == 1){
+                    // $colA = true;
+                // }
+            }
+
+            if(mysqli_num_rows($relations) > 0 && ($colA != 1)){
+                echo 'Si hay relacion';
+                http_response_code(503);
+                echo json_encode(array("message" => "Unable to delete locality"));
+            } else {
+                echo 'No hay relaciones :D';
+                if($locality->delete()){
+                    http_response_code(200);
+                    echo json_encode(array("message" => "Locality is hidden now :D"));
+                } else {
+                    http_response_code(503);
+                    echo json_encode(array("message" => "Unable to delete locality"));
+                }
+            }
         }
     } else {
         http_response_code(400);
         echo json_encode(array("message" => "Unable to delete locality. Data is incomplete"));
     }
+
+    // print_r($data);
+
+    // if(!empty($data->id)){
+    //     $locality->id = $data->id;
+    //     if($locality->delete()){
+    //         http_response_code(200);
+    //         echo json_encode(array("message" => "Locality was deleted :D"));
+    //     } else {
+    //         http_response_code(503);
+    //         echo json_encode(array("message" => "Unable to delete locality"));
+    //     }
+    // } else {
+    //     http_response_code(400);
+    //     echo json_encode(array("message" => "Unable to delete locality. Data is incomplete"));
+    // }

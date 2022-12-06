@@ -31,7 +31,8 @@ import Table from "./components/OrgTable";
 
 import "../../styles/Table.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faPenToSquare, faTrash, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { EditPopUp } from "./components/EditPopUp";
 
 
 
@@ -79,71 +80,63 @@ const getFormatedAreas = (areasFromTree) => {
   return arrPedorro.flatMap(e => e);
 };
 
-const ActionButtons = ({setShowEdit, setShowDelete}) => {
+const ActionButtons = ({ area_id, setShowEdit, setShowDelete, setAreaId }) => {
   return (
-    <div style={{gap: "1rem", alignSelf: "center"}}>
-    <FontAwesomeIcon icon={faPenToSquare} size="sm" style={{ cursor: "pointer", marginRight: '2rem' }}
-      onClick={setShowEdit(true)}
-    />
-    <FontAwesomeIcon icon={faTrash} size="sm" style={{ cursor: "pointer" }}
-      onClick={setShowDelete(true)} 
-    />
-  </div>
+    <div style={{ gap: "1rem", alignSelf: "center" }}>
+      <FontAwesomeIcon icon={faPenToSquare} size="sm" style={{ cursor: "pointer", marginRight: '2rem' }}
+        onClick={() => {
+          setShowEdit(true)
+          console.log('AREA ID->', area_id)
+          setAreaId(area_id);
+        }}
+      />
+      <FontAwesomeIcon icon={faTrash} size="sm" style={{ cursor: "pointer" }}
+        onClick={() => {
+          setAreaId(area_id);
+          setShowDelete(true);
+        }}
+      />
+    </div>
   )
 }
 
 
 
 function Organigrama() {
-  const areasFromTree = [
-    { nombre_area: 'Director General', responde_a: null },
-    { nombre_area: 'Equipo Operativo', responde_a: 'Director General' },
-    { nombre_area: 'Equipo Comercial', responde_a: 'Director General' },
-    { nombre_area: 'Comunicacion Sistemas', responde_a: 'Equipo Operativo' },
-    { nombre_area: 'Sistemas', responde_a: 'Equipo Operativo' },
-    { nombre_area: 'Venta Comunicacion', responde_a: 'Equipo Comercial' },
-    { nombre_area: 'Venta Sistemas', responde_a: 'Equipo Comercial' },
-  ];
-
-  const [showEdit, setShowEdit] = useState(false);
-  const [showDelete, setShowDelete] = useState(false);
-
   const [areas, setAreas] = useState([]);
-  // const [areasPending, setAreasPending] = useState(true);
-  // const [areasError, setAreasError] = useState(null);
 
   const [locationValues, setLocationValues] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState("");
 
   const [showPopUp, setShowPopUp] = useState(false);
-  const [refresh, setRefresh] = useState(false);
+  const [showEdit, setShowEdit] = useState(false);
+  const [showDelete, setShowDelete] = useState(false);
+  const [areaId, setAreaId] = useState(0);
 
-  console.log('SELECTED LOCATIOON ->  ',selectedLocation);
+
+  const [refresh, setRefresh] = useState(false);
 
   const handleRefresh = () => {
     setRefresh((current) => !current);
   };
 
   useEffect(() => {
-    // axios.get('http://localhost:8000/states/')
-    if(selectedLocation !== ''){
+    if (selectedLocation !== '') {
       axios.get(`http://localhost/ddsoftware/Alta_Sucursales/src/PHP/orgchart/read.php?id=${selectedLocation}`)
-          .then((response) => {
-              const { data } = response;
-              const { organigrama } = data;
-              console.log('organigramawtff -> ', organigrama);
-              const x =  getFormatedAreas(organigrama);
-              setAreas(x);
-              // setListedStates(estado);
-          })
-          .catch((error) => console.log(error));
+        .then((response) => {
+          const { data } = response;
+          const { organigrama } = data;
+          console.log('organigramawtff -> ', organigrama);
+          const x = getFormatedAreas(organigrama);
+          setAreas(x);
+        })
+        .catch((error) => console.log(error));
     }
 
-}, [selectedLocation, refresh]);
+  }, [selectedLocation, refresh]);
 
- 
+
   useEffect(() => {
-    // axios.get('http://localhost:8000/states/')
     axios.get('http://localhost/ddsoftware/Alta_Sucursales/src/PHP/locations/read.php')
       .then((response) => {
         const { data } = response;
@@ -165,11 +158,11 @@ function Organigrama() {
     { heading: "Responde a", value: "responde_a" },
     { heading: "Acciones", value: "acciones" },
   ];
-  
+
   const rows = areas?.map((elem) => ({
     nombre_area: elem.nombre_area,
     responde_a: elem.responde_a,
-    acciones: <ActionButtons setShowEdit={setShowEdit} setShowDelete={setShowDelete}/>
+    acciones: <ActionButtons area_id={elem.id} setAreaId={setAreaId} setShowEdit={setShowEdit} setShowDelete={setShowDelete} />
   }));
 
 
@@ -180,16 +173,33 @@ function Organigrama() {
 
   const handleShowEdit = () => {
     setShowEdit(prev => !prev);
-    console.log('Selected ID -> ',selectedLocation);
+    console.log('Selected ID -> ', selectedLocation);
   }
-  
+
   const handleShowDelete = () => {
     setShowDelete(prev => !prev);
-    console.log('Selected ID -> ',selectedLocation);
+    console.log('Selected ID -> ', selectedLocation);
   }
 
   const handleInputChange = ({ target }) => {
     setSelectedLocation(() => target.value);
+  };
+
+  const confirmDelete = (e) => {
+    e.preventDefault();
+    axios.patch('http://localhost/ddsoftware/Alta_Sucursales/src/PHP/orgchart/delete.php', {
+      id: areaId,
+    })
+      .then((response) => console.log('Borrado :D', response))
+      .catch(error => {
+        if(error.message == 'Request failed with status code 503'){
+          alert('La sucursal no se puede borrar por que ya se está utilizando');
+        }
+        console.log(error)
+      })
+
+    handleShowDelete();
+    handleRefresh();
   };
 
   const modalStyle = {
@@ -199,20 +209,20 @@ function Organigrama() {
     transform: "translate(-50%, -50%)",
   };
 
+  const modalStyle2 = {
+    width: "30%",
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    backgroundColor: "#FFF",
+    padding: "1rem"
+};
+
   return (
     <DashboardLayout>
-      <MDBox
-        py={3}
-        px={2}
-        variant="gradient"
-        bgColor="info"
-        borderRadius="lg"
-        coloredShadow="info"
-        mb={4}
-      >
-        <MDTypography variant="h6" color="white">
-          Organigrama
-        </MDTypography>
+      <MDBox py={3} px={2} variant="gradient" bgColor="info" borderRadius="lg" coloredShadow="info" mb={4}>
+        <MDTypography variant="h6" color="white">Organigrama</MDTypography>
       </MDBox>
       <MDBox mt={4} className="org-chart">
         <Card sx={{ padding: "1rem", height: "77vh" }}>
@@ -247,6 +257,7 @@ function Organigrama() {
               Area +{" "}
             </Button>
           </Box>
+
           <Modal
             open={showPopUp}
             onClose={handleClick}
@@ -262,26 +273,41 @@ function Organigrama() {
               />
             </Box>
           </Modal>
-{/* 
+
+
           <Modal
             open={showEdit}
-            onClose={handleShowEdit}
+            onClose={() => setShowEdit(false)}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
           >
             <Box sx={modalStyle}>
-              <OrgPopUp
-                close={setShowEdit(false)}
+              <EditPopUp
+                areaId={areaId}
+                close={setShowEdit}
                 handleClose={handleShowEdit}
                 handleRefresh={handleRefresh}
                 selectedLocation={selectedLocation}
               />
             </Box>
-          </Modal> */}
+          </Modal>
+          
+          <Modal open={showDelete} onClose={handleShowDelete}>
+            <Card style={modalStyle2} sx={{ display: "flex", gap: "1.5rem" }}>
+              <div style={{ width: "100%", display: "flex", justifyContent: "flex-end" }}>
+                <FontAwesomeIcon icon={faXmark} size="lg" style={{ cursor: "pointer" }} onClick={handleShowDelete} />
+              </div>
 
-
-          <div style={{overflowY: "scroll", display: "block"}}>
-          {areas && <Table data={rows} column={column} />}
+              <MDTypography variant="h6" fontWeight="medium" style={{textAlign: "center"}} >Borrar?, esta opción no es reversible</MDTypography>
+              <Box sx={{ display: "flex", justifyContent: "space-around" }}>
+                <Button style={{ width: "fit-content", color: "#FFF", backgroundColor: '#1A73E8' }} variant="contained" onClick={confirmDelete}>Borrar ciudad</Button>
+                <Button style={{ width: "fit-content", color: "#FFF", backgroundColor: '#1A73E8' }} variant="contained" onClick={handleShowDelete}>Cancelar</Button>
+              </Box>
+            </Card>
+          </Modal>
+          
+          <div style={{ overflowY: "scroll", display: "block" }}>
+            {areas && <Table data={rows} column={column} />}
           </div>
 
         </Card>

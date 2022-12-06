@@ -13,6 +13,20 @@
             $this->conn = $db;
         }
 
+        function viewRelations(){
+            $stmt = $this->conn->prepare("SELECT colonia.id AS ciudad_colonia, ubicacion_empleado.id AS ciudad_ubi_emp FROM ciudad
+            LEFT JOIN colonia ON colonia.id_ciud = ciudad.id
+            LEFT JOIN ubicacion_empleado ON ubicacion_empleado.id_ciudad = ciudad.id WHERE ciudad.id = ?;");
+
+            $this->id = htmlspecialchars(strip_tags($this->id));
+            $stmt->bind_param("i", $this->id);
+
+            $stmt->execute();			
+		    $result = $stmt->get_result();		
+		    return $result;
+        }
+
+
         function read(){
 
             switch($this){
