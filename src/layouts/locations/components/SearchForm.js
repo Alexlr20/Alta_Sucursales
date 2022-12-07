@@ -1,15 +1,17 @@
 import { Button, Grid, Icon, InputAdornment, TextField } from "@mui/material";
 // import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
+import { StatusDropdown } from "layouts/catalogues/Cities/components/StatusDropdown";
+import { useState } from "react";
 // import LocationForm from "./LocationForm";
 
 // eslint-disable-next-line react/prop-types
-export default function SearchForm({ searchInput, handleSearchChange, handleShowAdd }) {
+export default function SearchForm({ searchInput, handleSearchChange, handleShowAdd, statusValue, setStatusValue }) {
   return (
     <>
       <MDTypography>Buscar Sucursales</MDTypography>
-      <Grid container sx={{ paddingTop: 1 }} justifyContent="space-between">
-        <Grid item xs={8}>
+      <Grid container sx={{ paddingTop: 1, rowGap: 1.5 }} justifyContent="space-between">
+        <Grid item xs={12}>
           <TextField
             fullWidth
             InputProps={{
@@ -23,6 +25,16 @@ export default function SearchForm({ searchInput, handleSearchChange, handleShow
             onChange={handleSearchChange}
           />
         </Grid>
+
+        <Grid item xs={6}>
+          <StatusDropdown statusValue={statusValue} setStatusValue={setStatusValue}/>
+          {/* <div>{statusValue}</div>
+           */}
+          {/* <Button variant="contained" sx={{ color: "#FFF" }} onClick={handleShowAdd}> */}
+            {/* Seleccionar más filtros */}
+          {/* </Button> */}
+        </Grid>
+
 
         <Grid item>
           <Button variant="contained" sx={{ color: "#FFF" }} onClick={handleShowAdd}>

@@ -53,36 +53,58 @@ function Sucursales() {
   const [locationIdToUpdate, setLocationIdToUpdate] = useState(0);
   const [locationIdToDelete, setLocationIdToDelete] = useState(0);
 
+  const [statusValue, setStatusValue] = useState('nonSuspended');
 
 
   useEffect(() => {
-    axios.get('http://localhost/ddsoftware/Alta_Sucursales/src/PHP/locations/read.php')
-      .then((response) => {
-        const { data } = response;
-        const { sucursal } = data;
-        // console.log('DATA FROM LOCALITIES -> ',sucursal);
+    // if(statusValue === '') 
+    // all, suspended, nonSuspended
+    if (statusValue === 'nonSuspended') {
+      axios.get('http://localhost/ddsoftware/Alta_Sucursales/src/PHP/locations/read.php')
+        .then((response) => {
+          const { data } = response;
+          const { sucursal } = data;
+          // console.log('DATA FROM LOCALITIES -> ',sucursal);
 
-        const formatedData = sucursal?.map(e => ({
-          id: e.id,
-          nombre_sucursal: e.nombre,
-          direccion: `${e.tipo === 'Avenida' ? 'Av. ' : ''} ${e.nombre_vialidad} ${e.numero_ext}, ${e.numero_int === '' || e.numero_int === 'NULL' ? '' : `${e.numero_int},`} ${e.nombre_colonia}, ${e.codigo_postal}, ${e.nombre_ciud}, ${e.nombre_edo}`
-        }));
+          const formatedData = sucursal?.map(e => ({
+            id: e.id,
+            nombre_sucursal: e.nombre,
+            direccion: `${e.tipo === 'Avenida' ? 'Av. ' : ''} ${e.nombre_vialidad} ${e.numero_ext}, ${e.numero_int === '' || e.numero_int === 'NULL' ? '' : `${e.numero_int},`} ${e.nombre_colonia}, ${e.codigo_postal}, ${e.nombre_ciud}, ${e.nombre_edo}`
+          }));
 
-        // console.log('FormatedData -> ', formatedData);
+          setLocations(formatedData);
+          setIsPending(false);
+          setError(null);
+        })
+        .catch((err) => {
+          console.log(err)
+          setIsPending(false);
+          setError(err.message);
+        });
+    } else if(statusValue === 'suspended'){
+      axios.get('http://localhost/ddsoftware/Alta_Sucursales/src/PHP/locations/read.php')
+        .then((response) => {
+          const { data } = response;
+          const { sucursal } = data;
+          // console.log('DATA FROM LOCALITIES -> ',sucursal);
 
-        setLocations(formatedData);
-        setIsPending(false);
-        setError(null);
-      })
-      .catch((err) => {
-        console.log(err)
-        setIsPending(false);
-        setError(err.message);
-      });
+          const formatedData = sucursal?.map(e => ({
+            id: e.id,
+            nombre_sucursal: e.nombre,
+            direccion: `${e.tipo === 'Avenida' ? 'Av. ' : ''} ${e.nombre_vialidad} ${e.numero_ext}, ${e.numero_int === '' || e.numero_int === 'NULL' ? '' : `${e.numero_int},`} ${e.nombre_colonia}, ${e.codigo_postal}, ${e.nombre_ciud}, ${e.nombre_edo}`
+          }));
 
-
-
-  }, []);
+          setLocations(formatedData);
+          setIsPending(false);
+          setError(null);
+        })
+        .catch((err) => {
+          console.log(err)
+          setIsPending(false);
+          setError(err.message);
+        });
+    }
+  }, [statusValue]);
 
 
   const handleShowAdd = () => {
@@ -123,7 +145,7 @@ function Sucursales() {
     })
       .then((response) => console.log('Borrado :D', response))
       .catch(error => {
-        if(error.message == 'Request failed with status code 503'){
+        if (error.message == 'Request failed with status code 503') {
           alert('La sucursal no se puede borrar por que ya se está utilizando');
         }
         console.log(error)
@@ -139,9 +161,11 @@ function Sucursales() {
         </MDTypography>
       </MDBox>
 
-      {/* <SearchContextProvider> */}
-      <Card sx={{ borderRadius: "0.5rem", height: "77vh" }}>
+      {/* <Card sx={{ borderRadius: "0.5rem", height: "77vh" }}> */}
+      <Card sx={{ borderRadius: "0.5rem", height: "35rem" }}>
         <div style={{ display: "flex" }}>
+
+          {/* Lado izquierdo */}
           <MDBox pt={3} px={3} style={{ width: "50%", padding: "1rem" }}>
 
             <Modal open={showAdd} onClose={handleShowAdd}>
@@ -152,17 +176,9 @@ function Sucursales() {
 
             <Modal open={showEdit} onClose={handleShowEdit}>
               <Card sx={modalStyle} style={{ width: "50%" }}>
-                {/* <div>Ola</div> */}
                 <EditLocation handleShowAdd={handleShowEdit} locationIdToUpdate={locationIdToUpdate} />
-                {/* <LocationForm handleShowAdd={handleShowEdit} /> */}
               </Card>
             </Modal>
-
-            {/* <Modal open={showDelete} onClose={handleShowDelete}>
-              <Card sx={modalStyle} style={{ width: "50%" }}>
-                <DeleteLocation handleShowAdd={handleShowDelete} locationIdToUpdate={locationIdToUpdate}/>
-              </Card>
-            </Modal> */}
 
             <Modal open={showDelete} onClose={handleShowDelete}>
               <Card style={modalStyle2} sx={{ display: "flex", gap: "1.5rem" }}>
@@ -178,7 +194,7 @@ function Sucursales() {
               </Card>
             </Modal>
 
-
+            <div>{statusValue}</div>
 
 
             <SearchForm
@@ -187,6 +203,8 @@ function Sucursales() {
               showAdd={showAdd}
               handleShowAdd={handleShowAdd}
               setShowAdd={setShowAdd}
+              statusValue={statusValue}
+              setStatusValue={setStatusValue}
             />
 
             <Grid item>
@@ -205,6 +223,7 @@ function Sucursales() {
             </Grid>
           </MDBox>
 
+          {/* Lado derecho */}
           <div className="mapouter" style={{ width: "50%" }}>
             <div className="gmap_canvas">
               {/* <iframe
@@ -236,61 +255,7 @@ function Sucursales() {
             </div>
           </div>
         </div>
-
-        {/* <Grid sx={{ display: "flex", flexDirection: "row" }}> */}
-        {/* <MDBox pt={3} px={3}>
-            <Modal open={showAdd} onClose={handleShowAdd}>
-              <Card sx={modalStyle}>
-                <LocationForm handleShowAdd={handleShowAdd} />
-              </Card>
-            </Modal>
-
-            <SearchForm
-              searchInput={searchInput}
-              handleSearchChange={handleSearchChange}
-              showAdd={showAdd}
-              handleShowAdd={handleShowAdd}
-              setShowAdd={setShowAdd}
-            />
-
-            <Grid item>
-              {error && <div>{error}</div>}
-              {isPending && <div>Loading...</div>}
-              {locations && (
-                <Locations
-                  locations={locations}
-                  searchInput={searchInput}
-                  handleShowAdd={handleShowAdd}
-                />
-              )}
-            </Grid>
-          </MDBox> */}
-
-        {/* <Geocoding /> */}
-
-        {/* <MDBox pt={2} pb={3}>
-            <div className="mapouter">
-              <div className="gmap_canvas">
-                <iframe
-                  title="map"
-                  width="200%"
-                  height="750px"
-                  id="gmap_canvas"
-                  src="https://maps.google.com/maps?q=chennai&t=&z=13&ie=UTF8&iwloc=&output=embed"
-                  // src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBDaeWicvigtP9xPv919E-RNoxfvC-Hqik&callback=iniciarMap"
-
-                  frameBorder="0"
-                  scrolling="no"
-                  marginHeight="0"
-                  marginWidth="0"
-                />
-              </div>
-            </div>
-          </MDBox> */}
-        {/* </Grid> */}
-        {/* <Divider /> */}
       </Card>
-      {/* </SearchContextProvider> */}
 
       <Footer />
     </DashboardLayout>

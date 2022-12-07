@@ -14,6 +14,9 @@ class Location
     public $days;
     public $byStateId;
 
+    public $suspended;
+    public $allStatus;
+
 
 
     public function __construct($db)
@@ -68,6 +71,38 @@ class Location
 
                 break;
 
+            case !empty($this->suspended):
+                $stmt = $this->conn->prepare("SELECT 
+                sucursal.id, sucursal.nombre,
+                tipo_vialidad.tipo,
+                ubicacion_suc.nombre_vialidad, ubicacion_suc.numero_int, ubicacion_suc.numero_ext, ubicacion_suc.codigo_postal,
+                colonia.nombre AS nombre_colonia,
+                ciudad.nombre_ciud,
+                estado.nombre_edo
+                FROM sucursal
+                INNER JOIN ubicacion_suc ON sucursal.ubicacion = ubicacion_suc.id
+                INNER JOIN tipo_vialidad ON tipo_vialidad.id = ubicacion_suc.id_tipo_vialidad
+                INNER JOIN colonia ON colonia.id = ubicacion_suc.id_colonia
+                INNER JOIN ciudad ON colonia.id_ciud = ciudad.id
+                INNER JOIN estado ON ciudad.id_edo = estado.id WHERE sucursal.suspendida=1;");
+                break;
+
+            case !empty($this->allStatus):
+                $stmt = $this->conn->prepare("SELECT 
+                sucursal.id, sucursal.nombre,
+                tipo_vialidad.tipo,
+                ubicacion_suc.nombre_vialidad, ubicacion_suc.numero_int, ubicacion_suc.numero_ext, ubicacion_suc.codigo_postal,
+                colonia.nombre AS nombre_colonia,
+                ciudad.nombre_ciud,
+                estado.nombre_edo
+                FROM sucursal
+                INNER JOIN ubicacion_suc ON sucursal.ubicacion = ubicacion_suc.id
+                INNER JOIN tipo_vialidad ON tipo_vialidad.id = ubicacion_suc.id_tipo_vialidad
+                INNER JOIN colonia ON colonia.id = ubicacion_suc.id_colonia
+                INNER JOIN ciudad ON colonia.id_ciud = ciudad.id
+                INNER JOIN estado ON ciudad.id_edo = estado.id");
+                break;
+
             default:
                 $stmt = $this->conn->prepare("SELECT 
                 sucursal.id, sucursal.nombre,
@@ -81,7 +116,7 @@ class Location
                 INNER JOIN tipo_vialidad ON tipo_vialidad.id = ubicacion_suc.id_tipo_vialidad
                 INNER JOIN colonia ON colonia.id = ubicacion_suc.id_colonia
                 INNER JOIN ciudad ON colonia.id_ciud = ciudad.id
-                INNER JOIN estado ON ciudad.id_edo = estado.id;");
+                INNER JOIN estado ON ciudad.id_edo = estado.id WHERE sucursal.suspendida=0;");
 
                 break;
         }
