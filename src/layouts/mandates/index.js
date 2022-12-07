@@ -33,7 +33,8 @@ import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 
 // Billing page components
 import NameForm from "layouts/mandates/components/CreateMandate";
-import SearchForm from "layouts/mandates/components/SearchForm";
+import SearchForm from "./components/SearchForm";
+
 import { useState, useEffect } from "react";
 // eslint-disable-next-line no-unused-vars
 import MandateTable from "./components/MandateTable";

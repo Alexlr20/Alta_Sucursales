@@ -3,8 +3,6 @@ import { Card } from "@mui/material";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import DataTable from "examples/Tables/DataTable";
-import DetailDialog from "layouts/personal/data/dialogs/DetailDialog";
-import StatusDialog from "layouts/personal/data/dialogs/StatusDialog";
 import React, { useLayoutEffect, useRef } from "react";
 
 // import mandateData from "../SearchForm/mandateData";
@@ -61,24 +59,7 @@ export default function MandateTable({ setWidthOfTable, tasks }) {
     Fechas: <TableFiller name={elem.fecha_inicial} calle={elem.fecha_final} />,
     Horario: <TableFiller name={elem.hora_inicial} calle={elem.hora_final} />,
     Dias: <DatesSelect dias={elem.dias} />,
-    Visto: <TableFiller name={elem.visto} />,
-    Status: <StatusDialog status="candado" id="status_id_0" textValue="" />,
-    Detalle: (
-      <DetailDialog
-        detalle="detalle"
-        id="elem.id"
-        textValue=""
-        fechaInicial="fechacreacion"
-        fechaFinal="fechacreacion2"
-        horaInicial="horacreacion"
-        horaFinal="horacreacion2"
-
-        // fechaCreacion="fechainicial - hora"
-        // fechaModificacion="fechademod - horamod"
-        // fechaTerminado="fechaterminada - horaterminada"
-        // fechaAutorizacion="fechaautorizacion - horaautorizacion"
-      />
-    ),
+    Visto: <TableFiller name={elem.visto} />
   }));
 
   const widthRef = useRef(null);

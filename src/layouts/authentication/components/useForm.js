@@ -1,7 +1,3 @@
-/* eslint-disable strict */
-/* eslint-disable camelcase */
-/* eslint-disable */
-
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -136,6 +132,8 @@ const useForm = (initialValues, errorClassName = "error") => {
   };
 };
 exports.default = useForm;
+
+
 /**
  * In case the field you want to validate is not working with the `register` function,
  * use this component and "register" it.
