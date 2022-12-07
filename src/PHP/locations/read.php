@@ -20,7 +20,6 @@
     $location->allStatus = (isset($_GET['allStatus']) && $_GET['allStatus']) ? $_GET['allStatus'] : '0';
     
     
-    
     $result = $location->read();
     $baseFilter = mysqli_num_rows($result) >= 0;
     // print_r($result->fetch_assoc());

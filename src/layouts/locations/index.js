@@ -45,7 +45,7 @@ const modalStyle2 = {
 
 
 function Sucursales() {
-  const [locations, setLocations] = useState(null);
+  const [locations, setLocations] = useState([]);
   const [error, setError] = useState(null);
   const [isPending, setIsPending] = useState(true);
   const [showAdd, setShowAdd] = useState(false);
@@ -60,33 +60,13 @@ function Sucursales() {
     // if(statusValue === '') 
     // all, suspended, nonSuspended
     if (statusValue === 'nonSuspended') {
+      console.log('statusValue in nonsupended', statusValue);
       axios.get('http://localhost/ddsoftware/Alta_Sucursales/src/PHP/locations/read.php')
         .then((response) => {
           const { data } = response;
           const { sucursal } = data;
           // console.log('DATA FROM LOCALITIES -> ',sucursal);
-
-          const formatedData = sucursal?.map(e => ({
-            id: e.id,
-            nombre_sucursal: e.nombre,
-            direccion: `${e.tipo === 'Avenida' ? 'Av. ' : ''} ${e.nombre_vialidad} ${e.numero_ext}, ${e.numero_int === '' || e.numero_int === 'NULL' ? '' : `${e.numero_int},`} ${e.nombre_colonia}, ${e.codigo_postal}, ${e.nombre_ciud}, ${e.nombre_edo}`
-          }));
-
-          setLocations(formatedData);
-          setIsPending(false);
-          setError(null);
-        })
-        .catch((err) => {
-          console.log(err)
-          setIsPending(false);
-          setError(err.message);
-        });
-    } else if(statusValue === 'suspended'){
-      axios.get('http://localhost/ddsoftware/Alta_Sucursales/src/PHP/locations/read.php')
-        .then((response) => {
-          const { data } = response;
-          const { sucursal } = data;
-          // console.log('DATA FROM LOCALITIES -> ',sucursal);
+          console.log('EN NON SUSPENDED ->>', data);
 
           const formatedData = sucursal?.map(e => ({
             id: e.id,
@@ -104,6 +84,81 @@ function Sucursales() {
           setError(err.message);
         });
     }
+
+    if (statusValue === 'suspended') {
+      console.log('statusValue in nonsupended', statusValue);
+      axios.get('http://localhost/ddsoftware/Alta_Sucursales/src/PHP/locations/read.php?suspended=1')
+        .then((response) => {
+          const { data } = response;
+          const { sucursal } = data;
+          // console.log('DATA FROM LOCALITIES -> ',sucursal);
+          console.log('EN NON SUSPENDED ->>', data);
+
+          const formatedData = sucursal?.map(e => ({
+            id: e.id,
+            nombre_sucursal: e.nombre,
+            direccion: `${e.tipo === 'Avenida' ? 'Av. ' : ''} ${e.nombre_vialidad} ${e.numero_ext}, ${e.numero_int === '' || e.numero_int === 'NULL' ? '' : `${e.numero_int},`} ${e.nombre_colonia}, ${e.codigo_postal}, ${e.nombre_ciud}, ${e.nombre_edo}`
+          }));
+
+          setLocations(formatedData);
+          setIsPending(false);
+          setError(null);
+        })
+        .catch((err) => {
+          console.log(err)
+          setIsPending(false);
+          setError(err.message);
+        });
+    }
+
+    if (statusValue === 'allStatus') {
+      console.log('statusValue in nonsupended', statusValue);
+      axios.get('http://localhost/ddsoftware/Alta_Sucursales/src/PHP/locations/read.php?allStatus=1')
+        .then((response) => {
+          const { data } = response;
+          const { sucursal } = data;
+          // console.log('DATA FROM LOCALITIES -> ',sucursal);
+          console.log('EN NON SUSPENDED ->>', data);
+
+          const formatedData = sucursal?.map(e => ({
+            id: e.id,
+            nombre_sucursal: e.nombre,
+            direccion: `${e.tipo === 'Avenida' ? 'Av. ' : ''} ${e.nombre_vialidad} ${e.numero_ext}, ${e.numero_int === '' || e.numero_int === 'NULL' ? '' : `${e.numero_int},`} ${e.nombre_colonia}, ${e.codigo_postal}, ${e.nombre_ciud}, ${e.nombre_edo}`
+          }));
+
+          setLocations(formatedData);
+          setIsPending(false);
+          setError(null);
+        })
+        .catch((err) => {
+          console.log(err)
+          setIsPending(false);
+          setError(err.message);
+        });
+    }
+    // else if(statusValue === 'suspended'){
+    //   axios.get('http://localhost/ddsoftware/Alta_Sucursales/src/PHP/locations/read.php')
+    //     .then((response) => {
+    //       const { data } = response;
+    //       const { sucursal } = data;
+    //       // console.log('DATA FROM LOCALITIES -> ',sucursal);
+
+    //       const formatedData = sucursal?.map(e => ({
+    //         id: e.id,
+    //         nombre_sucursal: e.nombre,
+    //         direccion: `${e.tipo === 'Avenida' ? 'Av. ' : ''} ${e.nombre_vialidad} ${e.numero_ext}, ${e.numero_int === '' || e.numero_int === 'NULL' ? '' : `${e.numero_int},`} ${e.nombre_colonia}, ${e.codigo_postal}, ${e.nombre_ciud}, ${e.nombre_edo}`
+    //       }));
+
+    //       setLocations(formatedData);
+    //       setIsPending(false);
+    //       setError(null);
+    //     })
+    //     .catch((err) => {
+    //       console.log(err)
+    //       setIsPending(false);
+    //       setError(err.message);
+    //     });
+    // }
   }, [statusValue]);
 
 

@@ -100,7 +100,7 @@ class Location
                 INNER JOIN tipo_vialidad ON tipo_vialidad.id = ubicacion_suc.id_tipo_vialidad
                 INNER JOIN colonia ON colonia.id = ubicacion_suc.id_colonia
                 INNER JOIN ciudad ON colonia.id_ciud = ciudad.id
-                INNER JOIN estado ON ciudad.id_edo = estado.id");
+                INNER JOIN estado ON ciudad.id_edo = estado.id;");
                 break;
 
             default:
