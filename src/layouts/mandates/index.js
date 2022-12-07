@@ -25,6 +25,7 @@ import {
   // FormControlLabel,
 } from "@mui/material";
 import Grid from "@mui/material/Grid";
+import axios from "axios";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
@@ -38,109 +39,105 @@ import { useState, useEffect } from "react";
 import MandateTable from "./components/MandateTable";
 
 
+const getLocationsByState = (stateId, callback) => {
+  
+  let response;
+  axios.get(`http://localhost/ddsoftware/Alta_Sucursales/src/PHP/locations/read.php?id=${stateId}&byStateId=1`)
+    .then(resp => {
+      const {data} = resp;
+      const {sucursal} = data;
+      response = sucursal;
+      callback(sucursal)
+    })
+    .catch(err => console.log(err))
+
+  return response;
+};
+
+const getAreasByLocation = (locationId, callback) => {
+  let response;
+  axios.get(`http://localhost/ddsoftware/Alta_Sucursales/src/PHP/orgchart/read.php?id=${locationId}`)
+    .then(resp => {
+      const {data} = resp;
+      const {organigrama} = data;
+      response = organigrama;
+      callback(organigrama)
+    })
+    .catch(err => console.log(err))
+
+  return response;
+};
 
 
 
-const CheckBoxRow = ({ title }) => {
+
+
+
+
+
+const CheckBoxRow = ({ title,  executeCall }) => {
   const [checked, setChecked] = useState(false);
+  const [showChildren, setShowChildren] = useState(false);
+  
+  const [response, setResponse] = useState([]);
+
   const handleChange = () => {
     setChecked(prev => !prev);
   };
+
+  const handleShowChildren = () => {
+    if (executeCall && (showChildren === false)) {
+      executeCall((res) => {
+        setResponse(res);
+      });
+    }
+    setShowChildren(prev => !prev);
+  };
+
   return (
     <li>
-      <Box sx={{ display: "flex", gap: "0.5rem", alignItems: "center"}}>
+      <Box sx={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
         <Checkbox
           checked={checked}
           onChange={handleChange}
           inputProps={{ 'aria-label': 'controlled' }}
         />
-        <MDTypography variant="h6" fontWeight="medium">{title}</MDTypography>
+        <MDTypography variant="h6" fontWeight="medium" onClick={handleShowChildren}>{title}</MDTypography>
       </Box>
+      {
+        showChildren &&
+        <ul style={noBullet}>
+          {response?.map(e => (
+            <CheckBoxRow
+              key={e.id}
+              title={e.nombre || e.nombre_area}
+              executeCall={e.nombre ? (callback) => getAreasByLocation(e.id, callback) : null}
+              />
+          ))}
+        </ul>
+      }
     </li>
   )
 }
 
+const noBullet = {
+  listStyleType: 'none'
+};
 
 
-// const test = {
-//   estados: [
-//   {
-//     selected: false,
-//     id: 1,
-//     nombre: 'Estado 01',
-//     sucursal: [
-//       {
-//         selected: false,
-//         id: 1,
-//         nombre: 'Sucursal 01',
-//         areas: [
-//           {
-//             selected: false,
-//             id: 1,
-//             nombre: 'Area 01'
-//           },
-//           {
-//             selected: false,
-//             id: 2,
-//             nombre: 'Area 02'
-//           },
-//         ]
-//       },
-//     ]
-//   },
-//   {
-//     selected: false,
-//     id: 2,
-//     nombre: 'Estado 02',
-//     sucursal: [
-//       {
-//         selected: false,
-//         id: 1,
-//         nombre: 'Sucursal 01',
-//         areas: [
-//           {
-//             selected: false,
-//             id: 1,
-//             nombre: 'Area 01'
-//           },
-//           {
-//             selected: false,
-//             id: 2,
-//             nombre: 'Area 02'
-//           },
-//         ]
-//       },
-//       {
-//         selected: false,
-//         id: 1,
-//         nombre: 'Sucursal 02',
-//         areas: [
-//           {
-//             selected: false,
-//             id: 1,
-//             nombre: 'Area 01'
-//           }
-//         ]
-//       }
-//     ]
-//   },
-// ]
-// };
-
-
-
-
-
-
-
-
-
-
+const modalStyle = {
+  width: "50%",
+  height: "50%",
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  backgroundColor: "#FFF",
+  padding: "1rem",
+};
 
 function Mandatos() {
-  // eslint-disable-next-line no-unused-vars
   const [isPending, setIsPending] = useState(true);
-  // eslint-disable-next-line no-unused-vars
   const [error, setError] = useState(null);
   const [tasks, setTasks] = useState(null);
   const [showAdd, setShowAdd] = useState(false);
@@ -152,38 +149,6 @@ function Mandatos() {
     setRefresh((current) => !current);
   };
 
-  // const filterRef = useRef();
-  useEffect(() => {
-    // setTableReady(true);
-    const abortCont = new AbortController();
-
-    fetch("http://localhost:8000/mandates", { signal: abortCont.signal })
-      .then((res) => {
-        if (!res.ok) {
-          // error coming back from server
-          throw Error("could not fetch the data for that resource");
-        }
-        return res.json();
-      })
-      .then((t) => {
-        setTasks(t);
-        setIsPending(false);
-        setError(null);
-      })
-      .catch((err) => {
-        if (err.name === "AbortError") {
-          // eslint-disable-next-line no-console
-          console.log("fetch aborted");
-        } else {
-          // auto catches network / connection error
-          setIsPending(false);
-          setError(err.message);
-        }
-      });
-
-    return () => abortCont.abort();
-  }, [refresh]);
-
   const handleShowAdd = () => {
     if (!showFilters) {
       setShowAdd((current) => !current);
@@ -194,19 +159,11 @@ function Mandatos() {
     setShowFilters((current) => !current);
   };
 
-  const modalStyle = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    backgroundColor: "#FFF",
-    padding: "1rem",
-  };
-
   const [widthOfTable, setWidthOfTable] = useState(0);
 
 
   const [selectedCities, setSelectedCities] = useState([]);
+
   const handleCityChange = (e) => {
     const index = selectedCities.indexOf(e.target.value);
     if (index === -1) {
@@ -216,13 +173,21 @@ function Mandatos() {
     }
   };
 
+  const [allListedStates, setAllListedStates] = useState([]);
 
-  // estados.map(e => console.log(e.estado));
+  useEffect(() => {
+    // axios.get('http://localhost:8000/states/')
+    axios.get('http://localhost/ddsoftware/Alta_Sucursales/src/PHP/states/read.php')
+      .then((response) => {
+        const { data } = response;
+        const { estado } = data;
+        console.log('ESTADWtff', estado);
+        setAllListedStates(estado);
 
-  const noBullet = {
-    listStyleType: 'none'
-  };
+      })
+      .catch((error) => console.log(error));
 
+  }, [refresh]);
 
 
   return (
@@ -246,7 +211,6 @@ function Mandatos() {
       </Card>
 
       <Card sx={{ padding: 2, marginTop: 3 }}>
-        {/* <MDBox mt={4}> */}
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <Grid
@@ -269,9 +233,6 @@ function Mandatos() {
               >
                 Filtrar
               </Button>
-              {/* <Button variant="contained" sx={{ color: "#FFF" }} onClick={handleShowAdd}>
-                Agregar Mandato
-              </Button> */}
               Estado, sucursales, area Usuario en campo aparte
             </Grid>
 
@@ -285,20 +246,18 @@ function Mandatos() {
 
             <Modal open={showAdd} onClose={handleShowAdd}>
               <Card sx={modalStyle}>
+
                 <ul style={noBullet}>
-                  <CheckBoxRow title='ola'/>
-
-                  <ul style={noBullet}>
-                    <CheckBoxRow title='ola 1.1' />
-
-                    <ul style={noBullet}>
-                      <CheckBoxRow title='Ola 1.1.1' />
-                    </ul>
-
-                  </ul>
-
-                  <CheckBoxRow title='ola2' />
+                  {allListedStates.map(e => (
+                    <CheckBoxRow
+                      key={e.id}
+                      title={e.nombre_edo}
+                      executeCall={(callback) => getLocationsByState(e.id, callback)}
+                      // children={}
+                      />
+                  ))}
                 </ul>
+
               </Card>
             </Modal>
 

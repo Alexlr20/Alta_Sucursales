@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { useState } from 'react';
 import { Box, Button, Card, TextField, Typography } from '@mui/material';
 import MDTypography from 'components/MDTypography';
