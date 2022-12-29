@@ -15,31 +15,17 @@ function AddState({handleRefresh}) {
         setState(target.value);
     };
 
-    const handleCodeChange = ({ target }) => {
-        setCode(target.value);
-    }
+    const handleCodeChange = ({ target }) => setCode(target.value);
 
     const validateStatesInput = () => {
-        if (state.length <= 0) {
-            setStateError(true)
-        } else {
-            setStateError(false);
-        }
-
-        if (code.length <= 0) {
-            setCodeError(true)
-        } else {
-            setCodeError(false);
-        }
+        (state.length <= 0) ? setStateError(true) : setStateError(false);
+        (code.length <= 0) ? setCodeError(true) : setCodeError(false);
     };
 
     const handleSumbit = (e) => {
         e.preventDefault();
         validateStatesInput();
         if (stateError === false && codeError === false) {
-            console.log('No errors :D');
-
-            // axios.post('http://localhost:8000/states/', {
             axios.post('http://localhost/ddsoftware/Alta_Sucursales/src/PHP/states/create.php', {
                 nombre_edo: state,
                 codigo: code

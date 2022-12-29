@@ -148,8 +148,6 @@ function UpdatePersonal({ idToUpdate, handleShowEdit, handleRefresh, employeeIsU
 
   }, []);
 
-
-
   const [areaValues, setAreaValues] = useState(null);
   const [locationValues, setLocationValues] = useState(null);
 
@@ -160,8 +158,6 @@ function UpdatePersonal({ idToUpdate, handleShowEdit, handleRefresh, employeeIsU
   const [allListedAreas, setAllListedAreas] = useState([]);
 
   const [formErrors, setFormErrors] = useState({});
-  // const [setIsPending] = useState(true);
-  // const [setError] = useState(null);
 
   useEffect(() => {
     axios
@@ -252,7 +248,6 @@ function UpdatePersonal({ idToUpdate, handleShowEdit, handleRefresh, employeeIsU
     return () => abortCont.abort();
   }, []);
 
-  // eslint-disable-next-line no-unused-vars
   const allAreas = areaValues?.map((p) => p.nombre_area);
 
   useEffect(() => {
@@ -357,7 +352,7 @@ function UpdatePersonal({ idToUpdate, handleShowEdit, handleRefresh, employeeIsU
         rfc: formValues.rfc,
         curp: formValues.curp,
         sucursal: formValues.sucursal,
-        // nombreComercial: formValues.nombre_comercial,
+        // nombreComercial: formValues.nombre_comercial,zz
         nombre_vialidad: formValues.nombre_vialidad,
         numero_interior: formValues.num_interior === '' ? null : formValues.num_exterior,
         numero_exterior: formValues.num_exterior,
@@ -405,7 +400,7 @@ function UpdatePersonal({ idToUpdate, handleShowEdit, handleRefresh, employeeIsU
         })
         .then((response) => console.log("ENVIADO AHHHHHHHHHH!", response))
         .catch((error) => console.log(error));
-      } else if(!employeeisUser){
+      } else if(!employeeIsUser){
         axios
           .patch(`http://localhost/ddsoftware/Alta_Sucursales/src/PHP/personal/update.php?id=${idToUpdate}&isUser=1`, {
             newPerson,
@@ -740,7 +735,7 @@ function UpdatePersonal({ idToUpdate, handleShowEdit, handleRefresh, employeeIsU
                 >
                   {allListedCities?.map((city) => (
                     <MenuItem key={city.id} value={city.id}>
-                      {city.nombre_ciud}
+                      {city.nombre}
                     </MenuItem>
                   ))}
                 </Select>

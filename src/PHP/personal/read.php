@@ -15,6 +15,9 @@
     
     $personal->id = (isset($_GET['id']) && $_GET['id']) ? $_GET['id'] : '0';
     $personal->isUser = (isset($_GET['isUser']) && $_GET['isUser']) ? $_GET['isUser'] : '0';
+
+    $personal->suspended = (isset($_GET['suspended']) && $_GET['suspended']) ? $_GET['suspended'] : '0';
+    $personal->all = (isset($_GET['all']) && $_GET['all']) ? $_GET['all'] : '0';
         
     $result = $personal->read();
 
@@ -84,6 +87,50 @@
                     "id_edo" => $id_edo,
                     "id_ciudad" => $id_ciudad,
                     "id_area" => $id_area,
+                ); 
+               array_push($personalRecords["personal"], $itemDetails);
+            }    
+            
+            http_response_code(200);     
+            echo json_encode($personalRecords);
+            break;
+
+        case $baseFilter && $personal->suspended:
+            $personalRecords=array();
+            $personalRecords["personal"]=array(); 
+    
+            while ($item = $result->fetch_assoc()) { 	
+                extract($item); 
+                $itemDetails=array(
+                    "id" => $id,
+                    "nombre" => $nombre,
+                    "ap_paterno" => $ap_paterno,
+                    "ap_materno" => $ap_materno,
+                    "telefono" => $telefono,
+                    "area" => $area,
+                    "id_usuario" => $id_usuario
+                ); 
+               array_push($personalRecords["personal"], $itemDetails);
+            }    
+            
+            http_response_code(200);     
+            echo json_encode($personalRecords);
+            break;
+
+        case $baseFilter && $personal->all:
+            $personalRecords=array();
+            $personalRecords["personal"]=array(); 
+    
+            while ($item = $result->fetch_assoc()) { 	
+                extract($item); 
+                $itemDetails=array(
+                    "id" => $id,
+                    "nombre" => $nombre,
+                    "ap_paterno" => $ap_paterno,
+                    "ap_materno" => $ap_materno,
+                    "telefono" => $telefono,
+                    "area" => $area,
+                    "id_usuario" => $id_usuario
                 ); 
                array_push($personalRecords["personal"], $itemDetails);
             }    

@@ -42,13 +42,8 @@ export function OrgPopUp({ close, handleClose, handleRefresh, selectedLocation})
     close();
   };
 
-  const handleSelectChange = ({ target }) => {
-    setResponde_a(target.value);
-  };
-
-  const handleTextChange = ({ target }) => {
-    setNombre_area(target.value);
-  };
+  const handleSelectChange = ({ target }) => setResponde_a(target.value);
+  const handleTextChange = ({ target }) => setNombre_area(target.value);
 
   return (
     // <div className="popUp card">
@@ -74,7 +69,7 @@ export function OrgPopUp({ close, handleClose, handleRefresh, selectedLocation})
           Responde a:
         </Typography>
         <Select value={responde_a} onChange={handleSelectChange}>
-          {rootInLocation == false ? <MenuItem key="raiz" value={null}>Raiz</MenuItem> : null}
+          {rootInLocation === false ? <MenuItem key="raiz" value={null}>Raiz</MenuItem> : null}
           {data?.map((area) => (
             <MenuItem key={area.nombre_area} value={area.nombre_area}>
               {area.nombre_area}

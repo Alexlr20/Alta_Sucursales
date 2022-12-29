@@ -1,10 +1,6 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable no-unused-vars */
-/* eslint-disable prettier/prettier */
 import { Box, MenuItem, TextField } from "@mui/material";
 import MDTypography from "components/MDTypography";
 
-// eslint-disable-next-line import/prefer-default-export
 export function StatusDropdown({statusValue, setStatusValue}) {
 
     const handleChange = ({target}) => {

@@ -1,5 +1,3 @@
-/* eslint-disable */
-/* eslint-disable react/prop-types */
 import { faPenToSquare, faTrash, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Box, Button, Modal, TextField } from "@mui/material";
@@ -10,7 +8,27 @@ import MDTypography from "components/MDTypography";
 import DataTable from "examples/Tables/DataTable";
 import React, { useState } from "react";
 
-// eslint-disable-next-line react/prop-types
+
+const modalStyle = {
+    width: "15%",
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    backgroundColor: "#FFF",
+    padding: "1rem"
+};
+
+const actionButton = {
+    alignSelf: "center",
+    cursor: "pointer"
+}
+
+const buttonStyle = {
+    width: "fit-content", color: "#FFF", marginTop: "1.5rem", backgroundColor: '#1A73E8'
+}
+
+
 function ActionButtons({ id, handleRefresh }) {
     const [openEdit, setOpenEdit] = useState(false);
     const handleEdit = () => {
@@ -30,14 +48,10 @@ function ActionButtons({ id, handleRefresh }) {
 
     const handleClick = () => {
         handleEdit();
-        // axios.get(`http://localhost:8000/cities/${id}`)
-        axios.get(`http://localhost/ddsoftware/Alta_Sucursales/src/PHP/cities/read.php`, { params: { id: id } })
+        axios.get(`http://localhost/ddsoftware/Alta_Sucursales/src/PHP/cities/read.php?id=${id}`)
             .then((response) => {
                 const { data } = response;
                 const { ciudad } = data;
-                console.log('CIUDAD SI', ciudad);
-                // console.log('NOPUEDESERESTADO', state);
-                console.log('OLASOYCIUDAD', ciudad[0]);
                 setState(ciudad[0].id_edo);
                 setCity(ciudad[0].nombre_ciud);
                 setCityCode(ciudad[0].clave)
@@ -48,31 +62,14 @@ function ActionButtons({ id, handleRefresh }) {
                 }
             });
 
-        // axios.get('http://localhost:8000/states/')
         axios.get('http://localhost/ddsoftware/Alta_Sucursales/src/PHP/states/read.php')
             .then((response) => {
                 const { data } = response;
                 const { estado } = data;
-                console.log(estado);
                 setListedStates(estado);
             })
             .catch((error) => console.log(error));
     };
-
-    const modalStyle = {
-        width: "15%",
-        position: "absolute",
-        top: "50%",
-        left: "50%",
-        transform: "translate(-50%, -50%)",
-        backgroundColor: "#FFF",
-        padding: "1rem"
-    };
-
-    const actionButton = {
-        alignSelf: "center",
-        cursor: "pointer"
-    }
 
     const handleStateChange = ({ target }) => {
         setState(target.value);
@@ -87,33 +84,15 @@ function ActionButtons({ id, handleRefresh }) {
     }
 
     const validateCitiesInput = () => {
-        if (state.length <= 0) {
-            setStateError(true)
-        } else {
-            setStateError(false);
-        }
-
-        if (city.length <= 0) {
-            setCityError(true)
-        } else {
-            setCityError(false);
-        }
-
-        if (cityCode.length <= 0) {
-            setCityCodeError(true)
-        } else {
-            setCityCodeError(false);
-        }
+        (state.length <= 0) ? setStateError(true) : setStateError(false);
+        (city.length <= 0) ? setCityError(true) : setCityError(false);
+        (cityCode.length <= 0) ? setCityCodeError(true) : setCityCodeError(false);
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
         validateCitiesInput();
         if (stateError === false && cityError === false) {
-            // console.log(`EDO: ${state} CD: ${city} CityCode: ${cityCode}`);
-
-            // console.log(`${id} ${city} ${cityCode} ${state}`);
-
             axios.patch(`http://localhost/ddsoftware/Alta_Sucursales/src/PHP/cities/update.php`, {
                 id: id,
                 nombre_ciud: city,
@@ -139,15 +118,12 @@ function ActionButtons({ id, handleRefresh }) {
 
     const confirmDelete = (e) => {
         e.preventDefault();
-        // axios.delete(`http://localhost:8000/cities/${id}`)
-        // axios.patch('http://localhost/ddsoftware/Alta_Sucursales/src/PHP/cities/delete.php', {data: {id:id}});
-
         axios.patch('http://localhost/ddsoftware/Alta_Sucursales/src/PHP/cities/delete.php', {
             id: id,
         })
             .then((response) => console.log('Borrado :D', response))
             .catch(error => {
-                if (error.message == 'Request failed with status code 503') {
+                if (error.message === 'Request failed with status code 503') {
                     alert('La sucursal no se puede borrar por que ya se está utilizando');
                 }
                 console.log(error);
@@ -156,10 +132,6 @@ function ActionButtons({ id, handleRefresh }) {
         handleDelete();
         handleRefresh();
     };
-
-    const buttonStyle = {
-        width: "fit-content", color: "#FFF", marginTop: "1.5rem", backgroundColor: '#1A73E8'
-    }
 
 
     return (
@@ -247,7 +219,6 @@ function ActionButtons({ id, handleRefresh }) {
 };
 
 export default function CityTable({ allCities, handleRefresh }) {
-    // eslint-disable-next-line react/no-unstable-nested-components
     function TableFiller({ name, calle }) {
         return (
             <MDBox display="flex" alignItems="center">

@@ -26,6 +26,9 @@
         public $isUser;
         public $employeeToUser;
 
+        public $all;
+        public $suspended;
+
         public function __construct($db){
             $this->conn = $db;
         }
@@ -69,6 +72,29 @@
 			        $stmt->bind_param("i", $this->id);
                     break;
 
+                case !empty($this->suspended):
+                    $stmt = $this->conn->prepare("SELECT
+                        empleado.id, empleado.nombre, empleado.ap_paterno, empleado.ap_materno, empleado.telefono,
+                        area.nombre AS area,
+                        usuario.id AS id_usuario
+                    FROM empleado
+                    INNER JOIN area ON empleado.id_area = area.id
+                    LEFT JOIN usuario ON empleado.id = usuario.id_empleado
+                    WHERE empleado.suspendido=1
+                    ORDER BY empleado.id;");
+                    break;
+
+                case !empty($this->all):
+                    $stmt = $this->conn->prepare("SELECT
+                        empleado.id, empleado.nombre, empleado.ap_paterno, empleado.ap_materno, empleado.telefono,
+                        area.nombre AS area,
+                        usuario.id AS id_usuario
+                    FROM empleado
+                    INNER JOIN area ON empleado.id_area = area.id
+                    LEFT JOIN usuario ON empleado.id = usuario.id_empleado
+                    ORDER BY empleado.id;");
+                    break;
+
                 default:
                     $stmt = $this->conn->prepare("SELECT
                         empleado.id, empleado.nombre, empleado.ap_paterno, empleado.ap_materno, empleado.telefono,
@@ -91,10 +117,6 @@
         function create(){
 
             switch($this){
-
-                // 'ADSFAE1231', 1, 81123423, 2, 'AFEAFAE1241', 'Mario','Perez', 'Martinez',
-                // 'Vialidad 02', '12312', 1423, 1, 'Los 02', 'Colonia 02',
-                // 'olaaa@gmail.com', 'contrasena102'
                 case !empty($this->user):
                     $stmt = $this->conn->prepare("CALL insert_user(
                         ?, ?, ?, ?, ?, ?, ?, ?,
@@ -122,9 +144,6 @@
                     $this->email = htmlspecialchars(strip_tags($this->email));
                     $this->password = htmlspecialchars(strip_tags($this->password));
         
-        
-                    // $stmt->bind_param("siiissssssiississ",
-                    // $stmt->bind_param("siiissssssiississ ",
                     $stmt->bind_param("siiissssssiississ",
                         $this->curp,  $this->location_id, $this->phone, $this->area_id, $this->rfc, $this->name, $this->paternal_surname, $this->maternal_surname,
                         $this->road_name, $this->int_number, $this->ext_number, $this->road_type_id, $this->locality_name, $this->locality, $this->city,
@@ -155,7 +174,6 @@
                     $this->locality = htmlspecialchars(strip_tags($this->locality));
                     $this->city = htmlspecialchars(strip_tags($this->city));
 
-                    // $stmt->bind_param("siiissssssiissi",
                     $stmt->bind_param("siiissssssiissi",
                         $this->curp,  $this->location_id, $this->phone, $this->area_id, $this->rfc, $this->name, $this->paternal_surname, $this->maternal_surname,
                         $this->road_name, $this->int_number, $this->ext_number, $this->road_type_id, $this->locality_name, $this->locality, $this->city
@@ -297,7 +315,6 @@
         }
 
         function delete(){
-            // $stmt = $this->conn->prepare("DELETE FROM ".$this->cityTable." WHERE id= ?");
             $stmt = $this->conn->prepare("UPDATE empleado SET suspendido=1 WHERE id= ?");
 
             $this->id = htmlspecialchars(strip_tags($this->id));

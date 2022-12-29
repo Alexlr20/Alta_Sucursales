@@ -1,5 +1,3 @@
-/* eslint-disable */
-/* eslint-disable react/prop-types */
 import { faPenToSquare, faTrash, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Box, Button, Modal, TextField, Card, MenuItem } from "@mui/material";
@@ -9,13 +7,22 @@ import MDTypography from "components/MDTypography";
 import DataTable from "examples/Tables/DataTable";
 import React, { useEffect, useState } from "react";
 
-// eslint-disable-next-line react/prop-types
-function ActionButtons({ id, handleRefresh }) {
-    const [openEdit, setOpenEdit] = useState(false);
-    const handleEdit = () => {
-        setOpenEdit(prev => !prev);
-    };
+const modalStyle = {
+    width: "15%",
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    backgroundColor: "#FFF",
+    padding: "1rem"
+};
 
+const actionButton = {
+    alignSelf: "center",
+    cursor: "pointer"
+}
+
+function ActionButtons({ id, handleRefresh }) {
     const [state, setState] = useState('');
     const [stateError, setStateError] = useState(false);
     const [listedStates, setListedStates] = useState([]);
@@ -30,8 +37,12 @@ function ActionButtons({ id, handleRefresh }) {
     const [postalCode, setPostalCode] = useState('');
     const [postalCodeError, setPostalCodeError] = useState(false);
 
+    const [openEdit, setOpenEdit] = useState(false);
+    const handleEdit = () => {
+        setOpenEdit(prev => !prev);
+    };
+
     useEffect(()=>{
-        // axios.get(`http://localhost/ddsoftware/Alta_Sucursales/src/PHP/cities/read.php?id=${state}`)
         axios.get(`http://localhost/ddsoftware/Alta_Sucursales/src/PHP/cities/read.php?byStateId=1&id=${state}`)
         .then((response) => {
             const { data } = response;
@@ -44,15 +55,12 @@ function ActionButtons({ id, handleRefresh }) {
     
     const handleClick = () => {
         handleEdit();
-        // axios.get(`http://localhost:8000/localities/${id}`)
         axios.get(`http://localhost/ddsoftware/Alta_Sucursales/src/PHP/localities/read.php?id=${id}`)
             .then((response) => {
                 const { data } = response;
                 const {colonia} = data;
-                // setState(colonia[0].nombre_edo);
                 setState(colonia[0].id_edo);
                 setCity(colonia[0].id_ciud);
-                // setCity();
                 setLocality(colonia[0].nombre);
                 setPostalCode(colonia[0].codigo_postal);
             })
@@ -67,51 +75,9 @@ function ActionButtons({ id, handleRefresh }) {
                 const { data } = response;
                 const { estado } = data;
                 setListedStates(estado);
-                // console.log('GET ESTADOS SI',estado);
             })
             .catch((error) => console.log(error));
-
-        // axios.get('http://localhost:8000/states/')
-        //     .then((response) => {
-        //         const { data } = response;
-        //         console.log('RECIBIDOOOS', data)
-        //         setListedStates(data);
-        //     })
-        //     .catch((error) => console.log(error));
-
-        // axios.get(`http://localhost/ddsoftware/Alta_Sucursales/src/PHP/cities/read.php?id=${state}`)
-        // .then((response) => {
-        //     // console.log('ESTE ES EL ESTADO DENTRO DE ',state);
-        //     const { data } = response;
-        //     const {ciudad} = data;
-        //     console.log('OLA YO SOY CIUDAD SI', ciudad);
-        //     setListedCities(ciudad);
-        // })
-        // .catch((error) => console.log(error));
-
-        // axios.get('http://localhost:8000/cities/')
-        //     .then((response) => {
-        //         const { data } = response;
-        //         console.log('RECIBIDOOOS', data)
-        //         setListedCities(data);
-        //     })
-        //     .catch((error) => console.log(error));
     };
-
-    const modalStyle = {
-        width: "15%",
-        position: "absolute",
-        top: "50%",
-        left: "50%",
-        transform: "translate(-50%, -50%)",
-        backgroundColor: "#FFF",
-        padding: "1rem"
-    };
-
-    const actionButton = {
-        alignSelf: "center",
-        cursor: "pointer"
-    }
 
     const handleStateChange = ({ target }) => {
         setState(target.value);
@@ -131,29 +97,10 @@ function ActionButtons({ id, handleRefresh }) {
     }
 
     const validateLocalitiesInput = () => {
-        if (state.length <= 0) {
-            setStateError(true)
-        } else {
-            setStateError(false);
-        }
-
-        if (city.length <= 0) {
-            setCityError(true)
-        } else {
-            setCityError(false);
-        }
-
-        if (locality.length <= 0) {
-            setLocalityError(true)
-        } else {
-            setLocalityError(false);
-        }
-
-        if (postalCode.length <= 0) {
-            setPostalCodeError(true)
-        } else {
-            setPostalCodeError(false);
-        }
+        (state.length <= 0) ? setStateError(true) : setStateError(false);
+        (city.length <= 0) ? setCityError(true) : setCityError(false);
+        (locality.length <= 0) ? setLocalityError(true) :  setLocalityError(false);
+        (postalCode.length <= 0) ? setPostalCodeError(true) : setPostalCodeError(false);
     };
 
     const handleSubmit = (e) => {
@@ -190,14 +137,13 @@ function ActionButtons({ id, handleRefresh }) {
 
     const confirmDelete = (e) => {
         e.preventDefault();
-        // axios.delete(`http://localhost:8000/localities/${id}`);
 
         axios.patch('http://localhost/ddsoftware/Alta_Sucursales/src/PHP/localities/delete.php', {
             id: id,
         })
             .then((response) => console.log('Borrado :D', response))
             .catch(error => {
-                if (error.message == 'Request failed with status code 503') {
+                if (error.message === 'Request failed with status code 503') {
                     alert('La sucursal no se puede borrar por que ya se está utilizando');
                 }
                 console.log(error);
@@ -210,7 +156,6 @@ function ActionButtons({ id, handleRefresh }) {
     const buttonStyle = {
         width: "fit-content", color: "#FFF", marginTop: "1.5rem", backgroundColor: '#1A73E8'
     }
-
 
     return (
         <>
@@ -233,19 +178,11 @@ function ActionButtons({ id, handleRefresh }) {
                                 onChange={handleStateChange}
                                 error={stateError}
                             >
-                                {/* {listedStates?.map((state) => (
-                                    <MenuItem key={state.nombre} value={state.nombre}>
-                                        {state.nombre}
-                                    </MenuItem>
-                                )
-                                )} */}
-
                                 {listedStates?.map((state) => (
                                     <MenuItem key={state.id} value={state.id}>
                                         {state.nombre_edo}
                                     </MenuItem>
-                                )
-                                )}
+                                ))}
                             </TextField>
                         </Box>
 
@@ -262,19 +199,11 @@ function ActionButtons({ id, handleRefresh }) {
                                 onChange={handleCityChange}
                                 error={cityError}
                             >
-                                {/* {listedCities?.map((city) => (
-                                    <MenuItem key={city.nombre} value={city.nombre}>
-                                        {city.nombre}
-                                    </MenuItem>
-                                )
-                                )} */}
-
                                 {listedCities?.map((city) => (
                                     <MenuItem key={city.id} value={city.id}>
-                                        {city.nombre_ciud}
+                                        {city.nombre}
                                     </MenuItem>
-                                )
-                                )}
+                                ))}
                             </TextField>
                         </Box>
 
@@ -317,13 +246,11 @@ function ActionButtons({ id, handleRefresh }) {
                         <FontAwesomeIcon icon={faXmark} size="lg" style={{ cursor: "pointer" }} onClick={handleDelete} />
                     </div>
 
-                    {/* <Box style={{ display: "flex", flexDirection: "column"}}> */}
                     <MDTypography variant="h6" fontWeight="medium">Borrar?, esta opción no es reversible</MDTypography>
                     <Box sx={{ display: "flex", justifyContent: "space-around" }}>
                         <Button style={{ width: "fit-content", color: "#FFF", backgroundColor: '#1A73E8' }} variant="contained" onClick={confirmDelete}>Borrar estado</Button>
                         <Button style={{ width: "fit-content", color: "#FFF", backgroundColor: '#1A73E8' }} variant="contained" onClick={handleDelete}>Cancelar</Button>
                     </Box>
-                    {/* </Box> */}
                 </Card>
             </Modal>
 
@@ -336,7 +263,6 @@ function ActionButtons({ id, handleRefresh }) {
 };
 
 export default function LocalityTable({ allLocalities, handleRefresh }) {
-    // eslint-disable-next-line react/no-unstable-nested-components
     function TableFiller({ name, calle }) {
         return (
             <MDBox display="flex" alignItems="center">

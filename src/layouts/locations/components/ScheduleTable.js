@@ -2,10 +2,6 @@ import React from "react";
 
 const ScheduleTable = React.memo(({data, column})=>{
     console.log('Tabla renderizada');
-    console.log('data', data);
-    console.log('column', column);
-    // console.log('data in OrgTable -> ', data);
-    // console.log('column in OrgTable -> ', column);
 
     return (
         <table className="org-table">
@@ -42,7 +38,6 @@ function TableHeadItem({ item }) {
 }
 
 function TableRow({ item, column }) {
-    // console.log(item['hora_final']);
     return (
         <tr>
             {column.map((columnItem) => {

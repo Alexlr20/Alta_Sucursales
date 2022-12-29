@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { useState } from 'react';
 import { Box, Button, Card, TextField, Typography } from '@mui/material';
 import MDTypography from 'components/MDTypography';
@@ -28,7 +27,6 @@ function AddRoadType({handleRefresh}) {
         if (roadTypeError === false) {
             console.log('No errors :D');
 
-            // axios.post('http://localhost:8000/road-types/', {
             axios.post('http://localhost/ddsoftware/Alta_Sucursales/src/PHP/road_types/create.php', {
                 tipo: roadType
             })

@@ -20,21 +20,20 @@ import MDTypography from "components/MDTypography";
 import { useState } from "react";
 import MoreFilters from "./MoreFilters";
 
-// eslint-disable-next-line react/prop-types
-function SearchForm({ handleShowFilter, widthOfTable }) {
-  // const { columns, rows } = mandateData();
-  const [formErrors, setFormErrors] = useState({});
 
-  const initialFormValues = {
-    nombre: "",
-    meta: "",
-    hora_inicial: "",
-    hora_final: "",
-    detalle: "",
-    tipo_instruccion: "",
-    fecha_inicial: "",
-    fecha_final: "",
-  };
+const initialFormValues = {
+  nombre: "",
+  meta: "",
+  hora_inicial: "",
+  hora_final: "",
+  detalle: "",
+  tipo_instruccion: "",
+  fecha_inicial: "",
+  fecha_final: "",
+};
+
+function SearchForm({ handleShowFilter, widthOfTable }) {
+  const [formErrors, setFormErrors] = useState({});
   const [formValues, setFormValues] = useState(initialFormValues);
 
   const handleInputChange = (e) => {
@@ -102,24 +101,6 @@ function SearchForm({ handleShowFilter, widthOfTable }) {
             <MenuItem value="tarea">Tarea</MenuItem>
             <MenuItem value="usuario">Usuario</MenuItem>
           </TextField>
-          {/* 
-          <Select
-            fullWidth
-            name="tipoBusqueda"
-            value={formValues.tipoBusqueda}
-            onChange={handleInputChange}
-            error={formErrors.tipoBusqueda}
-            onBlur={handleBlur}
-            SelectProps={{
-              MenuProps: { disablePortal: true }
-            }}
-          >
-            <MenuItem value="T/U">
-              <em>T/U</em>
-            </MenuItem>
-            <MenuItem value="tarea">Tarea</MenuItem>
-            <MenuItem value="usuario">Usuario</MenuItem>
-          </Select> */}
         </Box>
         <Box sx={{ gridArea: "nombre" }}>
           <MDTypography variant="h6" fontWeight="medium">

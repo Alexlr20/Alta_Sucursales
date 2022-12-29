@@ -7,12 +7,8 @@ import AddCity from './components/AddCity';
 import { StateDropdown } from './components/StateDropdown';
 import { StatusDropdown } from './components/StatusDropdown';
 
-
-
 export function City() {
     const [allCities, setAllCities] = useState([]);
-    // const [pendingCities, setAllPendingCities] = useState(true);
-    // const [citiesError, setAllCitiesError] = useState(null);
 
     const [refresh, setRefresh] = useState(false);
 
@@ -25,64 +21,78 @@ export function City() {
 
     useEffect(() => {
         const abortCont = new AbortController();
-
+        
         if (stateValue === 'all' && statusValue === 'nonSuspended') {
-            // console.log('DEFAULTTT');
             axios.get('http://localhost/ddsoftware/Alta_Sucursales/src/PHP/cities/read.php')
                 .then((response) => {
                     const { data } = response;
                     const { ciudad } = data;
-                    console.log('DATA IN AXIOS GET',ciudad);
-                    // setAllPendingCities(false);
                     setAllCities(ciudad);
-                    // setAllCitiesError(null);
-                }
-                )
+                })
                 .catch((error) => {
-                    if (error === 'AbortError') {
-                        console.log(error);
-                    }
+                    if (error === 'AbortError') console.log(error);
                 });
-            }
-            
-            // Id, byStateId, nonSuspended
-            if(stateValue != 'all' && statusValue === 'nonSuspended'){
-                console.log('VALORDESTATEVALUEEE',stateValue);
-                axios.get(`http://localhost/ddsoftware/Alta_Sucursales/src/PHP/cities/read.php?id=${stateValue}&suspended=1`)
-                    .then((response) => {
-                        const { data } = response;
-                        const { ciudad } = data;
-                        console.log('DATA IN AXIOS GET',data);
-                        // setAllPendingCities(false);
-                        setAllCities(ciudad);
-                        // setAllCitiesError(null);
-                    }
-                    )
-                    .catch((error) => {
-                        if (error === 'AbortError') {
-                            console.log(error);
-                        }
-                    });
-            }
+        }
 
-            if(stateValue === 'all' && statusValue === 'suspended'){
-                axios.get('http://localhost/ddsoftware/Alta_Sucursales/src/PHP/cities/read.php?all=1&suspended=1')
-                    .then((response) => {
-                        const { data } = response;
-                        const { ciudad } = data;
-                        console.log('DATA IN AXIOS GET',data);
-                        // setAllPendingCities(false);
-                        setAllCities(ciudad);
-                        // setAllCitiesError(null);
-                    }
-                    )
-                    .catch((error) => {
-                        if (error === 'AbortError') {
-                            console.log(error);
-                        }
-                    });
-            }
-            
+        if (stateValue === 'all' && statusValue === 'suspended') {
+            axios.get('http://localhost/ddsoftware/Alta_Sucursales/src/PHP/cities/read.php?suspended=1')
+                .then((response) => {
+                    const { data } = response;
+                    const { ciudad } = data;
+                    setAllCities(ciudad);
+                })
+                .catch((error) => {
+                    if (error === 'AbortError') console.log(error);
+                });
+        }
+
+        if (stateValue === 'all' && statusValue === 'all') {
+            axios.get(`http://localhost/ddsoftware/Alta_Sucursales/src/PHP/cities/read.php?all=1`)
+                .then((response) => {
+                    const { data } = response;
+                    const { ciudad } = data;
+                    setAllCities(ciudad);
+                })
+                .catch((error) => {
+                    if (error === 'AbortError') console.log(error);
+                });
+        }
+
+        if (stateValue != 'all' && statusValue === 'nonSuspended') {
+            axios.get(`http://localhost/ddsoftware/Alta_Sucursales/src/PHP/cities/read.php?id=${stateValue}&byStateId=1`)
+                .then((response) => {
+                    const { data } = response;
+                    const { ciudad } = data;
+                    setAllCities(ciudad);
+                })
+                .catch((error) => {
+                    if (error === 'AbortError') console.log(error);
+                });
+        }
+
+        if (stateValue != 'all' && statusValue === 'suspended') {
+            axios.get(`http://localhost/ddsoftware/Alta_Sucursales/src/PHP/cities/read.php?id=${stateValue}&suspended=1&byStateId=1`)
+                .then((response) => {
+                    const { data } = response;
+                    const { ciudad } = data;
+                    setAllCities(ciudad);
+                })
+                .catch((error) => {
+                    if (error === 'AbortError') console.log(error);
+                });
+        }
+
+        if (stateValue != 'all' && statusValue === 'all') {
+            axios.get(`http://localhost/ddsoftware/Alta_Sucursales/src/PHP/cities/read.php?id=${stateValue}&all=1&byStateId=1`)
+                .then((response) => {
+                    const { data } = response;
+                    const { ciudad } = data;
+                    setAllCities(ciudad);
+                })
+                .catch((error) => {
+                    if (error === 'AbortError') console.log(error);
+                });
+        }
 
         return () => abortCont.abort();
     }, [refresh, statusValue, stateValue]);
@@ -93,8 +103,6 @@ export function City() {
                 <AddCity handleRefresh={handleRefresh} refresh={refresh} />
 
                 <Box sx={{ marginRight: "1rem", display: "flex", flexDirection: "column", gap: "1rem" }}>
-                    {/* {pendingCities && <div>Loading...</div>} */}
-                    {/* {citiesError && <div>Error</div>} */}
                     <Box style={{ display: "flex", gap: "1rem", alignSelf: "flex-end", width: "50%" }}>
                         <StateDropdown stateValue={stateValue} setStateValue={setStateValue} />
                         <StatusDropdown statusValue={statusValue} setStatusValue={setStatusValue} />
@@ -107,4 +115,3 @@ export function City() {
 }
 
 export default City;
-

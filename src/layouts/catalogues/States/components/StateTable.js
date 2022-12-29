@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { faPenToSquare, faTrash, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Box, Button, Modal, TextField, Card } from "@mui/material";
@@ -8,94 +7,73 @@ import MDTypography from "components/MDTypography";
 import DataTable from "examples/Tables/DataTable";
 import React, { useState } from "react";
 
-// import mandateData from "../SearchForm/mandateData";
 
-// eslint-disable-next-line react/prop-types
+const modalStyle = {
+  width: "30%",
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  backgroundColor: "#FFF",
+  padding: "1rem",
+};
+
+const actionButton = {
+  alignSelf: "center",
+  cursor: "pointer",
+};
+
+const buttonStyle = {
+  width: "fit-content",
+  color: "#FFF",
+  marginTop: "1.5rem",
+  backgroundColor: "#1A73E8",
+};
+
+
 function ActionButtons({ id, handleRefresh }) {
   const [openEdit, setOpenEdit] = useState(false);
-  const handleEdit = () => {
-    setOpenEdit((prev) => !prev);
-  };
-
-  console.log(id);
+  const handleEdit = () => setOpenEdit((prev) => !prev);
 
   const [state, setState] = useState("");
   const [stateError, setStateError] = useState(false);
   const [code, setCode] = useState("");
   const [codeError, setCodeError] = useState(false);
 
+  const [openDelete, setOpenDelete] = useState(false);
+  const handleDelete = () => {
+    setOpenDelete((prev) => !prev);
+  };
+
+
   const handleClick = () => {
     handleEdit();
 
-    axios
-      .get(`http://localhost/ddsoftware/Alta_Sucursales/src/PHP/states/read.php?id=${id}`)
+    axios.get(`http://localhost/ddsoftware/Alta_Sucursales/src/PHP/states/read.php?id=${id}`)
       .then((response) => {
         const { data } = response;
         const { estado } = data;
-        // console.log('GET IN STATE TABLE SI',estado[0]);
         setState(estado[0].nombre_edo);
         setCode(estado[0].codigo);
       })
       .catch((error) => {
-        if (error === "AbortError") {
-          console.log(error);
-        }
+        if (error === "AbortError") console.log(error);
       });
   };
 
-  const modalStyle = {
-    width: "30%",
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    backgroundColor: "#FFF",
-    padding: "1rem",
-  };
-
-  const actionButton = {
-    alignSelf: "center",
-    cursor: "pointer",
-  };
-
-  const handleChange = ({ target }) => {
-    setState(target.value);
-  };
-
-  const handleCodeChange = ({ target }) => {
-    setCode(target.value);
-  };
+  const handleChange = ({ target }) => setState(target.value);
+  const handleCodeChange = ({ target }) => setCode(target.value);
 
   const validateStatesInput = () => {
-    if (state.length <= 0) {
-      setStateError(true);
-    } else {
-      setStateError(false);
-    }
-
-    if (code.length <= 0) {
-      setCodeError(true);
-    } else {
-      setCodeError(false);
-    }
+    (state.length <= 0) ? setStateError(true) : setStateError(false);
+    (code.length <= 0) ? setCodeError(true) : setCodeError(false);
   };
 
   const handleSumbit = (e) => {
     e.preventDefault();
     validateStatesInput();
     if (stateError === false && codeError === false) {
-      console.log("No errors :D");
-
-      console.log(`
-            id: ${id},
-            nombre: ${state},
-            cod: ${code}
-            `);
-
-      // axios.patch(`http://localhost:8000/states/${id}`, {
-      axios
-        .patch(`http://localhost/ddsoftware/Alta_Sucursales/src/PHP/states/update.php`, {
-          // eslint-disable-next-line object-shorthand
+      axios.patch(`http://localhost/ddsoftware/Alta_Sucursales/src/PHP/states/update.php`, {
           id: id,
           nombre_edo: state,
           codigo: code,
@@ -110,11 +88,6 @@ function ActionButtons({ id, handleRefresh }) {
     }
   };
 
-  const [openDelete, setOpenDelete] = useState(false);
-
-  const handleDelete = () => {
-    setOpenDelete((prev) => !prev);
-  };
 
   const confirmDelete = (e) => {
     e.preventDefault();
@@ -125,32 +98,13 @@ function ActionButtons({ id, handleRefresh }) {
       })
         .then((response) => console.log('Borrado :D', response))
         .catch(error => {
-          if(error.message == 'Request failed with status code 503'){
-            alert('La sucursal no se puede borrar por que ya se está utilizando');
-          }
-          console.log(error)
+          if(error.message === 'Request failed with status code 503') alert('La sucursal no se puede borrar por que ya se está utilizando');
         })
 
-
-
-
-
-
-
-
-    // .then(((response) => console.log('ESTADO BORRADO :D', response))
-    // .catch(error => console.log(error))
-    // )
     handleDelete();
     handleRefresh();
   };
 
-  const buttonStyle = {
-    width: "fit-content",
-    color: "#FFF",
-    marginTop: "1.5rem",
-    backgroundColor: "#1A73E8",
-  };
 
   return (
     <>
@@ -220,7 +174,6 @@ function ActionButtons({ id, handleRefresh }) {
             />
           </div>
 
-          {/* <Box style={{ display: "flex", flexDirection: "column"}}> */}
           <MDTypography variant="h6" fontWeight="medium">
             Borrar?, esta opción no es reversible
           </MDTypography>
@@ -240,7 +193,6 @@ function ActionButtons({ id, handleRefresh }) {
               Cancelar
             </Button>
           </Box>
-          {/* </Box> */}
         </Card>
       </Modal>
 
@@ -259,9 +211,6 @@ function ActionButtons({ id, handleRefresh }) {
 
 export default function StateTable({ allStates, handleRefresh }) {
   console.log(allStates);
-  // const { columns, rows } = mandateData();
-
-  // eslint-disable-next-line react/no-unstable-nested-components
   function TableFiller({ name, calle }) {
     return (
       <MDBox display="flex" alignItems="center">
@@ -285,37 +234,11 @@ export default function StateTable({ allStates, handleRefresh }) {
     { Header: "Editar", accessor: "Editar", align: "left" },
   ];
 
-  // const prefakeddata = [
-  //     { id: 10, nombre: "Nuevo león", codigo: "NL"},
-  // ];
-
   const rows = allStates.map((elem) => ({
     ID: <TableFiller name={elem.id} />,
     Nombre: <TableFiller name={elem.nombre_edo} />,
     Codigo: <TableFiller name={elem.codigo} />,
     Editar: <ActionButtons id={elem.id} handleRefresh={handleRefresh} />,
-
-    // Fechas: <TableFiller name={elem.fecha_inicial} calle={elem.fecha_final} />,
-    // Horario: <TableFiller name={elem.hora_inicial} calle={elem.hora_final} />,
-    // Dias: <DatesSelect dias={elem.dias} />,
-    // Visto: <TableFiller name={elem.visto} />,
-    // Status: <StatusDialog status="candado" id="status_id_0" textValue="" />,
-    // Detalle: (
-    //   <DetailDialog
-    //     detalle="detalle"
-    //     id="elem.id"
-    //     textValue=""
-    //     fechaInicial="fechacreacion"
-    //     fechaFinal="fechacreacion2"
-    //     horaInicial="horacreacion"
-    //     horaFinal="horacreacion2"
-
-    //     // fechaCreacion="fechainicial - hora"
-    //     // fechaModificacion="fechademod - horamod"
-    //     // fechaTerminado="fechaterminada - horaterminada"
-    //     // fechaAutorizacion="fechaautorizacion - horaautorizacion"
-    //   />
-    // ),
   }));
 
   return (
@@ -323,10 +246,8 @@ export default function StateTable({ allStates, handleRefresh }) {
       <DataTable
         table={{ columns, rows }}
         isSorted={false}
-
         entriesPerPage={false}
         // showTotalEntries={false}
-
         // noEndBorder
       />
     </Card>

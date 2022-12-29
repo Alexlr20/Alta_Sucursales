@@ -7,6 +7,24 @@ import MDTypography from "components/MDTypography";
 import DataTable from "examples/Tables/DataTable";
 import React, { useState } from "react";
 
+const modalStyle = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    backgroundColor: "#FFF",
+    padding: "1rem"
+};
+
+const actionButton = {
+    alignSelf: "center",
+    cursor: "pointer"
+}
+
+const buttonStyle = {
+    width: "fit-content", color: "#FFF", marginTop: "1.5rem", backgroundColor: '#1A73E8'
+}
+
 function ActionButtons({ id, handleRefresh }) {
     const [openEdit, setOpenEdit] = useState(false);
     const handleEdit = () => {
@@ -16,6 +34,10 @@ function ActionButtons({ id, handleRefresh }) {
     const [roadType, setRoadType] = useState('');
     const [roadTypeError, setRoadTypeError] = useState(false);
 
+    const [openDelete, setOpenDelete] = useState(false);
+    const handleDelete = () => {
+        setOpenDelete(prev => !prev);
+    };
 
     const handleClick = () => {
         handleEdit();
@@ -32,38 +54,13 @@ function ActionButtons({ id, handleRefresh }) {
             });
     };
 
-    const modalStyle = {
-        position: "absolute",
-        top: "50%",
-        left: "50%",
-        transform: "translate(-50%, -50%)",
-        backgroundColor: "#FFF",
-        padding: "1rem"
-    };
-
-    const actionButton = {
-        alignSelf: "center",
-        cursor: "pointer"
-    }
-
-    const handleChange = ({ target }) => {
-        setRoadType(target.value);
-    };
-
-    const validateStatesInput = () => {
-        if (roadType.length <= 0) {
-            setRoadTypeError(true)
-        } else {
-            setRoadTypeError(false);
-        }
-    };
+    const handleChange = ({ target }) => setRoadType(target.value);
+    const validateStatesInput = () => (roadType.length <= 0) ? setRoadTypeError(true) : setRoadTypeError(false);
 
     const handleSubmit = (e) => {
         e.preventDefault();
         validateStatesInput();
         if (roadTypeError === false) {
-            console.log('No errors :D');
-
             axios.patch('http://localhost/ddsoftware/Alta_Sucursales/src/PHP/road_types/update.php', {
                 id: id,
                 tipo: roadType,
@@ -77,12 +74,6 @@ function ActionButtons({ id, handleRefresh }) {
         }
     };
 
-    const [openDelete, setOpenDelete] = useState(false);
-
-    const handleDelete = () => {
-        setOpenDelete(prev => !prev);
-    };
-
     const confirmDelete = (e) => {
         e.preventDefault();
 
@@ -91,19 +82,14 @@ function ActionButtons({ id, handleRefresh }) {
         })
             .then((response) => console.log('Borrado :D', response))
             .catch(error => {
-                if (error.message == 'Request failed with status code 503') {
-                    alert('La sucursal no se puede borrar por que ya se está utilizando');
-                }
-                console.log(error);
+                if (error.message === 'Request failed with status code 503') alert('La sucursal no se puede borrar por que ya se está utilizando');
             })
 
         handleDelete();
         handleRefresh();
     };
 
-    const buttonStyle = {
-        width: "fit-content", color: "#FFF", marginTop: "1.5rem", backgroundColor: '#1A73E8'
-    }
+
 
     return (
         <>

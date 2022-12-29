@@ -12,6 +12,10 @@ class Location
     public $locality_id;
     public $postal_code;
     public $days;
+    public $byStateId;
+
+    public $suspended;
+    public $allStatus;
 
 
 
@@ -38,21 +42,23 @@ class Location
     {
 
         switch ($this) {
-            case !empty($this->id):
-                // $stmt = $this->conn->prepare("SELECT 
-                // sucursal.nombre,
-                // tipo_vialidad.tipo,
-                // ubicacion_suc.nombre_vialidad, ubicacion_suc.numero_int, ubicacion_suc.numero_ext, ubicacion_suc.codigo_postal,
-                // colonia.nombre AS nombre_colonia,
-                // ciudad.nombre_ciud,
-                // estado.nombre_edo
-                // FROM sucursal
-                // INNER JOIN ubicacion_suc ON sucursal.ubicacion = ubicacion_suc.id AND sucursal.id = ?
-                // INNER JOIN tipo_vialidad ON tipo_vialidad.id = ubicacion_suc.id_tipo_vialidad
-                // INNER JOIN colonia ON colonia.id = ubicacion_suc.id_colonia
-                // INNER JOIN ciudad ON colonia.id_ciud = ciudad.id
-                // INNER JOIN estado ON ciudad.id_edo = estado.id;");
+            case !empty($this->byStateId) && !empty($this->id):
+                $stmt = $this->conn->prepare("SELECT
+                sucursal.id AS id_sucursal, sucursal.nombre, ubicacion_suc.nombre_vialidad, ubicacion_suc.numero_int, ubicacion_suc.numero_ext, ubicacion_suc.id_tipo_vialidad, ubicacion_suc.nombre_localidad, ubicacion_suc.codigo_postal, ubicacion_suc.id_colonia,
+                ciudad.id AS id_ciudad, ciudad.id_edo
+                FROM sucursal
+                INNER JOIN ubicacion_suc ON ubicacion_suc.id = sucursal.ubicacion
+                INNER JOIN colonia ON colonia.id = ubicacion_suc.id_colonia
+                INNER JOIN ciudad ON ciudad.id = colonia.id_ciud WHERE colonia.id_edo = ?;");
+                // SELECT * FROM sucursal
+                // INNER JOIN ubicacion_suc ON ubicacion_suc.id = sucursal.id
+                // INNER JOIN colonia ON colonia.id = ubicacion_suc.id_colonia WHERE colonia.id_edo = ?;
 
+                $stmt->bind_param("i", $this->id);
+
+                break;
+
+            case !empty($this->id):
                 $stmt = $this->conn->prepare("SELECT
                 sucursal.id AS id_sucursal, sucursal.nombre, ubicacion_suc.nombre_vialidad, ubicacion_suc.numero_int, ubicacion_suc.numero_ext, ubicacion_suc.id_tipo_vialidad, ubicacion_suc.nombre_localidad, ubicacion_suc.codigo_postal, ubicacion_suc.id_colonia,
                 ciudad.id AS id_ciudad, ciudad.id_edo
@@ -63,6 +69,38 @@ class Location
 
                 $stmt->bind_param("i", $this->id);
 
+                break;
+
+            case !empty($this->suspended):
+                $stmt = $this->conn->prepare("SELECT 
+                sucursal.id, sucursal.nombre,
+                tipo_vialidad.tipo,
+                ubicacion_suc.nombre_vialidad, ubicacion_suc.numero_int, ubicacion_suc.numero_ext, ubicacion_suc.codigo_postal,
+                colonia.nombre AS nombre_colonia,
+                ciudad.nombre_ciud,
+                estado.nombre_edo
+                FROM sucursal
+                INNER JOIN ubicacion_suc ON sucursal.ubicacion = ubicacion_suc.id
+                INNER JOIN tipo_vialidad ON tipo_vialidad.id = ubicacion_suc.id_tipo_vialidad
+                INNER JOIN colonia ON colonia.id = ubicacion_suc.id_colonia
+                INNER JOIN ciudad ON colonia.id_ciud = ciudad.id
+                INNER JOIN estado ON ciudad.id_edo = estado.id WHERE sucursal.suspendida=1;");
+                break;
+
+            case !empty($this->allStatus):
+                $stmt = $this->conn->prepare("SELECT 
+                sucursal.id, sucursal.nombre,
+                tipo_vialidad.tipo,
+                ubicacion_suc.nombre_vialidad, ubicacion_suc.numero_int, ubicacion_suc.numero_ext, ubicacion_suc.codigo_postal,
+                colonia.nombre AS nombre_colonia,
+                ciudad.nombre_ciud,
+                estado.nombre_edo
+                FROM sucursal
+                INNER JOIN ubicacion_suc ON sucursal.ubicacion = ubicacion_suc.id
+                INNER JOIN tipo_vialidad ON tipo_vialidad.id = ubicacion_suc.id_tipo_vialidad
+                INNER JOIN colonia ON colonia.id = ubicacion_suc.id_colonia
+                INNER JOIN ciudad ON colonia.id_ciud = ciudad.id
+                INNER JOIN estado ON ciudad.id_edo = estado.id;");
                 break;
 
             default:
@@ -78,7 +116,7 @@ class Location
                 INNER JOIN tipo_vialidad ON tipo_vialidad.id = ubicacion_suc.id_tipo_vialidad
                 INNER JOIN colonia ON colonia.id = ubicacion_suc.id_colonia
                 INNER JOIN ciudad ON colonia.id_ciud = ciudad.id
-                INNER JOIN estado ON ciudad.id_edo = estado.id;");
+                INNER JOIN estado ON ciudad.id_edo = estado.id WHERE sucursal.suspendida=0;");
 
                 break;
         }

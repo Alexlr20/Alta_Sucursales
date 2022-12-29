@@ -1,8 +1,5 @@
 import React from "react";
 
-// import '../../../styles/Table.css';
-// require('../../../styles/Table.css');
-
 function Table({ data, column }) {
   return (
     <table>

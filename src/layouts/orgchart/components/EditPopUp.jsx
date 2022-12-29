@@ -18,7 +18,6 @@ export function EditPopUp({areaId, close, handleClose, handleRefresh, selectedLo
         .then((response) => {
             const { data } = response;
             const { organigrama } = data;
-            // console.log('Area ->',organigrama[0]);
             setNombre_area(organigrama[0].nombre_area);
             nombre_filtrar = organigrama[0].nombre_area;
             setResponde_a(organigrama[0].responde_a);
@@ -39,8 +38,6 @@ export function EditPopUp({areaId, close, handleClose, handleRefresh, selectedLo
                 const x = organigrama.filter(e => e.responde_a === null);
                 setRootInlocation(x.length >= 1);
                 const filteredOrgChart = organigrama.filter(e => e.nombre_area !== nombre_filtrar);
-                // console.log('nombre_area -> ',nombre_filtrar);
-                // console.log('DATA TO FILTER ->',y);
                 setData(filteredOrgChart);
             })
             .catch((err) => {
@@ -65,29 +62,12 @@ export function EditPopUp({areaId, close, handleClose, handleRefresh, selectedLo
         })
             .then((response) => console.log('ENVIADO PATCH!', response))
             .catch(error => console.log(error))
-
-        // axios.post('http://localhost/ddsoftware/Alta_Sucursales/src/PHP/orgchart/create.php', {
-        //     nombre_area: nombre_area,
-        //     responde_a: responde_a,
-        //     id_sucursal: selectedLocation
-        // })
-        //     .then((response) => console.log('ENVIADO!', response))
-        //     .catch((error) => console.log(error));
-
-        // handleRefresh();
-        // close();
     };
 
-    const handleSelectChange = ({ target }) => {
-        setResponde_a(target.value);
-    };
-
-    const handleTextChange = ({ target }) => {
-        setNombre_area(target.value);
-    };
+    const handleSelectChange = ({ target }) => setResponde_a(target.value);
+    const handleTextChange = ({ target }) => setNombre_area(target.value);
 
     return (
-        // <div className="popUp card">
         <Card sx={{ padding: "1rem", display: "flex", flexDirection: "column", gap: "1rem" }}>
             <Box sx={{ alignSelf: "flex-end" }}>
                 <FontAwesomeIcon className="closeIcon" icon={faXmark} onClick={handleClose} />

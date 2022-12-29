@@ -289,7 +289,7 @@ export default function EditLocation({ handleShowAdd, locationIdToUpdate }) {
     };
 
     const savedDays = useRef(initialCheckboxValues);
-    const [daysHistory, setDaysHistory] = useState([{scheduleId: 0, dia: 'Lunes', hora_inicial: '12:00', hora_final: '13:25'}]);
+    const [daysHistory, setDaysHistory] = useState({});
 
 
     const handleUpdateDay = () => {
@@ -297,15 +297,8 @@ export default function EditLocation({ handleShowAdd, locationIdToUpdate }) {
         console.log('Editar activo? ', editActive);
         console.log('IdToUpdate en UpdateDay ->', idToUpdate.current);
 
-        if (!Object.values(currentDay).includes(true)) {
-            return;
-        }
-
-        if (currentDay.hora_final === "" || currentDay.hora_inicial === "") {
-            return;
-        }
-
-        console.log(!Object.keys(currentDay).includes(false));
+        if (!Object.values(currentDay).includes(true)) return;
+        if (currentDay.hora_final === "" || currentDay.hora_inicial === "") return;
 
         const currentSchedule = {
             scheduleId: idToUpdate.current,
@@ -370,11 +363,8 @@ export default function EditLocation({ handleShowAdd, locationIdToUpdate }) {
         });
 
         console.log('NEWSTATEEE', newState);
-
         [newStateSync.current] = newState;
-
         console.log('POR ESTO ES QUE TRUENA', [newState.flatMap(e => e)][0]);
-
 
         const allHistory = [...history.flatMap(e => e), ...historyState.flatMap(e => e), ...newState.flatMap(e => e)];
         console.log('TODO EL HISTORIAL HASTA EL MOMENTO', allHistory);
@@ -402,14 +392,12 @@ export default function EditLocation({ handleShowAdd, locationIdToUpdate }) {
         setEditActive(false);
     };
 
-    const handleAddDay = () => {
-        if (!Object.values(currentDay).includes(true)) {
-            return;
-        }
 
-        if (currentDay.hora_final === "" || currentDay.hora_inicial === "") {
-            return;
-        }
+
+
+    const handleAddDay = () => {
+        if (!Object.values(currentDay).includes(true)) return;
+        if (currentDay.hora_final === "" || currentDay.hora_inicial === "") return;
 
 
         const currentSchedule = {
@@ -442,12 +430,6 @@ export default function EditLocation({ handleShowAdd, locationIdToUpdate }) {
         currentSchedule.hora_final = currentDay.hora_final;
         history.push(currentSchedule);
 
-        // const allHistory = [...history.flatMap(e => e), ...historyState.flatMap(e => e), newStateSync.current];
-        // console.log('TODO EL HISTORIAL HASTA EL MOMENTO', allHistory);
-
-        // const savedDaysArr = allHistory.map((e) => e.dia);
-
-
         const savedDaysArr = history.map((e) => e.dia);
 
         if (savedDaysArr.findIndex((e) => e.includes("Domingo")) !== -1) daysHistory.sunday = true;
@@ -462,16 +444,11 @@ export default function EditLocation({ handleShowAdd, locationIdToUpdate }) {
         savedDays.current = daysHistory;
         setCurrentDay(initialCheckboxValues);
 
-        // console.log(currentSchedule);
-
         scheduleCounter.current += 1;
         setHistoryState((prev) => [...prev, history]);
         currentSchedule.acciones = <ActionButtons id={currentSchedule.scheduleId} savedDays={savedDays.current} currentDay={currentDay} setCurrentDay={setCurrentDay} history={history} historyState={historyState} setHistoryState={setHistoryState} setEditActive={setEditActive} idToUpdate={idToUpdate} editActive={editActive} newStateSync={newStateSync} />;
-
-        // console.log('Historial', history);
-        // console.log('Historial en estado', historyState);
-
     };
+
 
     const handleScheduleChange = (e) => {
         const { name, value } = e.target;
