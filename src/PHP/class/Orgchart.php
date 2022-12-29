@@ -6,14 +6,16 @@
         public $area;
         public $responds_to;
         private $conn;
+        
+        public $suspended;
+        public $all;
 
         public function __construct($db){
             $this->conn = $db;
         }
 
         function viewRelations(){
-            $stmt = $this->conn->prepare("SELECT area_x_sucursal.id AS area_suc, empleado.id AS area_empleado FROM area
-            LEFT JOIN area_x_sucursal ON area_x_sucursal.id_area = area.id
+            $stmt = $this->conn->prepare("SELECT empleado.id AS area_empleado FROM area
             LEFT JOIN empleado ON empleado.id_area = area.id WHERE area.id = ?;");
     
             $this->id = htmlspecialchars(strip_tags($this->id));
@@ -35,13 +37,35 @@
                     $stmt->bind_param("ii", $this->id, $this->area_id);
                     break;
 
-                default:
+                case !empty($this->suspended) && !empty($this->id):
+                    $stmt = $this->conn->prepare("SELECT
+                    sucursal.nombre,
+                    area.id, area.nombre AS nombre_area, area.responde_a
+                    FROM area_x_sucursal
+                    INNER JOIN sucursal ON area_x_sucursal.id_sucursal = sucursal.id AND sucursal.id = ?
+                    INNER JOIN area ON area_x_sucursal.id_area = area.id WHERE area.suspendida = 1;");
+
+                    $stmt->bind_param("i", $this->id);
+                    break;
+
+                case !empty($this->all) && !empty($this->id):
                     $stmt = $this->conn->prepare("SELECT
                     sucursal.nombre,
                     area.id, area.nombre AS nombre_area, area.responde_a
                     FROM area_x_sucursal
                     INNER JOIN sucursal ON area_x_sucursal.id_sucursal = sucursal.id AND sucursal.id = ?
                     INNER JOIN area ON area_x_sucursal.id_area = area.id;");
+
+                    $stmt->bind_param("i", $this->id);
+                    break;
+
+                default:
+                    $stmt = $this->conn->prepare("SELECT
+                    sucursal.nombre,
+                    area.id, area.nombre AS nombre_area, area.responde_a
+                    FROM area_x_sucursal
+                    INNER JOIN sucursal ON area_x_sucursal.id_sucursal = sucursal.id AND sucursal.id = ?
+                    INNER JOIN area ON area_x_sucursal.id_area = area.id WHERE area.suspendida = 0;");
 
                     $stmt->bind_param("i", $this->id);
                     break;
@@ -91,7 +115,7 @@
         }
 
         function delete(){
-            $stmt = $this->conn->prepare("UPDATE area SET suspendida=1 WHERE id= ?");
+            $stmt = $this->conn->prepare("CALL delete_area(?);");
     
             $this->id = htmlspecialchars(strip_tags($this->id));
             $stmt->bind_param("i", $this->id);

@@ -6,8 +6,12 @@ class Locality
     public $name;
     public $postal_code;
     public $state_name;
-    public $city_id;
     public $byCityId;
+    public $city_id;
+
+    public $filter;
+    public $visible;
+    public $state_id;
 
     public function __construct($db)
     {
@@ -26,8 +30,7 @@ class Locality
         return $result;
     }
 
-    function read()
-    {
+    function read(){
         // if ($this->id) {
         //     // $stmt = $this->conn->prepare("SELECT * FROM ".$this->localityTable." WHERE id = ?");
         //     // $stmt = $this->conn->prepare("SELECT * FROM ".$this->localityTable." WHERE NOT visible = 0 AND id = ?");
@@ -51,6 +54,36 @@ class Locality
         // }
 
         switch ($this) {
+            case !empty($this->filter):
+                $statement = "SELECT
+                    colonia.id, colonia.nombre, colonia.codigo_postal,
+                    estado.nombre_edo,
+                    ciudad.nombre_ciud
+                FROM colonia
+                INNER JOIN ciudad ON colonia.id_ciud = ciudad.id
+                INNER JOIN estado ON colonia.id_edo = estado.id
+                WHERE ";
+
+                if($this->state_id){
+                    $statement .= 'estado.id = '.$this->state_id;
+                }
+
+                if($this->city_id){
+                    if($this->state_id) $statement .= ' AND ';
+                    $statement .= 'ciudad.id = '.$this->state_id;
+                }
+
+                if($this->visible){
+                    if($this->state_id || $this->city_id) $statement .= ' AND ';
+                    $statement .= 'colonia.visible='.$this->visible;
+                }
+
+                // echo 'QUERY ->> '.$statement;
+                $stmt = $this->conn->prepare($statement);
+
+                break;
+
+
             case $this->id && $this->byCityId:
                 $stmt = $this->conn->prepare("SELECT colonia.id, colonia.nombre, colonia.codigo_postal, colonia.id_edo, colonia.id_ciud FROM colonia INNER JOIN ciudad ON colonia.id_ciud = ciudad.id INNER JOIN estado ON colonia.id_edo = estado.id WHERE estado.visible=1 AND ciudad.visible=1 AND colonia.visible=1 AND ciudad.id=?;");
                 $stmt->bind_param("i", $this->id);
@@ -69,9 +102,7 @@ class Locality
         return $result;
     }
 
-    function create()
-    {
-        // $stmt = $this->conn->prepare("INSERT INTO ".$this->localityTable." (`nombre`, `codigo_postal`) VALUES(?,?)");
+    function create(){
         $stmt = $this->conn->prepare("INSERT INTO " . $this->localityTable . " (`nombre`, `codigo_postal`, `id_edo`, `id_ciud`) VALUES(?,?,?,?)");
 
         $this->name = htmlspecialchars(strip_tags($this->name));
@@ -87,8 +118,7 @@ class Locality
         return false;
     }
 
-    function update()
-    {
+    function update(){
         // $stmt = $this->conn->prepare("UPDATE ".$this->localityTable." SET nombre= ?, codigo_postal= ? WHERE id= ?");
         $stmt = $this->conn->prepare("UPDATE " . $this->localityTable . " SET nombre= ?, codigo_postal= ? WHERE NOT visible = 0 AND id= ?");
 

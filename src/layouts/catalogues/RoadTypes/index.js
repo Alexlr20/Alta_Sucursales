@@ -7,67 +7,49 @@ import { StatusDropdown } from "./components/StatusDropdown";
 
 export function RoadType() {
   const [allRoadTypes, setAllRoadTypes] = useState([]);
-
+  const [statusValue, setStatusValue] = useState('nonSuspended');
   const [refresh, setRefresh] = useState(false);
 
-  const [statusValue, setStatusValue] = useState('nonSuspended');
-
-  const handleRefresh = () => {
-    setRefresh((prev) => !prev);
-  };
-
-  console.log("refresh ->", refresh);
+  const handleRefresh = () => setRefresh((prev) => !prev);
 
   useEffect(() => {
     const abortCont = new AbortController();
 
     if (statusValue === 'nonSuspended') {
-      axios
-        .get("http://localhost/ddsoftware/Alta_Sucursales/src/PHP/road_types/read.php")
+      axios.get("http://localhost/ddsoftware/Alta_Sucursales/src/PHP/road_types/read.php")
         .then((response) => {
           const { data } = response;
           const { tipo_vialidad } = data;
           setAllRoadTypes(tipo_vialidad);
         })
         .catch((error) => {
-          if (error === "AbortError") {
-            console.log(error);
-          }
+          if (error === "AbortError") console.log(error);
         });
     }
 
-    if(statusValue === 'suspended'){
-      axios
-      .get("http://localhost/ddsoftware/Alta_Sucursales/src/PHP/road_types/read.php?suspended=1")
-      .then((response) => {
-        const { data } = response;
-        const { tipo_vialidad } = data;
-        setAllRoadTypes(tipo_vialidad);
-      })
-      .catch((error) => {
-        if (error === "AbortError") {
-          console.log(error);
-        }
-      });
+    if (statusValue === 'suspended') {
+      axios.get("http://localhost/ddsoftware/Alta_Sucursales/src/PHP/road_types/read.php?suspended=1")
+        .then((response) => {
+          const { data } = response;
+          const { tipo_vialidad } = data;
+          setAllRoadTypes(tipo_vialidad);
+        })
+        .catch((error) => {
+          if (error === "AbortError") console.log(error);
+        });
     }
 
-    if(statusValue === 'all'){
-      axios
-      .get("http://localhost/ddsoftware/Alta_Sucursales/src/PHP/road_types/read.php?all=1")
-      .then((response) => {
-        const { data } = response;
-        const { tipo_vialidad } = data;
-        setAllRoadTypes(tipo_vialidad);
-      })
-      .catch((error) => {
-        if (error === "AbortError") {
-          console.log(error);
-        }
-      });
+    if (statusValue === 'all') {
+      axios.get("http://localhost/ddsoftware/Alta_Sucursales/src/PHP/road_types/read.php?all=1")
+        .then((response) => {
+          const { data } = response;
+          const { tipo_vialidad } = data;
+          setAllRoadTypes(tipo_vialidad);
+        })
+        .catch((error) => {
+          if (error === "AbortError") console.log(error);
+        });
     }
-
-
-    console.log("Tabla enviada de info :D");
 
     return () => abortCont.abort();
   }, [refresh, statusValue]);

@@ -3,9 +3,7 @@ import { Button, Grid, Icon, InputAdornment, TextField } from "@mui/material";
 import MDTypography from "components/MDTypography";
 import { StatusDropdown } from "layouts/catalogues/Cities/components/StatusDropdown";
 import { useState } from "react";
-// import LocationForm from "./LocationForm";
 
-// eslint-disable-next-line react/prop-types
 export default function SearchForm({ searchInput, handleSearchChange, handleShowAdd, statusValue, setStatusValue }) {
   return (
     <>
@@ -28,11 +26,6 @@ export default function SearchForm({ searchInput, handleSearchChange, handleShow
 
         <Grid item xs={6}>
           <StatusDropdown statusValue={statusValue} setStatusValue={setStatusValue}/>
-          {/* <div>{statusValue}</div>
-           */}
-          {/* <Button variant="contained" sx={{ color: "#FFF" }} onClick={handleShowAdd}> */}
-            {/* Seleccionar más filtros */}
-          {/* </Button> */}
         </Grid>
 
 

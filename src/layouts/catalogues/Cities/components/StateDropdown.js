@@ -10,36 +10,20 @@ export function StateDropdown({stateValue, setStateValue}) {
 
     useEffect(() => {
         const abortCont = new AbortController();
-
-        // if (dropdownValue == 'nonSuspended') {
-        // axios.get('http://localhost:8000/cities/')
         axios.get('http://localhost/ddsoftware/Alta_Sucursales/src/PHP/states/read.php'
             // , {data: {id: 5}}
         )
             .then((response) => {
                 const { data } = response;
                 const { estado } = data;
-                // console.log(estado);
                 setAllListedStates(estado);
-                // console.log('DATA IN AXIOS GET',data);
-                // setAllPendingCities(false);
-                // setAllCities(ciudad);
-                // setAllCitiesError(null);
             }
             )
             .catch((error) => {
                 if (error === 'AbortError') {
                     console.log(error);
                 }
-                // else {
-                //     setAllPendingCities(false);
-                //     setAllCitiesError(error);
-                // }
             });
-        // } else if (dropdownValue == 'suspended'){
-        //     console.log('olaaa');
-        // }
-
         return () => abortCont.abort();
     }, []);
 

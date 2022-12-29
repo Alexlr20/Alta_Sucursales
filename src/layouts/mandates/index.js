@@ -19,34 +19,26 @@ import {
   Modal,
   ClickAwayListener,
   Checkbox,
-  // Typography,
-  // FormGroup,
-  // FormControl,
-  // FormControlLabel,
 } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import axios from "axios";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
-// import DataTable from "layouts/locations/components/DataTable";
-
-// Billing page components
 import NameForm from "layouts/mandates/components/CreateMandate";
 import SearchForm from "./components/SearchForm";
 
 import { useState, useEffect } from "react";
-// eslint-disable-next-line no-unused-vars
 import MandateTable from "./components/MandateTable";
 
 
 const getLocationsByState = (stateId, callback) => {
-  
+
   let response;
   axios.get(`http://localhost/ddsoftware/Alta_Sucursales/src/PHP/locations/read.php?id=${stateId}&byStateId=1`)
     .then(resp => {
-      const {data} = resp;
-      const {sucursal} = data;
+      const { data } = resp;
+      const { sucursal } = data;
       response = sucursal;
       callback(sucursal)
     })
@@ -59,8 +51,8 @@ const getAreasByLocation = (locationId, callback) => {
   let response;
   axios.get(`http://localhost/ddsoftware/Alta_Sucursales/src/PHP/orgchart/read.php?id=${locationId}`)
     .then(resp => {
-      const {data} = resp;
-      const {organigrama} = data;
+      const { data } = resp;
+      const { organigrama } = data;
       response = organigrama;
       callback(organigrama)
     })
@@ -69,19 +61,13 @@ const getAreasByLocation = (locationId, callback) => {
   return response;
 };
 
+const CheckBoxRow = ({ title, executeCall }) => {
 
-
-
-
-
-
-
-const CheckBoxRow = ({ title,  executeCall }) => {
   const [checked, setChecked] = useState(false);
   const [showChildren, setShowChildren] = useState(false);
-  
-  const [response, setResponse] = useState([]);
 
+  const [response, setResponse] = useState([]);
+  
   const handleChange = () => {
     setChecked(prev => !prev);
   };
@@ -103,7 +89,7 @@ const CheckBoxRow = ({ title,  executeCall }) => {
           onChange={handleChange}
           inputProps={{ 'aria-label': 'controlled' }}
         />
-        <MDTypography variant="h6" fontWeight="medium" onClick={handleShowChildren}>{title}</MDTypography>
+        <MDTypography style={{cursor: "pointer"}} variant="h6" fontWeight="medium" onClick={handleShowChildren}>{title}</MDTypography>
       </Box>
       {
         showChildren &&
@@ -113,7 +99,7 @@ const CheckBoxRow = ({ title,  executeCall }) => {
               key={e.id}
               title={e.nombre || e.nombre_area}
               executeCall={e.nombre ? (callback) => getAreasByLocation(e.id, callback) : null}
-              />
+            />
           ))}
         </ul>
       }
@@ -138,11 +124,14 @@ const modalStyle = {
 };
 
 function Mandatos() {
-  const [isPending, setIsPending] = useState(true);
-  const [error, setError] = useState(null);
   const [tasks, setTasks] = useState(null);
   const [showAdd, setShowAdd] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
+  const [widthOfTable, setWidthOfTable] = useState(0);
+
+  // const [selectedStates, setSelectedStates] = useState([]);
+  // const [selectedLocations, setSelectedLocations] = useState([]);
+  // const [selectedAreas, setSelectedAreas] = useState([]);
 
   const [refresh, setRefresh] = useState(false);
 
@@ -160,51 +149,38 @@ function Mandatos() {
     setShowFilters((current) => !current);
   };
 
-  const [widthOfTable, setWidthOfTable] = useState(0);
+  
+  // const [selectedCities, setSelectedCities] = useState([]);
 
-
-  const [selectedCities, setSelectedCities] = useState([]);
-
-  const handleCityChange = (e) => {
-    const index = selectedCities.indexOf(e.target.value);
-    if (index === -1) {
-      setSelectedCities([...selectedCities, e.target.value]);
-    } else {
-      setSelectedCities(selectedCities.filter((city) => city !== e.target.value));
-    }
-  };
+  // const handleCityChange = (e) => {
+  //   const index = selectedCities.indexOf(e.target.value);
+  //   if (index === -1) {
+  //     setSelectedCities([...selectedCities, e.target.value]);
+  //   } else {
+  //     setSelectedCities(selectedCities.filter((city) => city !== e.target.value));
+  //   }
+  // };
 
   const [allListedStates, setAllListedStates] = useState([]);
 
   useEffect(() => {
-    // axios.get('http://localhost:8000/states/')
     axios.get('http://localhost/ddsoftware/Alta_Sucursales/src/PHP/states/read.php')
       .then((response) => {
         const { data } = response;
         const { estado } = data;
-        console.log('ESTADWtff', estado);
         setAllListedStates(estado);
-
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        console.log(error)
+      });
 
   }, [refresh]);
 
 
   return (
     <DashboardLayout>
-      <MDBox
-        style={{ zIndex: 10 }}
-        py={3}
-        px={2}
-        variant="gradient"
-        bgColor="info"
-        borderRadius="lg"
-        coloredShadow="info"
-      >
-        <MDTypography variant="h6" color="white">
-          Mandatos
-        </MDTypography>
+      <MDBox style={{ zIndex: 10 }} py={3} px={2} variant="gradient" bgColor="info" borderRadius="lg" coloredShadow="info">
+        <MDTypography variant="h6" color="white">Mandatos</MDTypography>
       </MDBox>
 
       <Card sx={{ marginTop: 3 }}>
@@ -247,30 +223,24 @@ function Mandatos() {
 
             <Modal open={showAdd} onClose={handleShowAdd}>
               <Card sx={modalStyle}>
+                <div style={{height: "100%", overflowY: "scroll"}}>
 
-                <ul style={noBullet}>
-                  {allListedStates.map(e => (
-                    <CheckBoxRow
-                      key={e.id}
-                      title={e.nombre_edo}
-                      executeCall={(callback) => getLocationsByState(e.id, callback)}
+                  <ul style={noBullet}>
+                    {allListedStates.map(e => (
+                      <CheckBoxRow
+                        key={e.id}
+                        title={e.nombre_edo}
+                        executeCall={(callback) => getLocationsByState(e.id, callback)}
                       // children={}
                       />
-                  ))}
-                </ul>
-
+                    ))}
+                  </ul>
+                </div>
               </Card>
             </Modal>
-
-            {error && <div>{error}</div>}
-            {isPending && <div>Cargando...</div>}
-
             {tasks && <MandateTable setWidthOfTable={setWidthOfTable} tasks={tasks} />}
-
-            {/* {tasks && <DataTable data={tasks} />} */}
           </Grid>
         </Grid>
-        {/* </MDBox> */}
       </Card>
     </DashboardLayout>
   );

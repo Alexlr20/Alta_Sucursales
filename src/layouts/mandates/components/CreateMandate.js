@@ -56,7 +56,6 @@ function NameForm({ handleRefresh, handleShowAdd }) {
   const [formValues, setFormValues] = useState(initialFormValues);
   const [values, setValues] = useState(initialCheckboxValues);
   const [formErrors, setFormErrors] = useState({});
-  // const [checkboxErrors, setCheckboxErrors] = useState({});
   const [testCheck, setTestCheck] = useState({});
 
   const handleInputChange = (e) => {
@@ -180,7 +179,6 @@ function NameForm({ handleRefresh, handleShowAdd }) {
   };
 
   return (
-    // <Stack spacing={3} style={{ position: "absolute", zIndex: 99, width: "90%" }}>
     <Box sx={{ display: "flex", flexDirection: "column", padding: "1rem" }}>
       <Box
         sx={{
@@ -246,7 +244,6 @@ function NameForm({ handleRefresh, handleShowAdd }) {
         >
           Sucursales
         </Button>
-        {/* <Box sx={{ gridArea: "sucBtn" }}>o</Box> */}
 
         <Box sx={{ gridArea: "meta" }}>
           <MDTypography variant="h6" fontWeight="medium" sx={{ marginBottom: 2 }}>

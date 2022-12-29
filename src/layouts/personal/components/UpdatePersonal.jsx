@@ -735,7 +735,7 @@ function UpdatePersonal({ idToUpdate, handleShowEdit, handleRefresh, employeeIsU
                 >
                   {allListedCities?.map((city) => (
                     <MenuItem key={city.id} value={city.id}>
-                      {city.nombre_ciud}
+                      {city.nombre}
                     </MenuItem>
                   ))}
                 </Select>

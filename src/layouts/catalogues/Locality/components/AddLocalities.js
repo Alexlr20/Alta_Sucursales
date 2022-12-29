@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import { useEffect, useState } from 'react';
 import { Box, Button, Card, TextField, Typography } from '@mui/material';
 import MDTypography from 'components/MDTypography';
@@ -23,7 +21,6 @@ function AddLocality({ handleRefresh, refresh }) {
     const [postalCodeError, setPostalCodeError] = useState(false);
 
     useEffect(() => {
-        // axios.get('http://localhost:8000/states/')
         axios.get('http://localhost/ddsoftware/Alta_Sucursales/src/PHP/states/read.php')
             .then((response) => {
                 const { data } = response;
@@ -35,17 +32,15 @@ function AddLocality({ handleRefresh, refresh }) {
     }, [refresh]);
 
     useEffect(() => {
-        // axios.get('http://localhost:8000/cities/')
-        // axios.get(`http://localhost/ddsoftware/Alta_Sucursales/src/PHP/cities/read.php?id=${state}`)
         axios.get(`http://localhost/ddsoftware/Alta_Sucursales/src/PHP/cities/read.php?byStateId=1&id=${state}`)
             .then((response) => {
-                // console.log('ESTE ES EL ESTADO DENTRO DE ',state);
                 const { data } = response;
                 const {ciudad} = data;
-                // console.log('OLA YO SOY CIUDAD SI', ciudad);
                 setListedCities(ciudad);
             })
-            .catch((error) => console.log(error));
+            .catch((error) => {
+                if(error) console.log(error);
+            });
 
     }, [refresh, state]);
 
@@ -56,52 +51,21 @@ function AddLocality({ handleRefresh, refresh }) {
         setCity(null);
     };
 
-    const handleCityChange = ({ target }) => {
-        console.log(target.value);
-        setCity(target.value);
-    }
-
-    const handleLocalityChange = ({ target }) => {
-        setLocality(target.value);
-    }
-
-    const handlePostalCodeCodeChange = ({ target }) => {
-        setPostalCode(target.value);
-    }
-
+    const handleCityChange = ({ target }) => setCity(target.value);
+    const handleLocalityChange = ({ target }) => setLocality(target.value);
+    const handlePostalCodeCodeChange = ({ target }) => setPostalCode(target.value);
 
     const validateLocalitiesInput = () => {
-        if (state.length <= 0) {
-            setStateError(true)
-        } else {
-            setStateError(false);
-        }
-
-        if (city.length <= 0) {
-            setCityError(true)
-        } else {
-            setCityError(false);
-        }
-
-        if (locality.length <= 0) {
-            setLocalityError(true)
-        } else {
-            setLocalityError(false);
-        }
-
-        if (postalCode.length <= 0) {
-            setPostalCodeError(true)
-        } else {
-            setPostalCodeError(false);
-        }
+        (state.length <= 0) ? setStateError(true) : setStateError(false);
+        (city.length <= 0) ? setCityError(true) : setCityError(false);
+        (locality.length <= 0) ? setLocalityError(true) : setLocalityError(false);
+        (postalCode.length <= 0) ? setPostalCodeError(true) : setPostalCodeError(false);
     };
 
     const handleSumbit = (e) => {
         e.preventDefault();
         validateLocalitiesInput();
         if (stateError === false && cityError === false) {
-            console.log(`EDO: ${state} CD: ${city} colonia: ${locality} CP: ${postalCode}`);
-            // axios.post('http://localhost:8000/localities/', {
             axios.post('http://localhost/ddsoftware/Alta_Sucursales/src/PHP/localities/create.php', {
                 id_edo: state,
                 id_ciud: city,
@@ -111,7 +75,6 @@ function AddLocality({ handleRefresh, refresh }) {
             .then((response) => console.log('ENVIADO!',response))
             .catch((error) => console.log(error));
             
-
             setState('');
             setCity('');
             setLocality('');
@@ -141,8 +104,7 @@ function AddLocality({ handleRefresh, refresh }) {
                             <MenuItem key={state.id} value={state.id}>
                                 {state.nombre_edo}
                             </MenuItem>
-                        )
-                        )}
+                        ))}
                     </TextField>
                 </Box>
 
@@ -161,10 +123,9 @@ function AddLocality({ handleRefresh, refresh }) {
                     >
                         {listedCities?.map((city) => (
                             <MenuItem key={city.id} value={city.id}>
-                                {city.nombre_ciud}
+                                {city.nombre}
                             </MenuItem>
-                        )
-                        )}
+                        ))}
                     </TextField>
                 </Box>
 

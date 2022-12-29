@@ -1,7 +1,6 @@
 import { Box, MenuItem, TextField } from "@mui/material";
 import MDTypography from "components/MDTypography";
 
-// eslint-disable-next-line import/prefer-default-export
 export function StatusDropdown({statusValue, setStatusValue}) {
 
     const handleChange = ({target}) => {

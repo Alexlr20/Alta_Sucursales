@@ -3,31 +3,34 @@ import { Grid, TextField, Checkbox, FormLabel, MenuItem, Box } from "@mui/materi
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 
+const initialFormValues = {
+  nombre: "",
+  meta: "",
+  hora_inicial: "",
+  hora_final: "",
+  detalle: "",
+  tipo_instruccion: "",
+  fecha_inicial: "",
+  fecha_final: "",
+};
+
+const initialValues = {
+  monday: false,
+  tuesday: false,
+  wednesday: false,
+  thursday: false,
+  friday: false,
+  saturday: false,
+  sunday: false,
+  all: false,
+};
+
 function MoreFilters() {
   const [formErrors, setFormErrors] = useState({});
 
-  const initialFormValues = {
-    nombre: "",
-    meta: "",
-    hora_inicial: "",
-    hora_final: "",
-    detalle: "",
-    tipo_instruccion: "",
-    fecha_inicial: "",
-    fecha_final: "",
-  };
+
   const [formValues, setFormValues] = useState(initialFormValues);
 
-  const initialValues = {
-    monday: false,
-    tuesday: false,
-    wednesday: false,
-    thursday: false,
-    friday: false,
-    saturday: false,
-    sunday: false,
-    all: false,
-  };
   const [values, setValues] = useState(initialValues);
 
   const handleInputChange = (e) => {
@@ -36,7 +39,6 @@ function MoreFilters() {
       ...v,
       [name]: value,
     }));
-    // eslint-disable-next-line no-console
     console.log(value);
   };
 

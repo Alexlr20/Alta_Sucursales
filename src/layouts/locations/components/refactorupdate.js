@@ -158,7 +158,6 @@ export default function EditLocation({ handleShowAdd, locationIdToUpdate }) {
     useEffect(() => {
         axios
             .get(
-                // `http://localhost/ddsoftware/Alta_Sucursales/src/PHP/cities/read.php?byStateId=1&id=${formValues.estado}`
                 `http://localhost/ddsoftware/Alta_Sucursales/src/PHP/localities/read.php?byCityId=1&id=${formValues.municipio}`
             )
             .then((response) => {
@@ -695,7 +694,7 @@ export default function EditLocation({ handleShowAdd, locationIdToUpdate }) {
                                 >
                                     {allListedCities?.map((city) => (
                                         <MenuItem key={city.id} value={city.id}>
-                                            {city.nombre_ciud}
+                                            {city.nombre}
                                         </MenuItem>
                                     ))}
                                 </Select>

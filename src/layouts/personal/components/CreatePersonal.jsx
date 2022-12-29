@@ -639,7 +639,7 @@ function CreatePersonal({ handleShowCreate, handleRefresh }) {
                 >
                   {allListedCities?.map((city) => (
                     <MenuItem key={city.id} value={city.id}>
-                      {city.nombre_ciud}
+                      {city.nombre}
                     </MenuItem>
                   ))}
                 </Select>

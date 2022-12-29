@@ -42,6 +42,13 @@ const modalStyle2 = {
   padding: "1rem"
 };
 
+const modalStyle = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  backgroundColor: "#FFF",
+};
 
 function Sucursales() {
   const [locations, setLocations] = useState([]);
@@ -56,16 +63,12 @@ function Sucursales() {
 
 
   useEffect(() => {
-    // if(statusValue === '') 
-    // all, suspended, nonSuspended
     if (statusValue === 'nonSuspended') {
       console.log('statusValue in nonsupended', statusValue);
       axios.get('http://localhost/ddsoftware/Alta_Sucursales/src/PHP/locations/read.php')
         .then((response) => {
           const { data } = response;
           const { sucursal } = data;
-          // console.log('DATA FROM LOCALITIES -> ',sucursal);
-          console.log('EN NON SUSPENDED ->>', data);
 
           const formatedData = sucursal?.map(e => ({
             id: e.id,
@@ -90,8 +93,6 @@ function Sucursales() {
         .then((response) => {
           const { data } = response;
           const { sucursal } = data;
-          // console.log('DATA FROM LOCALITIES -> ',sucursal);
-          console.log('EN NON SUSPENDED ->>', data);
 
           const formatedData = sucursal?.map(e => ({
             id: e.id,
@@ -110,15 +111,12 @@ function Sucursales() {
         });
     }
 
-    if (statusValue === 'allStatus') {
+    if (statusValue === 'all') {
       console.log('statusValue in nonsupended', statusValue);
       axios.get('http://localhost/ddsoftware/Alta_Sucursales/src/PHP/locations/read.php?allStatus=1')
         .then((response) => {
           const { data } = response;
           const { sucursal } = data;
-          // console.log('DATA FROM LOCALITIES -> ',sucursal);
-          console.log('EN NON SUSPENDED ->>', data);
-
           const formatedData = sucursal?.map(e => ({
             id: e.id,
             nombre_sucursal: e.nombre,
@@ -135,29 +133,6 @@ function Sucursales() {
           setError(err.message);
         });
     }
-    // else if(statusValue === 'suspended'){
-    //   axios.get('http://localhost/ddsoftware/Alta_Sucursales/src/PHP/locations/read.php')
-    //     .then((response) => {
-    //       const { data } = response;
-    //       const { sucursal } = data;
-    //       // console.log('DATA FROM LOCALITIES -> ',sucursal);
-
-    //       const formatedData = sucursal?.map(e => ({
-    //         id: e.id,
-    //         nombre_sucursal: e.nombre,
-    //         direccion: `${e.tipo === 'Avenida' ? 'Av. ' : ''} ${e.nombre_vialidad} ${e.numero_ext}, ${e.numero_int === '' || e.numero_int === 'NULL' ? '' : `${e.numero_int},`} ${e.nombre_colonia}, ${e.codigo_postal}, ${e.nombre_ciud}, ${e.nombre_edo}`
-    //       }));
-
-    //       setLocations(formatedData);
-    //       setIsPending(false);
-    //       setError(null);
-    //     })
-    //     .catch((err) => {
-    //       console.log(err)
-    //       setIsPending(false);
-    //       setError(err.message);
-    //     });
-    // }
   }, [statusValue]);
 
 
@@ -165,33 +140,17 @@ function Sucursales() {
     setShowAdd((current) => !current);
   };
 
-  const modalStyle = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    backgroundColor: "#FFF",
-  };
-
   const [searchInput, setSearchInput] = useState("");
 
-  const handleSearchChange = ({ target }) => {
-    setSearchInput(target.value);
-    // eslint-disable-next-line no-console
-    console.log(searchInput);
-  };
+  const handleSearchChange = ({ target }) => setSearchInput(target.value);
 
   const [showEdit, setShowEdit] = useState(false);
 
-  const handleShowEdit = () => {
-    setShowEdit(prev => !prev);
-  };
+  const handleShowEdit = () => setShowEdit(prev => !prev);
 
   const [showDelete, setShowDelete] = useState(false);
 
-  const handleShowDelete = () => {
-    setShowDelete(prev => !prev);
-  };
+  const handleShowDelete = () => setShowDelete(prev => !prev);
 
   const confirmDelete = (id) => {
     axios.patch('http://localhost/ddsoftware/Alta_Sucursales/src/PHP/locations/delete.php', {
@@ -199,10 +158,8 @@ function Sucursales() {
     })
       .then((response) => console.log('Borrado :D', response))
       .catch(error => {
-        if (error.message == 'Request failed with status code 503') {
-          alert('La sucursal no se puede borrar por que ya se está utilizando');
-        }
         console.log(error)
+        if (error.message === 'Request failed with status code 503') alert('La sucursal no se puede borrar por que ya se está utilizando');
       })
     setShowDelete(false);
   };
@@ -215,7 +172,6 @@ function Sucursales() {
         </MDTypography>
       </MDBox>
 
-      {/* <Card sx={{ borderRadius: "0.5rem", height: "77vh" }}> */}
       <Card sx={{ borderRadius: "0.5rem", height: "35rem" }}>
         <div style={{ display: "flex" }}>
 
@@ -240,16 +196,13 @@ function Sucursales() {
                   <FontAwesomeIcon icon={faXmark} size="lg" style={{ cursor: "pointer" }} onClick={handleShowDelete} />
                 </div>
 
-                <MDTypography variant="h6" fontWeight="medium" style={{ textAlign: "center" }} >Borrar?, esta opción no es reversible</MDTypography>
+                <MDTypography variant="h6" fontWeight="medium" style={{ textAlign: "center" }}>Borrar?, esta opción no es reversible</MDTypography>
                 <Box sx={{ display: "flex", justifyContent: "space-around" }}>
                   <Button style={{ width: "fit-content", color: "#FFF", backgroundColor: '#1A73E8' }} variant="contained" onClick={() => confirmDelete(locationIdToDelete)}>Borrar ciudad</Button>
                   <Button style={{ width: "fit-content", color: "#FFF", backgroundColor: '#1A73E8' }} variant="contained" onClick={handleShowDelete}>Cancelar</Button>
                 </Box>
               </Card>
             </Modal>
-
-            <div>{statusValue}</div>
-
 
             <SearchForm
               searchInput={searchInput}
@@ -280,19 +233,6 @@ function Sucursales() {
           {/* Lado derecho */}
           <div className="mapouter" style={{ width: "50%" }}>
             <div className="gmap_canvas">
-              {/* <iframe
-                title="map"
-                width="100%"
-                height="750px"
-                id="gmap_canvas"
-                src="https://maps.google.com/maps?q=chennai&t=&z=13&ie=UTF8&iwloc=&output=embed"
-                // src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBDaeWicvigtP9xPv919E-RNoxfvC-Hqik&callback=iniciarMap"
-                frameBorder="0"
-                scrolling="no"
-                marginHeight="0"
-                marginWidth="0"
-              /> */}
-
               <iframe
                 src="https://maps.google.com/maps?q=chennai&t=&z=13&ie=UTF8&iwloc=&output=embed"
                 title="map"
@@ -315,12 +255,5 @@ function Sucursales() {
     </DashboardLayout>
   );
 }
-
-const DeleteLocation = () => {
-  return (
-    <div>Olacomoestas</div>
-  )
-}
-
 
 export default Sucursales;

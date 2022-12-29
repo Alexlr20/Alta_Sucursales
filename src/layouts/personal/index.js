@@ -33,6 +33,7 @@ import PersonalTable from "./components/PersonalTable";
 import UpdatePersonal from "./components/UpdatePersonal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { StatusDropdown } from "components/dropdrowns/StatusDropdown";
 
 const modalStyle2 = {
   width: "30%",
@@ -52,7 +53,9 @@ function Personal() {
 
   const [showEdit, setShowEdit] = useState(false);
 
-  
+  const [statusValue, setStatusValue] = useState('nonSuspended');
+
+
   const handleShowEdit = () => {
     setShowEdit(prev => !prev);
   };
@@ -69,17 +72,43 @@ function Personal() {
     setRefresh((current) => !current);
   };
 
-    useEffect(() => {
-        axios.get('http://localhost/ddsoftware/Alta_Sucursales/src/PHP/personal/read.php')
-            .then((response) => {
-                const { data } = response;
-                const { personal: p } = data;
-                console.log('ESTADWtff', p);
-                setPersonal(p);
-            })
-            .catch((err) => console.log(err));
 
-    }, [refresh]);
+
+  useEffect(() => {
+    if(statusValue === 'nonSuspended'){
+      axios.get('http://localhost/ddsoftware/Alta_Sucursales/src/PHP/personal/read.php')
+        .then((response) => {
+          const { data } = response;
+          const { personal: p } = data;
+          console.log('ESTADWtff', p);
+          setPersonal(p);
+        })
+        .catch((err) => console.log(err));
+    }
+
+    if(statusValue === 'suspended'){
+      axios.get('http://localhost/ddsoftware/Alta_Sucursales/src/PHP/personal/read.php?suspended=1')
+        .then((response) => {
+          const { data } = response;
+          const { personal: p } = data;
+          console.log('ESTADWtff', p);
+          setPersonal(p);
+        })
+        .catch((err) => console.log(err));
+    }
+
+    if(statusValue === 'all'){
+      axios.get('http://localhost/ddsoftware/Alta_Sucursales/src/PHP/personal/read.php?all=1')
+        .then((response) => {
+          const { data } = response;
+          const { personal: p } = data;
+          console.log('ESTADWtff', p);
+          setPersonal(p);
+        })
+        .catch((err) => console.log(err));
+    }
+
+  }, [statusValue, refresh]);
 
 
   const handleShowCreate = () => {
@@ -99,7 +128,7 @@ function Personal() {
     })
       .then((response) => console.log('Borrado :D', response))
       .catch(error => {
-        if(error.message == 'Request failed with status code 503'){
+        if (error.message == 'Request failed with status code 503') {
           alert('El empleado no se puede ocultar por que ya está en uso');
         }
         console.log(error)
@@ -144,7 +173,10 @@ function Personal() {
               />
             </Grid>
 
-            <Grid item>
+            <Grid item style={{ display: "flex", gap: "1rem" }}>
+              <StatusDropdown statusValue={statusValue} setStatusValue={setStatusValue} />
+
+
               <Button
                 sx={{ color: "#FFF", alignSelf: "flex-end" }}
                 variant="contained"
@@ -157,13 +189,13 @@ function Personal() {
 
           <Modal open={showCreate} onClose={handleShowCreate}>
             <MDBox mt={2} sx={modalStyle}>
-              <CreatePersonal handleShowCreate={handleShowCreate} handleRefresh={handleRefresh}/>
+              <CreatePersonal handleShowCreate={handleShowCreate} handleRefresh={handleRefresh} />
             </MDBox>
           </Modal>
 
           <Modal open={showEdit} onClose={handleShowEdit}>
             <MDBox mt={2} sx={modalStyle}>
-              <UpdatePersonal idToUpdate={idToUpdate} employeeIsUser={employeeIsUser} handleShowEdit={handleShowEdit} handleRefresh={handleRefresh}/>
+              <UpdatePersonal idToUpdate={idToUpdate} employeeIsUser={employeeIsUser} handleShowEdit={handleShowEdit} handleRefresh={handleRefresh} />
             </MDBox>
           </Modal>
 
@@ -173,7 +205,7 @@ function Personal() {
                 <FontAwesomeIcon icon={faXmark} size="lg" style={{ cursor: "pointer" }} onClick={handleShowDelete} />
               </div>
 
-              <MDTypography variant="h6" fontWeight="medium" style={{textAlign: "center"}} >Borrar?, esta opción no es reversible</MDTypography>
+              <MDTypography variant="h6" fontWeight="medium" style={{ textAlign: "center" }} >Borrar?, esta opción no es reversible</MDTypography>
               <Box sx={{ display: "flex", justifyContent: "space-around" }}>
                 <Button style={{ width: "fit-content", color: "#FFF", backgroundColor: '#1A73E8' }} variant="contained" onClick={confirmDelete}>Ocultar empleado</Button>
                 <Button style={{ width: "fit-content", color: "#FFF", backgroundColor: '#1A73E8' }} variant="contained" onClick={handleShowDelete}>Cancelar</Button>

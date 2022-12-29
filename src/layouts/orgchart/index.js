@@ -33,52 +33,55 @@ import "../../styles/Table.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrash, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { EditPopUp } from "./components/EditPopUp";
+import { StatusDropdown } from "components/dropdrowns/StatusDropdown";
 
 
 
-const getFormatedAreas = (areasFromTree) => {
-  const idMapping = areasFromTree.reduce((acc, el, i) => {
-    acc[el.nombre_area] = i;
-    return acc;
-  }, {});
+// const getFormatedAreas = (areasFromTree) => {
+//   const idMapping = areasFromTree.reduce((acc, el, i) => {
+//     acc[el.nombre_area] = i;
+//     return acc;
+//   }, {});
 
-  let root;
-  areasFromTree.forEach((el) => {
-    // Handle the root element
-    if (el.responde_a === null) {
-      root = el;
-      return;
-    }
-    const parentEl = areasFromTree[idMapping[el.responde_a]];
-    parentEl.children = [...(parentEl.children || []), el];
-  });
+//   let root;
+//   areasFromTree.forEach((el) => {
+//     if (el.responde_a === null) {
+//       root = el;
+//       return;
+//     }
+//     const parentEl = areasFromTree[idMapping[el.responde_a]];
+//     parentEl.children = [...(parentEl.children || []), el] ? [...(parentEl.children || []), el] : null;
+//   });
 
 
-  const arrPedorro = [];
-  const getAllAreas = (allAreas) => {
-    console.log('AllAreas in GetAllAreas -> ', allAreas);
-    arrPedorro.push(allAreas);
+//   const arrPedorro = [];
+//   const getAllAreas = (allAreas) => {
+//     console.log('AllAreas in GetAllAreas -> ', allAreas);
+//     arrPedorro.push(allAreas);
 
-    allAreas.map((area) => {
-      if (area.children) {
-        return getAllAreas(area.children);
-      }
+//     allAreas?.map((area) => {
+//       if (area.children) {
+//         return getAllAreas(area.children);
+//       }
 
-      return {
-        nombre_area: area.nombre_area,
-        responde_a: area.responde_a
-      }
-    });
-  }
+//       return {
+//         nombre_area: area.nombre_area,
+//         responde_a: area.responde_a
+//       }
+//     });
+//   }
 
-  const allReturnedAreas = getAllAreas([root]);
+//   const allReturnedAreas = getAllAreas([root]);
 
-  console.log('Areas de organigrama en arbol -> ', root);
-  console.log('Areas de organigrama después -> ', allReturnedAreas);
-  console.log('Array pedorro -> ', arrPedorro.flatMap(e => e));
+//   console.log('Areas de organigrama en arbol -> ', root);
+//   console.log('Areas de organigrama después -> ', allReturnedAreas);
+//   console.log('Array pedorro -> ', arrPedorro.flatMap(e => e));
 
-  return arrPedorro.flatMap(e => e);
-};
+//   return arrPedorro.flatMap(e => e);
+// };
+
+
+
 
 const ActionButtons = ({ area_id, setShowEdit, setShowDelete, setAreaId }) => {
   return (
@@ -101,6 +104,22 @@ const ActionButtons = ({ area_id, setShowEdit, setShowDelete, setAreaId }) => {
 }
 
 
+const modalStyle = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+};
+
+const modalStyle2 = {
+  width: "30%",
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  backgroundColor: "#FFF",
+  padding: "1rem"
+};
 
 function Organigrama() {
   const [areas, setAreas] = useState([]);
@@ -113,6 +132,7 @@ function Organigrama() {
   const [showDelete, setShowDelete] = useState(false);
   const [areaId, setAreaId] = useState(0);
 
+  const [statusValue, setStatusValue] = useState('nonSuspended');
 
   const [refresh, setRefresh] = useState(false);
 
@@ -121,19 +141,44 @@ function Organigrama() {
   };
 
   useEffect(() => {
-    if (selectedLocation !== '') {
+    console.log('STATUS VALUE IN USE EFFECT ->> ',statusValue);
+
+    if (selectedLocation !== '' && statusValue === 'nonSuspended') {
       axios.get(`http://localhost/ddsoftware/Alta_Sucursales/src/PHP/orgchart/read.php?id=${selectedLocation}`)
         .then((response) => {
           const { data } = response;
           const { organigrama } = data;
           console.log('organigramawtff -> ', organigrama);
-          const x = getFormatedAreas(organigrama);
-          setAreas(x);
+          // const x = getFormatedAreas(organigrama);
+          // setAreas(x);
+          setAreas(organigrama);
         })
         .catch((error) => console.log(error));
     }
 
-  }, [selectedLocation, refresh]);
+    if (selectedLocation !== '' && statusValue === 'suspended') {
+      axios.get(`http://localhost/ddsoftware/Alta_Sucursales/src/PHP/orgchart/read.php?id=${selectedLocation}&suspended=1`)
+        .then((response) => {
+          const { data } = response;
+          const { organigrama } = data;
+          console.log('organigramawtff -> ', organigrama);
+              setAreas(organigrama);
+        })
+        .catch((error) => console.log(error));
+    }
+
+    if (selectedLocation !== '' && statusValue === 'all') {
+      axios.get(`http://localhost/ddsoftware/Alta_Sucursales/src/PHP/orgchart/read.php?id=${selectedLocation}&all=1`)
+        .then((response) => {
+          const { data } = response;
+          const { organigrama } = data;
+          console.log('organigramawtff -> ', organigrama);
+          setAreas(organigrama);
+        })
+        .catch((error) => console.log(error));
+    }
+
+  }, [selectedLocation, statusValue, refresh]);
 
 
   useEffect(() => {
@@ -166,24 +211,10 @@ function Organigrama() {
   }));
 
 
-  const handleClick = () => {
-    setShowPopUp((current) => !current);
-    console.log('Selected location -> ', selectedLocation);
-  };
-
-  const handleShowEdit = () => {
-    setShowEdit(prev => !prev);
-    console.log('Selected ID -> ', selectedLocation);
-  }
-
-  const handleShowDelete = () => {
-    setShowDelete(prev => !prev);
-    console.log('Selected ID -> ', selectedLocation);
-  }
-
-  const handleInputChange = ({ target }) => {
-    setSelectedLocation(() => target.value);
-  };
+  const handleClick = () => setShowPopUp((current) => !current);
+  const handleShowEdit = () => setShowEdit(prev => !prev);
+  const handleShowDelete = () => setShowDelete(prev => !prev);
+  const handleInputChange = ({ target }) => setSelectedLocation(() => target.value);
 
   const confirmDelete = (e) => {
     e.preventDefault();
@@ -192,9 +223,7 @@ function Organigrama() {
     })
       .then((response) => console.log('Borrado :D', response))
       .catch(error => {
-        if(error.message == 'Request failed with status code 503'){
-          alert('La sucursal no se puede borrar por que ya se está utilizando');
-        }
+        if (error.message === 'Request failed with status code 503') alert('La sucursal no se puede borrar por que ya se está utilizando');
         console.log(error)
       })
 
@@ -202,22 +231,7 @@ function Organigrama() {
     handleRefresh();
   };
 
-  const modalStyle = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-  };
 
-  const modalStyle2 = {
-    width: "30%",
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    backgroundColor: "#FFF",
-    padding: "1rem"
-};
 
   return (
     <DashboardLayout>
@@ -236,11 +250,10 @@ function Organigrama() {
                 gridTemplateRows: "1fr",
                 columnGap: "1rem",
               }}
-            >
-              <MDTypography variant="h6" fontWeight="medium">
-                Seleccionar Sucursal:
-              </MDTypography>
 
+            // style={{ display: "flex", }}
+            >
+              <MDTypography variant="h6" fontWeight="medium">Seleccionar Sucursal:</MDTypography>
               <Select name="area" value={selectedLocation} onChange={handleInputChange}>
                 {
                   locationValues?.map((location) => (
@@ -252,10 +265,17 @@ function Organigrama() {
               </Select>
             </Box>
 
-            <Button variant="contained" disabled={!selectedLocation} onClick={handleClick} sx={{ color: "#FFF" }} size="small">
-              {" "}
-              Area +{" "}
-            </Button>
+            <Box sx={{ display: "flex", gap: "1rem" }}>
+              {
+                selectedLocation &&
+                <StatusDropdown statusValue={statusValue} setStatusValue={setStatusValue} />
+              }
+
+              <Button variant="contained" disabled={!selectedLocation} onClick={handleClick} sx={{ color: "#FFF" }} size="small">
+                {" "}Area +{" "}
+              </Button>
+            </Box>
+
           </Box>
 
           <Modal
@@ -291,21 +311,21 @@ function Organigrama() {
               />
             </Box>
           </Modal>
-          
+
           <Modal open={showDelete} onClose={handleShowDelete}>
             <Card style={modalStyle2} sx={{ display: "flex", gap: "1.5rem" }}>
               <div style={{ width: "100%", display: "flex", justifyContent: "flex-end" }}>
                 <FontAwesomeIcon icon={faXmark} size="lg" style={{ cursor: "pointer" }} onClick={handleShowDelete} />
               </div>
 
-              <MDTypography variant="h6" fontWeight="medium" style={{textAlign: "center"}} >Borrar?, esta opción no es reversible</MDTypography>
+              <MDTypography variant="h6" fontWeight="medium" style={{ textAlign: "center" }} >Borrar?, esta opción no es reversible</MDTypography>
               <Box sx={{ display: "flex", justifyContent: "space-around" }}>
                 <Button style={{ width: "fit-content", color: "#FFF", backgroundColor: '#1A73E8' }} variant="contained" onClick={confirmDelete}>Borrar ciudad</Button>
                 <Button style={{ width: "fit-content", color: "#FFF", backgroundColor: '#1A73E8' }} variant="contained" onClick={handleShowDelete}>Cancelar</Button>
               </Box>
             </Card>
           </Modal>
-          
+
           <div style={{ overflowY: "scroll", display: "block" }}>
             {areas && <Table data={rows} column={column} />}
           </div>

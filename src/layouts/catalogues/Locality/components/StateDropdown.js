@@ -3,42 +3,21 @@ import axios from "axios";
 import MDTypography from "components/MDTypography";
 import { useEffect, useState } from "react";
 
-// eslint-disable-next-line import/prefer-default-export
 export function StateDropdown({stateValue, setStateValue}) {
-
     const [allListedStates, setAllListedStates] = useState(null);
 
     useEffect(() => {
         const abortCont = new AbortController();
 
-        // if (dropdownValue == 'nonSuspended') {
-        // axios.get('http://localhost:8000/cities/')
-        axios.get('http://localhost/ddsoftware/Alta_Sucursales/src/PHP/states/read.php'
-            // , {data: {id: 5}}
-        )
+        axios.get('http://localhost/ddsoftware/Alta_Sucursales/src/PHP/states/read.php')
             .then((response) => {
                 const { data } = response;
                 const { estado } = data;
-                // console.log(estado);
                 setAllListedStates(estado);
-                // console.log('DATA IN AXIOS GET',data);
-                // setAllPendingCities(false);
-                // setAllCities(ciudad);
-                // setAllCitiesError(null);
-            }
-            )
+            })
             .catch((error) => {
-                if (error === 'AbortError') {
-                    console.log(error);
-                }
-                // else {
-                //     setAllPendingCities(false);
-                //     setAllCitiesError(error);
-                // }
+                if (error === 'AbortError') console.log(error);
             });
-        // } else if (dropdownValue == 'suspended'){
-        //     console.log('olaaa');
-        // }
 
         return () => abortCont.abort();
     }, []);

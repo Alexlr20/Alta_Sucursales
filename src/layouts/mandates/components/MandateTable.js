@@ -1,17 +1,10 @@
-/* eslint-disable react/prop-types */
 import { Card } from "@mui/material";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import DataTable from "examples/Tables/DataTable";
 import React, { useLayoutEffect, useRef } from "react";
 
-// import mandateData from "../SearchForm/mandateData";
-
-// eslint-disable-next-line react/prop-types
 export default function MandateTable({ setWidthOfTable, tasks }) {
-  // const { columns, rows } = mandateData();
-
-  // eslint-disable-next-line react/no-unstable-nested-components
   function TableFiller({ name, calle }) {
     return (
       <MDBox width={60} display="flex" alignItems="center" lineHeight={1}>
@@ -27,7 +20,6 @@ export default function MandateTable({ setWidthOfTable, tasks }) {
     );
   }
 
-  // eslint-disable-next-line react/no-unstable-nested-components
   function DatesSelect({ dias }) {
     return (
       <MDBox lineHeight={1} textAlign="left">
