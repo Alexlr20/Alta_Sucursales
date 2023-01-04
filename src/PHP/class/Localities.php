@@ -1,6 +1,7 @@
 <?php
 class Locality
 {
+    private $conn;
     private $localityTable = 'colonia';
     public $id;
     public $name;

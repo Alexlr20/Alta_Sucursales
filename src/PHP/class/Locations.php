@@ -2,7 +2,7 @@
 class Location
 {
     public $id;
-
+    private $conn;
     public $location_name;
     public $road_name;
     public $int_number;
@@ -17,10 +17,7 @@ class Location
     public $suspended;
     public $allStatus;
 
-
-
-    public function __construct($db)
-    {
+    public function __construct($db){
         $this->conn = $db;
     }
     
@@ -37,10 +34,7 @@ class Location
         return $result;
     }
 
-
-    function read()
-    {
-
+    function read(){
         switch ($this) {
             case !empty($this->byStateId) && !empty($this->id):
                 $stmt = $this->conn->prepare("SELECT
@@ -173,34 +167,33 @@ class Location
 
 
 
-    function update()
-    {
-        // $stmt = $this->conn->prepare("UPDATE ".$this->cityTable." SET nombre= ?, clave= ? WHERE id= ?");
-        $stmt = $this->conn->prepare("UPDATE " . $this->cityTable . " SET nombre_ciud= ?, clave= ?, id_edo=? WHERE NOT visible = 0 AND id= ?");
+//     function update(){
+//         // $stmt = $this->conn->prepare("UPDATE ".$this->cityTable." SET nombre= ?, clave= ? WHERE id= ?");
+//         $stmt = $this->conn->prepare("UPDATE " . $this->cityTable . " SET nombre_ciud= ?, clave= ?, id_edo=? WHERE NOT visible = 0 AND id= ?");
 
-        $this->name = htmlspecialchars(strip_tags($this->name));
-        $this->code = htmlspecialchars(strip_tags($this->code));
-        $this->state_id = htmlspecialchars(strip_tags($this->state_id));
-        $this->id = htmlspecialchars(strip_tags($this->id));
+//         $this->name = htmlspecialchars(strip_tags($this->name));
+//         $this->code = htmlspecialchars(strip_tags($this->code));
+//         $this->state_id = htmlspecialchars(strip_tags($this->state_id));
+//         $this->id = htmlspecialchars(strip_tags($this->id));
 
 
-        $stmt->bind_param("ssii", $this->name, $this->code, $this->state_id, $this->id);
+//         $stmt->bind_param("ssii", $this->name, $this->code, $this->state_id, $this->id);
 
-        if ($stmt->execute()) {
-            return true;
-        }
-        return false;
-    }
+//         if ($stmt->execute()) {
+//             return true;
+//         }
+//         return false;
+//     }
 
-    function delete(){
-        $stmt = $this->conn->prepare("UPDATE sucursal SET suspendida=1 WHERE id= ?");
+//     function delete(){
+//         $stmt = $this->conn->prepare("UPDATE sucursal SET suspendida=1 WHERE id= ?");
 
-        $this->id = htmlspecialchars(strip_tags($this->id));
-        $stmt->bind_param("i", $this->id);
+//         $this->id = htmlspecialchars(strip_tags($this->id));
+//         $stmt->bind_param("i", $this->id);
 
-        if ($stmt->execute()) {
-            return true;
-        }
-        return false;
-    }
+//         if ($stmt->execute()) {
+//             return true;
+//         }
+//         return false;
+//     }
 }

@@ -62,7 +62,6 @@ const getAreasByLocation = (locationId, callback) => {
 };
 
 const CheckBoxRow = ({ title, executeCall }) => {
-
   const [checked, setChecked] = useState(false);
   const [showChildren, setShowChildren] = useState(false);
 
@@ -226,6 +225,15 @@ function Mandatos() {
                 <div style={{height: "100%", overflowY: "scroll"}}>
 
                   <ul style={noBullet}>
+                    {
+                      allListedStates.map(e => (
+                      <CheckBoxRow
+                        key={e.id}
+                        title={e.nombre_edo}
+                      />
+                      ))
+                    }
+
                     {allListedStates.map(e => (
                       <CheckBoxRow
                         key={e.id}

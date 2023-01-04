@@ -13,8 +13,6 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-// import SearchContextProvider from "context/SearchContext";
-// import SearchContextProvider from "context/SearchContext";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Grid from "@mui/material/Grid";
@@ -24,13 +22,12 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import Footer from "examples/Footer";
-import LocationForm from "./components/CreateLocation";
 import SearchForm from "./components/SearchForm";
 import Locations from "./components/Locations";
-import EditLocation from "./components/EditLocation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { Box } from "@mui/system";
+import CreateLocation from "./components/CreateLocation";
 
 const modalStyle2 = {
   width: "30%",
@@ -141,15 +138,12 @@ function Sucursales() {
   };
 
   const [searchInput, setSearchInput] = useState("");
-
   const handleSearchChange = ({ target }) => setSearchInput(target.value);
 
   const [showEdit, setShowEdit] = useState(false);
-
   const handleShowEdit = () => setShowEdit(prev => !prev);
 
   const [showDelete, setShowDelete] = useState(false);
-
   const handleShowDelete = () => setShowDelete(prev => !prev);
 
   const confirmDelete = (id) => {
@@ -180,13 +174,14 @@ function Sucursales() {
 
             <Modal open={showAdd} onClose={handleShowAdd}>
               <Card sx={modalStyle} style={{ width: "50%" }}>
-                <LocationForm handleShowAdd={handleShowAdd} />
+                <CreateLocation handleShowAdd={handleShowAdd} locationIdToUpdate={locationIdToUpdate} />
               </Card>
             </Modal>
 
             <Modal open={showEdit} onClose={handleShowEdit}>
               <Card sx={modalStyle} style={{ width: "50%" }}>
-                <EditLocation handleShowAdd={handleShowEdit} locationIdToUpdate={locationIdToUpdate} />
+
+                <CreateLocation handleShowAdd={handleShowAdd} locationIdToUpdate={locationIdToUpdate} edit={showEdit}/>
               </Card>
             </Modal>
 
@@ -215,8 +210,6 @@ function Sucursales() {
             />
 
             <Grid item>
-              {error && <div>{error}</div>}
-              {isPending && <div>Cargando...</div>}
               {locations && (
                 <Locations
                   locations={locations}

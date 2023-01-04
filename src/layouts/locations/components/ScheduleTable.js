@@ -2,6 +2,7 @@ import React from "react";
 
 const ScheduleTable = React.memo(({data, column})=>{
     console.log('Tabla renderizada');
+    console.log('Esta es la info que me llega -> ', data);
 
     return (
         <table className="org-table">

@@ -93,21 +93,6 @@ export default function EditLocation({ handleShowAdd, locationIdToUpdate }) {
         console.log(allListedStates);
     }, []);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     const history = [];
     const [historyState, setHistoryState] = useState([]);
 

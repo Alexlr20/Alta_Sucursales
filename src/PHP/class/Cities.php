@@ -4,11 +4,14 @@
         public $id;
         public $name;
         public $code;
+        public $state;
         public $state_id;
 
         public $all;
         public $suspended;
         public $byStateId;
+
+        private $conn;
 
         public function __construct($db){
             $this->conn = $db;
